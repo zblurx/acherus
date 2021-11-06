@@ -42,6 +42,18 @@ function install_ffuf {
     go install -v github.com/ffuf/ffuf@latest
 }
 
+function install_jsloot {
+    go install -v github.com/zblurx/jsloot@latest
+}
+
+function install_brb {
+    go install -v github.com/zblurx/brb@latest
+}
+
+function install_funiq {
+    go install -v github.com/zblurx/funiq@latest
+}
+
 function install_gobuster {
     # https://github.com/OJ/gobuster
     go install -v github.com/OJ/gobuster/v3@latest
@@ -469,6 +481,7 @@ function install_default {
     apti delta
     install_arsenal
     install_DefaultCredsCheatSheet
+    install_funiq
     # install_blesh
 }
 
@@ -488,6 +501,8 @@ function spe_web {
     install_meg
     install_unfurl
     install_waybackurls
+    install_jsloot
+    install_brb
     install_sqlmap
     install_gau
     install_burp
