@@ -1,0 +1,24 @@
+set show-all-if-ambiguous on
+set completion-ignore-case on 
+
+"\e[B": history-search-forward
+"\e[A": history-search-backward
+
+# Do not autocomplete hidden files unless the pattern explicitly begins with a dot
+set match-hidden-files off
+
+# Show all autocomplete results at once
+set page-completions off
+
+set completion-query-items 200
+
+# Show extra file information when completing, like `ls -F` does
+set visible-stats on
+
+set input-meta on
+set output-meta on
+set convert-meta off
+
+# Hop up directories
+"\C-n":"cd ..\n"
+"\C-b":"cd /data\n"
