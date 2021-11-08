@@ -97,10 +97,14 @@ func CreateContainer(globalOptions *AcherusGlobalOptions, commandOptions *Acheru
 			},
 		}
 	}
-	image := "acherus"
+
+	var image string
 	if commandOptions.Local {
-		image += "-local"
+		image = "acherus-local"
+	} else {
+		image = "zblurx/acherus:latest"
 	}
+
 	config := &container.Config{
 		Image:        image,
 		Tty:          true,
