@@ -11,7 +11,7 @@ import (
 
 func ListImage(globalOptions *AcherusGlobalOptions) {
 	imageListOptions := types.ImageListOptions{
-		Filters: filters.NewArgs(filters.KeyValuePair{Key: "reference", Value: "acherus*"}),
+		Filters: filters.NewArgs(filters.KeyValuePair{Key: "reference", Value: "*/acherus*"}),
 	}
 	images, err := globalOptions.DockerClient.ImageList(globalOptions.Context, imageListOptions)
 	if err != nil {
