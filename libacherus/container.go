@@ -21,7 +21,7 @@ func ListContainer(globalOptions *AcherusGlobalOptions) {
 
 	containerListOptions := types.ContainerListOptions{
 		All:     true,
-		Filters: filters.NewArgs(filters.KeyValuePair{Key: "ancestor", Value: "acherus"}),
+		Filters: filters.NewArgs(filters.KeyValuePair{Key: "ancestor", Value: "zblurx/acherus"}, filters.KeyValuePair{Key: "ancestor", Value: "acherus-local"}),
 	}
 
 	containers, err := globalOptions.DockerClient.ContainerList(globalOptions.Context, containerListOptions)
