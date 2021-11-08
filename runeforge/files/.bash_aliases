@@ -18,3 +18,4 @@ alias a="arsenal"
 alias ssrfmap='python3 /opt/tools/SSRFmap/ssrfmap.py'
 alias enum4linux-ng='python3 /opt/tools/enum4linuxng/enum4linux-ng.py'
 alias d='cd /data'
+alias donpapi='python3 /opt/tools/DonPAPI/DonPAPI.py'

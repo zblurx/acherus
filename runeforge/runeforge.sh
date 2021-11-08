@@ -317,7 +317,12 @@ function install_wifite2 {
 
 function install_chisel {
     go get -v github.com/jpillora/chisel
+}
 
+function install_donpapi {
+    git clone https://github.com/login-securite/DonPAPI.git /opt/tools/DonPAPI
+    cd /opt/tools/DonPAPI
+    python3 -m pip install -r requirements.txt
 }
 
 function install_gau {
@@ -371,7 +376,10 @@ function install_truffleHog {
 function install_evil-winrm {
     bash -l -c "gem install winrm winrm-fs stringio logger fileutils"
     git clone https://github.com/Hackplayers/evil-winrm.git /opt/tools/evil-winrm
+}
 
+function install_jsbeautifier {
+    pip install jsbeautifier
 }
 
 function install_enum4linuxng {
@@ -516,6 +524,7 @@ function spe_web {
     apti sslscan
     install_cookiemonster
     install_proxify
+    install_jsbeautifier
 }
 
 function spe_network {
@@ -571,6 +580,7 @@ function spe_ad {
     install_certipy
     install_manspider
     install_kerbrute
+    install_donpapi
 }
 
 function spe_wifi {
