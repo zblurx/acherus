@@ -275,7 +275,7 @@ function install_ressources {
     get_last_git_release antonioCoco/RemotePotato0 RemotePotato0
     get_last_git_release antonioCoco/RogueWinRM RogueWinRM
     get_last_git_release antonioCoco/ConPtyShell ConPtyShell
-    get_last_git_release GhostPack/Rubeus Rubeus
+    get_last_git_release gentilkiwi/kekeo kekeo
     get_last_git_release AlessandroZ/LaZagne LaZagne
     get_last_git_release DominicBreuker/pspy pspy
     get_last_git_release synacktiv/HopLa HopLa
