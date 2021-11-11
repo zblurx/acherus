@@ -11,7 +11,7 @@ import (
 
 func ListImage(globalOptions *AcherusGlobalOptions) {
 	imageListOptions := types.ImageListOptions{
-		Filters: filters.NewArgs(filters.KeyValuePair{Key: "reference", Value: "*/acherus*"}),
+		Filters: filters.NewArgs(filters.KeyValuePair{Key: "reference", Value: "zblurx/acherus*"}, filters.KeyValuePair{Key: "reference", Value: "acherus-local*"}),
 	}
 	images, err := globalOptions.DockerClient.ImageList(globalOptions.Context, imageListOptions)
 	if err != nil {
@@ -61,7 +61,7 @@ func BuildImage(globalOptions *AcherusGlobalOptions, commandOptions *AcherusInit
 
 	opts := types.ImageBuildOptions{
 		Dockerfile: commandOptions.DockerfilePath,
-		Tags:       []string{"acherus"},
+		Tags:       []string{"acherus-local"},
 		Remove:     true,
 	}
 
