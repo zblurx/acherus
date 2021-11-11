@@ -27,7 +27,6 @@ function install_manspider {
     apti tesseract 
     apti tesseract-data-eng
     apti antiword
-    pip install pipx
     pipx install man-spider
 }
 
@@ -83,7 +82,6 @@ function install_naabu {
 function install_testssl {
     # https://github.com/drwetter/testssl.sh
     git clone --depth 1 https://github.com/drwetter/testssl.sh.git /opt/tools/testssl
-    ls -s /opt/tools/testssl/testssl.sh /usr/bin/testssl
 }
 
 function install_burp {
@@ -127,6 +125,8 @@ function install_bloodhoundpy {
 }
 
 function install_pcredz {
+    pip3 install Cython
+    pip3 install python-libpcap
     git clone https://github.com/lgandx/PCredz.git /opt/tools/PCredz
 }
 
@@ -170,20 +170,16 @@ function install_sqlmap {
 }
 
 function install_Responder {
-    # git clone https://github.com/lgandx/Responder.git /opt/tools/Responder
-    apt-get -y install responder
-    sed -i 's/ Random/ 1122334455667788/g' /usr/share/responder/Responder.conf
+    git clone https://github.com/lgandx/Responder.git /opt/tools/Responder
+    sed -i 's/ Random/ 1122334455667788/g' /opt/tools/Responder/Responder.conf
+    sed -i 's/Responder-Session.log/\/data\/.Responder-Session.log/g' /opt/tools/Responder/Responder.conf
+    sed -i 's/Poisoners-Session.log/\/data\/.Poisoners-Session.log/g' /opt/tools/Responder/Responder.conf
+    sed -i 's/Analyzer-Session.log/\/data\/.Analyzer-Session.log/g' /opt/tools/Responder/Responder.conf
+    sed -i 's/Config-Responder.log/\/data\/.Config-Responder.log/g' /opt/tools/Responder/Responder.conf
 }
 
 function install_mitm6 {
     pip install mitm6
-}
-
-function install_merlin {
-    mkdir /opt/tools/merlin
-    go get -u github.com/Ne0nd0g/merlin
-    go get -u github.com/Ne0nd0g/merlin-agent
-
 }
 
 function install_procdump {
@@ -199,7 +195,8 @@ function install_proxify {
 
 function install_pywhisker {
     git clone https://github.com/ShutdownRepo/pywhisker.git /opt/tools/pywhisker
-    cd /opt/tools/pywhisker && python3 -m pip install -r requirements.txt
+    cd /opt/tools/pywhisker 
+    python3 -m pip install -r requirements.txt
 }
 
 function install_zerologon {
@@ -242,6 +239,9 @@ function install_ntlmv1-multi {
 }
 
 function install_LDAPmonitor {
+    apti libldap2-dev
+    apti libsasl2-dev
+    apti libssl-dev
     git clone https://github.com/p0dalirius/LDAPmonitor.git /opt/tools/LDAPmonitor
 }
 
@@ -249,11 +249,6 @@ function install_sysinternals {
     mkdir /opt/resources/SysInternals
     cd /opt/resources/SysInternals
     wget https://download.sysinternals.com/files/SysinternalsSuite.zip
-}
-
-function install_blesh {
-    git clone --recursive https://github.com/akinomyoga/ble.sh.git ~/.ble.sh
-    make -C ~/.ble.sh install PREFIX=~/.local
 }
 
 function install_routersploit {
@@ -275,15 +270,23 @@ function install_ressources {
     get_last_git_release antonioCoco/RemotePotato0 RemotePotato0
     get_last_git_release antonioCoco/RogueWinRM RogueWinRM
     get_last_git_release antonioCoco/ConPtyShell ConPtyShell
-    get_last_git_release GhostPack/Rubeus Rubeus
+    get_last_git_release gentilkiwi/kekeo kekeo
     get_last_git_release AlessandroZ/LaZagne LaZagne
     get_last_git_release DominicBreuker/pspy pspy
+    git clone https://github.com/Flangvik/SharpCollection.git /opt/resources/SharpCollection
     get_last_git_release synacktiv/HopLa HopLa
     git clone https://github.com/PowerShellMafia/PowerSploit.git /opt/resources/PowerSploit
     install_procdump
+    get_ad_explorer
     get_procmon
     git clone https://github.com/samratashok/nishang.git /opt/resources/nishang
     get_last_git_release vletoux/pingcastle PingCastle
+}
+
+function get_ad_explorer {
+    mkdir /opt/resources/AdExplorer
+    cd /opt/resources/AdExplorer
+    wget https://download.sysinternals.com/files/AdExplorer.zip
 }
 
 function get_procmon {
@@ -294,8 +297,8 @@ function get_procmon {
 
 function install_eos {
     git clone https://github.com/Synacktiv/eos /opt/tools/eos
-    cd /opt/tools/
-    python3 -m pip install --user ./eos
+    cd /opt/tools/eos
+    python3 -m pipx install .
 }
 
 function install_arsenal {
@@ -312,7 +315,7 @@ function install_BloodHound {
 function install_wifite2 {
     git clone https://github.com/derv82/wifite2.git /opt/tools/wifite2
     cd /opt/tools/wifite2
-    python setup.py install
+    python3 -m pipx install .
 }
 
 function install_chisel {
@@ -343,21 +346,19 @@ function install_impacket {
     # https://github.com/SecureAuthCorp/impacket
     git clone https://github.com/SecureAuthCorp/impacket.git /opt/tools/impacket
     python3 -m pip install /opt/tools/impacket
-    alias impacket="cd /opt/tools/impacket/examples"
 }
 
 function install_cme {
-    curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
     apt-get install -y libssl-dev libffi-dev python-dev build-essential
     git clone --recursive https://github.com/byt3bl33d3r/CrackMapExec /opt/tools/CrackMapExec
-    cd /opt/tools/CrackMapExec && /root/.poetry/bin/poetry update && /root/.poetry/bin/poetry install
-    # apti crackmapexec
+    cd /opt/tools/CrackMapExec
+    python3 -m pipx install .
 }
 
 function install_certipy {
     git clone https://github.com/ly4k/Certipy.git /opt/tools/Certipy
     cd /opt/tools/Certipy
-    python3 setup.py install
+    python3 -m pipx install .
 }
 
 function install_fuxploider {
@@ -374,7 +375,7 @@ function install_truffleHog {
 }
 
 function install_evil-winrm {
-    bash -l -c "gem install winrm winrm-fs stringio logger fileutils"
+    gem install winrm winrm-fs stringio logger fileutils
     git clone https://github.com/Hackplayers/evil-winrm.git /opt/tools/evil-winrm
 }
 
@@ -397,7 +398,7 @@ function install_cookiemonster {
 }
 
 function install_ssrfmap {
-    git clone https://github.com/swisskyrepo/SSRFmap /opt/tools/SSRFmap
+    git clone https://github.com/swisskyrepo/SSRFmap.git /opt/tools/SSRFmap
     cd /opt/tools/SSRFmap
     pip3 install -r requirements.txt
 }
@@ -481,11 +482,7 @@ function install_default {
     apti x11-apps
     apti bat
     apti exa
-    apti fd
     apti ripgrep
-    apti ytop
-    apti tealdeer
-    apti grex
     apti delta
     install_arsenal
     install_DefaultCredsCheatSheet
@@ -525,13 +522,15 @@ function spe_web {
     install_cookiemonster
     install_proxify
     install_jsbeautifier
+    apti python3.9-venv
+    pip install pipx
 }
 
 function spe_network {
     apti tcpdump
     apti nmap
     install_naabu
-    apti proxychains
+    apti proxychains4
     apti masscan
     apti traceroute
     apti openvpn

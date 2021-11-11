@@ -61,7 +61,7 @@ fi
 
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
-export PATH="$HOME/.poetry/bin:$PATH"
+export PATH="$HOME/.poetry/bin:/root/.local/bin/:$PATH"
 export HISTFILE=/data/.bash_history
 export PROMPT_COMMAND='history -a'
 
