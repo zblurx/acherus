@@ -301,6 +301,13 @@ function install_eos {
     python3 -m pipx install .
 }
 
+function install_chopchop {
+    git clone https://github.com/michelin/ChopChop.git /opt/tools/ChopChop
+    cd /opt/tools/ChopChop
+    go mod download
+    go build .
+}
+
 function install_arsenal {
     python3 -m pip install arsenal-cli
 }
