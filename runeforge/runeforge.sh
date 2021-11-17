@@ -494,7 +494,8 @@ function install_default {
     install_arsenal
     install_DefaultCredsCheatSheet
     install_funiq
-    # install_blesh
+    apti python3.9-venv
+    pip install pipx
 }
 
 function spe_web {
@@ -528,9 +529,8 @@ function spe_web {
     apti sslscan
     install_cookiemonster
     install_proxify
+    install_chopchop
     install_jsbeautifier
-    apti python3.9-venv
-    pip install pipx
 }
 
 function spe_network {
