@@ -337,7 +337,7 @@ function install_donpapi {
 
 function install_gau {
     # https://github.com/lc/gau
-    go install -v github.com/lc/gau@latest
+    go install github.com/lc/gau/v2/cmd/gau@latest
 }
 
 function install_amass {
