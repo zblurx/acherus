@@ -62,6 +62,7 @@ type AcherusGoOptions struct {
 	Privileged   bool
 	Local        bool
 	Recreate     bool
+	NetworkAdmin bool
 }
 
 func NewGoOptions() *AcherusGoOptions {

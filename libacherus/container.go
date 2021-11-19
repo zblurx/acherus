@@ -14,6 +14,7 @@ import (
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/api/types/mount"
+	"github.com/docker/docker/api/types/strslice"
 	"golang.org/x/crypto/ssh/terminal"
 )
 
@@ -123,11 +124,18 @@ func CreateContainer(globalOptions *AcherusGlobalOptions, commandOptions *Acheru
 		networkmode = "bridge"
 	}
 
+	var capabilities strslice.StrSlice
+	if commandOptions.NetworkAdmin {
+		capabilities = append(capabilities, "NET_ADMIN")
+	}
+
 	hostconfig := &container.HostConfig{
 		Mounts:      mountList,
 		NetworkMode: networkmode,
 		IpcMode:     "host",
 		Privileged:  commandOptions.Privileged,
+		CapAdd:      capabilities,
+		Resources:   container.Resources{Devices: []container.DeviceMapping{{PathOnHost: "/dev/net/tun", PathInContainer: "/dev/net/tun", CgroupPermissions: "rwm"}}},
 	}
 
 	resp, err := globalOptions.DockerClient.ContainerCreate(globalOptions.Context, config, hostconfig, nil, nil, commandOptions.ContainerTag)

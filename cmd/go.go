@@ -45,7 +45,7 @@ func runGo(cmd *cobra.Command, args []string) error {
 	} else {
 		globalOptions.Logger.Output("Container already exists\n", "verbose", "*", "")
 		if commandOptions.Recreate {
-			globalOptions.Logger.Output("Recreating Contianer\n", "verbose", "*", "")
+			globalOptions.Logger.Output("Recreating Container\n", "verbose", "*", "")
 			err = globalOptions.DockerClient.ContainerRemove(globalOptions.Context, commandOptions.ContainerTag, types.ContainerRemoveOptions{})
 			if err != nil {
 				globalOptions.Logger.ClassicOutput(err.Error(), "fail")
@@ -114,6 +114,11 @@ func getGoOptions() (*libacherus.AcherusGlobalOptions, *libacherus.AcherusGoOpti
 		return nil, nil, err
 	}
 
+	commandOptions.NetworkAdmin, err = cmdGo.Flags().GetBool("netadmin")
+	if err != nil {
+		return nil, nil, err
+	}
+
 	commandOptions.Mount, err = cmdGo.Flags().GetString("mount")
 	if err != nil {
 		return nil, nil, err
@@ -163,5 +168,6 @@ func init() {
 	cmdGo.Flags().Bool("privileged", false, "Create a container in privileged mode")
 	cmdGo.Flags().BoolP("local", "l", false, "Create container based on local image")
 	cmdGo.Flags().Bool("recreate", false, "Force creation of the container (if the container already exists, will delete it)")
+	cmdGo.Flags().Bool("netadmin", false, "Create a container that can interact with network interfaces")
 	rootCmd.AddCommand(cmdGo)
 }
