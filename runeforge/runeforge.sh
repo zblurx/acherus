@@ -27,7 +27,7 @@ function install_manspider {
     apti tesseract 
     apti tesseract-data-eng
     apti antiword
-    pipx install man-spider
+    pip install man-spider
 }
 
 function install_tmux {
