@@ -325,7 +325,7 @@ function install_eaphammer {
 }
 
 function install_hakrevdns {
-    go installw github.com/hakluke/hakrevdns@latest
+    go install github.com/hakluke/hakrevdns@latest
 }
 
 function install_chopchop {
