@@ -21,4 +21,4 @@ set convert-meta off
 
 # Hop up directories
 "\C-n":"cd ..\n"
-"\C-b":"cd /data\n"
+"\C-m":"cd /data\n"
