@@ -57,6 +57,8 @@ func CreateContainer(globalOptions *AcherusGlobalOptions, commandOptions *Acheru
 		"QT_X11_NO_MITSHM=1",
 		"_X11_NO_MITSHM=1",
 		"_MITSHM=0",
+		"COLUMNS=`tput cols`",
+		"LINES=`tput lines`",
 	}
 
 	fullDirPath := filepath.Join(globalOptions.AcherusDir, commandOptions.ContainerTag)

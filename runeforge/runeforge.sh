@@ -301,6 +301,33 @@ function install_eos {
     python3 -m pipx install .
 }
 
+function install_firefed {
+    pip install firefed --upgrade 
+}
+
+function install_altdns {
+    pip3 install py-altdns==1.0.2
+}
+
+function install_cve-2019-1040-scanner {
+    git clone https://github.com/fox-it/cve-2019-1040-scanner.git /opt/tools/cve-2019-1040-scanner
+}
+function install_webclientservicescanner {
+    git clone https://github.com/Hackndo/WebclientServiceScanner.git /opt/tools/WebclientServiceScanner
+    cd /opt/tools/WebclientServiceScanner
+    python3 -m pipx install .
+}
+
+function install_eaphammer {
+    git clone https://github.com/s0lst1c3/eaphammer.git /opt/tools/eaphammer
+    cd /opt/tools/eaphammer
+    echo y | ./kali-setup
+}
+
+function install_hakrevdns {
+    go installw github.com/hakluke/hakrevdns@latest
+}
+
 function install_chopchop {
     git clone https://github.com/michelin/ChopChop.git /opt/tools/ChopChop
     cd /opt/tools/ChopChop
@@ -531,6 +558,8 @@ function spe_web {
     install_proxify
     install_chopchop
     install_jsbeautifier
+    install_altdns
+    install_hakrevdns
 }
 
 function spe_network {
@@ -587,6 +616,9 @@ function spe_ad {
     install_manspider
     install_kerbrute
     install_donpapi
+    install_webclientservicescanner
+    install_cve-2019-1040-scanner
+    install_firefed
 }
 
 function spe_wifi {
@@ -598,6 +630,8 @@ function spe_wifi {
     apti reaver
     apti bully
     apti cowpatty
+    apti hostapd-wpe
+    install_eaphammer
 }
 
 "$@"
