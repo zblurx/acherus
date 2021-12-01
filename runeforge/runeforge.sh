@@ -328,6 +328,10 @@ function install_hakrevdns {
     go install github.com/hakluke/hakrevdns@latest
 }
 
+function install_shuffledns {
+    go install -v github.com/projectdiscovery/shuffledns/cmd/shuffledns@latest
+}
+
 function install_chopchop {
     git clone https://github.com/michelin/ChopChop.git /opt/tools/ChopChop
     cd /opt/tools/ChopChop
@@ -560,6 +564,7 @@ function spe_web {
     install_jsbeautifier
     install_altdns
     install_hakrevdns
+    install_shuffledns
 }
 
 function spe_network {
