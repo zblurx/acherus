@@ -212,11 +212,11 @@ func StartContainerAndAttach(respID string, globalOptions *AcherusGlobalOptions,
 func SetupTty(globalOptions *AcherusGlobalOptions, respID string, waiter types.HijackedResponse, exec bool) (*terminal.State, int, error) {
 	fd := int(os.Stdin.Fd())
 
-	width, height, err := terminal.GetSize(int(os.Stdin.Fd()))
-	resizeOptions := types.ResizeOptions{
-		Height: uint(height),
-		Width:  uint(width),
+	resizeOptions, err := getResizeOptions()
+	if err != nil {
+		fmt.Println(err.Error())
 	}
+
 	if exec {
 		err = globalOptions.DockerClient.ContainerExecResize(globalOptions.Context, respID, resizeOptions)
 		if err != nil {
@@ -244,6 +244,10 @@ func SetupTty(globalOptions *AcherusGlobalOptions, respID string, waiter types.H
 					fmt.Println(err.Error())
 				}
 				waiter.Conn.Write([]byte{input})
+				resizeOptions, err := getResizeOptions()
+				if err != nil {
+					fmt.Println(err.Error())
+				}
 				if exec {
 					err = globalOptions.DockerClient.ContainerExecResize(globalOptions.Context, respID, resizeOptions)
 					if err != nil {
@@ -259,6 +263,19 @@ func SetupTty(globalOptions *AcherusGlobalOptions, respID string, waiter types.H
 		}()
 	}
 	return oldState, fd, nil
+}
+
+func getResizeOptions() (resizeOptions types.ResizeOptions, err error) {
+	width, height, err := terminal.GetSize(int(os.Stdin.Fd()))
+	if err != nil {
+		return resizeOptions, err
+	}
+
+	resizeOptions = types.ResizeOptions{
+		Height: uint(height),
+		Width:  uint(width),
+	}
+	return resizeOptions, nil
 }
 
 func InitContainerDir(globalOptions *AcherusGlobalOptions, commandOptions *AcherusGoOptions) error {
