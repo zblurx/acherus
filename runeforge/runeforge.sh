@@ -245,6 +245,11 @@ function install_LDAPmonitor {
     git clone https://github.com/p0dalirius/LDAPmonitor.git /opt/tools/LDAPmonitor
 }
 
+function install_cypheroth {
+    git clone https://github.com/seajaysec/cypheroth.git /opt/tools/cypheroth
+    chmod +x /opt/tools/cypheroth/cypheroth.sh
+}
+
 function install_sysinternals {
     mkdir /opt/resources/SysInternals
     cd /opt/resources/SysInternals
@@ -318,6 +323,10 @@ function install_webclientservicescanner {
     python3 -m pipx install .
 }
 
+function install_roadrecon {
+    pip install roadrecon
+}
+
 function install_eaphammer {
     git clone https://github.com/s0lst1c3/eaphammer.git /opt/tools/eaphammer
     cd /opt/tools/eaphammer
@@ -347,7 +356,20 @@ function install_BloodHound {
     # git clone https://github.com/BloodHoundAD/BloodHound /opt/tools/BloodHound
     apti bloodhound
     mkdir -p ~/.config/bloodhound/
-    curl -o "~/.config/bloodhound/customqueries.json" "https://raw.githubusercontent.com/CompassSecurity/BloodHoundQueries/master/customqueries.json"
+    curl -o ~/.config/bloodhound/customqueries.json "https://raw.githubusercontent.com/CompassSecurity/BloodHoundQueries/master/customqueries.json"
+    python3 -m pip install bloodhound-import
+}
+
+function install-bloodhound-quickwin {
+    pip3 install py2neo
+    pip3 install pandas
+    pip3 install prettytable
+    git clone https://github.com/kaluche/bloodhound-quickwin.git /opt/tools/bloodhound-quickwin
+
+}
+
+function install_adconnectdump {
+    git clone https://github.com/fox-it/adconnectdump /opt/tools/adconnectdump
 }
 
 function install_wifite2 {
@@ -624,6 +646,10 @@ function spe_ad {
     install_webclientservicescanner
     install_cve-2019-1040-scanner
     install_firefed
+    install_cypheroth
+    install_adconnectdump
+    install-bloodhound-quickwin
+    install_roadrecon
 }
 
 function spe_wifi {
