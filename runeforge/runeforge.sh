@@ -415,6 +415,14 @@ function install_cme {
     python3 -m pipx install .
 }
 
+function install_proxmark3 {
+    apt-get install -y --no-install-recommends git ca-certificates build-essential pkg-config libreadline-dev gcc-arm-none-eabi libnewlib-dev qtbase5-dev libbz2-dev libbluetooth-dev libpython3-dev
+    git clone https://github.com/RfidResearchGroup/proxmark3.git /opt/tools/proxmark3
+    cd /opt/tools/proxmark3
+    make clean && make -j
+    make install
+}
+
 function install_certipy {
     git clone https://github.com/ly4k/Certipy.git /opt/tools/Certipy
     cd /opt/tools/Certipy
@@ -663,6 +671,10 @@ function spe_wifi {
     apti cowpatty
     apti hostapd-wpe
     install_eaphammer
+}
+
+function spe_rfid {
+    install_proxmark3
 }
 
 "$@"
