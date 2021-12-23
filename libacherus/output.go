@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/cheggaaa/pb/v3"
 	"github.com/fatih/color"
 	"github.com/olekukonko/tablewriter"
 )
@@ -24,6 +25,18 @@ type ImageBuildErrorDetail struct {
 
 type ImageBuildStream struct {
 	Stream string `json:"stream"`
+}
+
+type ImagePullProgressDetail struct {
+	Current int64 `json:"current,omitempty"`
+	Total   int64 `json:"total,omitempty"`
+}
+
+type ImagePullStream struct {
+	Status         string                  `json:"status"`
+	Id             string                  `json:"id"`
+	ProgressDetail ImagePullProgressDetail `json:"progressDetail,omitempty"`
+	Progress       string                  `json:"progress,omitempty"`
 }
 
 type AcherusOutput struct {
@@ -56,7 +69,86 @@ func sizeFormat(size int64) string {
 	return ""
 }
 
-func (out AcherusOutput) LoadingOutput(scanner *bufio.Scanner, message string) error {
+func (out AcherusOutput) SimpleLoadingOutput(scanner *bufio.Scanner, message string) {
+	for scanner.Scan() {
+		modulo := time.Now().Second() % 4
+		var icon string
+		switch modulo {
+		case 1:
+			icon = "/"
+		case 2:
+			icon = "—"
+		case 3:
+			icon = "\\"
+		case 0:
+			icon = "|"
+		}
+		out.Output(message+"\r", "default", icon, "\r")
+	}
+}
+
+func (out AcherusOutput) LoadingPullOutput(scanner *bufio.Scanner, message string) error {
+	if out.Verbose {
+		out.Output(message+"\n", "default", "*", "\r")
+		var segments map[string]*ImagePullStream = make(map[string]*ImagePullStream)
+		var downloadData map[string]*ImagePullProgressDetail = make(map[string]*ImagePullProgressDetail)
+		var general_total, general_current int64
+		var lastLine string
+		var bar *pb.ProgressBar = pb.New(0)
+		bar.Set(pb.Bytes, true)
+		bar.Set(pb.SIBytesPrefix, true)
+
+		for scanner.Scan() {
+			lastLine = scanner.Text()
+			streamLine := &ImagePullStream{}
+			json.Unmarshal([]byte(lastLine), streamLine)
+			if streamLine.Status != "" && streamLine.Status != "\n" {
+				segments[streamLine.Id] = streamLine
+			}
+
+			for _, e := range segments {
+				if e.Status == "Downloading" {
+					downloadData[e.Id] = &e.ProgressDetail
+				}
+			}
+
+			general_total = 0
+			general_current = 0
+			downloading := false
+			for i, e := range downloadData {
+				general_current += e.Current
+				general_total += e.Total
+				if segments[i].Status != "Downloading" {
+					downloading = true
+				}
+			}
+
+			if downloading {
+				if bar.Total() <= general_total {
+					bar.SetTotal(general_total)
+					bar.Start()
+				}
+				bar.SetCurrent(general_current)
+			}
+		}
+		errLine := &ImageBuildErrorLine{}
+		json.Unmarshal([]byte(lastLine), errLine)
+		if errLine.Error != "" {
+			return errors.New(errLine.Error)
+		}
+
+	} else {
+		out.SimpleLoadingOutput(scanner, message)
+	}
+
+	if err := scanner.Err(); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (out AcherusOutput) LoadingBuildOutput(scanner *bufio.Scanner, message string) error {
 
 	if out.Verbose {
 		out.Output(message+"\n", "default", "*", "\r")
@@ -78,22 +170,7 @@ func (out AcherusOutput) LoadingOutput(scanner *bufio.Scanner, message string) e
 			return errors.New(errLine.Error)
 		}
 	} else {
-		// Use waitgroup to wait for the scan
-		for scanner.Scan() {
-			modulo := time.Now().Second() % 4
-			var icon string
-			switch modulo {
-			case 1:
-				icon = "/"
-			case 2:
-				icon = "—"
-			case 3:
-				icon = "\\"
-			case 0:
-				icon = "|"
-			}
-			out.Output(message+"\r", "default", icon, "\r")
-		}
+		out.SimpleLoadingOutput(scanner, message)
 	}
 
 	if err := scanner.Err(); err != nil {

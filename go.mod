@@ -3,6 +3,7 @@ module github.com/zblurx/acherus
 go 1.13
 
 require (
+	github.com/cheggaaa/pb/v3 v3.0.8
 	github.com/containerd/containerd v1.5.7 // indirect
 	github.com/docker/docker v20.10.10+incompatible
 	github.com/docker/go-connections v0.4.0 // indirect

@@ -44,7 +44,7 @@ func PullImage(globalOptions *AcherusGlobalOptions) (err error) {
 		return err
 	}
 
-	err = globalOptions.Logger.LoadingOutput(bufio.NewScanner(reader), "Pulling Acherus. Can take some time...")
+	err = globalOptions.Logger.LoadingPullOutput(bufio.NewScanner(reader), "Pulling Acherus. Can take some time...")
 	if err != nil {
 		return err
 	}
@@ -72,7 +72,7 @@ func BuildImage(globalOptions *AcherusGlobalOptions, commandOptions *AcherusInit
 
 	defer res.Body.Close()
 
-	err = globalOptions.Logger.LoadingOutput(bufio.NewScanner(res.Body), "Building Acherus. Can take some time...")
+	err = globalOptions.Logger.LoadingBuildOutput(bufio.NewScanner(res.Body), "Building Acherus. Can take some time...")
 	if err != nil {
 		return err
 	}
