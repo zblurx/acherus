@@ -404,10 +404,10 @@ function install_gau {
 
 function install_gf {
     GO111MODULE=off go get -v github.com/tomnomnom/gf
-    echo 'source $GOPATH/src/github.com/tomnomnom/gf/gf-completion.bash' >> ~/.bashrc
-    cp -r $GOPATH/src/github.com/tomnomnom/gf/examples ~/.gf
+    echo 'source /root/go/src/github.com/tomnomnom/gf/gf-completion.bash' >> ~/.bashrc
+    cp -r /root/go/src/github.com/tomnomnom/gf/examples ~/.gf
     git clone https://github.com/mrofisr/gf-patterns.git /opt/resources/gf-patterns/
-    cp /opt/resources/gf-patternss/*.json ~/.gf
+    cp /opt/resources/gf-patterns/*.json ~/.gf
 }
 
 function install_amass {
@@ -480,7 +480,7 @@ function install_bettercap {
     apti libnetfilter-queue-dev
     apti libusb-1.0-0-dev
     GO111MODULE=off go get -u github.com/bettercap/bettercap
-    cd $GOPATH/src/github.com/bettercap/bettercap
+    cd /root/go/src/github.com/bettercap/bettercap
     make build
     make install
 }
@@ -608,6 +608,7 @@ function install_default {
     pip install pipx
     install_fzf
     install_pwncat
+    apti gcc-mingw-w64-x86-64
 }
 
 function spe_osint {
@@ -640,7 +641,6 @@ function spe_web {
     install_fuxploider
     apti whatweb
     install_hakrawler
-    install_rustscan
     install_simplehttpserver
     install_eos
     apti sslscan
@@ -655,10 +655,8 @@ function spe_web {
 }
 
 function spe_network {
-    apti wireshark
-    apti dsniff
-    apti tcpdump
     apti nmap
+    install_rustscan
     install_naabu
     apti proxychains4
     apti masscan
@@ -668,6 +666,9 @@ function spe_network {
     apti ipcalc
     install_bettercap
     apti tshark
+    apti wireshark
+    apti dsniff
+    apti tcpdump
 }
 
 function spe_ad {
