@@ -8,10 +8,4 @@ COPY runeforge /runeforge
 
 RUN chmod +x /runeforge/runeforge.sh
 
-RUN /runeforge/runeforge.sh install_default
-RUN /runeforge/runeforge.sh spe_network
-RUN /runeforge/runeforge.sh spe_web
-RUN /runeforge/runeforge.sh spe_ad
-RUN /runeforge/runeforge.sh spe_wifi
-RUN /runeforge/runeforge.sh spe_rfid
-RUN /runeforge/runeforge.sh cleanup
+RUN /runeforge/runeforge.sh full_spe

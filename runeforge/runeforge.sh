@@ -281,11 +281,16 @@ function install_ressources {
     git clone https://github.com/Flangvik/SharpCollection.git /opt/resources/SharpCollection
     get_last_git_release synacktiv/HopLa HopLa
     git clone https://github.com/PowerShellMafia/PowerSploit.git /opt/resources/PowerSploit
+    git clone https://github.com/int0x33/nc.exe.git /opt/resources/nc/windows
     install_procdump
     get_ad_explorer
     get_procmon
     git clone https://github.com/samratashok/nishang.git /opt/resources/nishang
     get_last_git_release vletoux/pingcastle PingCastle
+}
+
+function install_firefed {
+    pip install firefed --upgrade 
 }
 
 function get_ad_explorer {
@@ -379,7 +384,7 @@ function install_wifite2 {
 }
 
 function install_chisel {
-    go get -v github.com/jpillora/chisel
+    go install -v github.com/jpillora/chisel@latest
 }
 
 function install_donpapi {
@@ -388,9 +393,21 @@ function install_donpapi {
     python3 -m pip install -r requirements.txt
 }
 
+function install_holehe {
+    pip3 install holehe
+}
+
 function install_gau {
     # https://github.com/lc/gau
     go install github.com/lc/gau/v2/cmd/gau@latest
+}
+
+function install_gf {
+    GO111MODULE=off go get -v github.com/tomnomnom/gf
+    echo 'source $GOPATH/src/github.com/tomnomnom/gf/gf-completion.bash' >> ~/.bashrc
+    cp -r $GOPATH/src/github.com/tomnomnom/gf/examples ~/.gf
+    git clone https://github.com/mrofisr/gf-patterns.git /opt/resources/gf-patterns/
+    cp /opt/resources/gf-patternss/*.json ~/.gf
 }
 
 function install_amass {
@@ -415,12 +432,27 @@ function install_cme {
     python3 -m pipx install .
 }
 
+function install_go-windapsearch {
+    git clone https://github.com/ropnop/go-windapsearch.git && cd go-windapsearch
+    go install -v github.com/magefile/mage@latest
+    mage build
+}
+
 function install_proxmark3 {
     apt-get install -y --no-install-recommends git ca-certificates build-essential pkg-config libreadline-dev gcc-arm-none-eabi libnewlib-dev qtbase5-dev libbz2-dev libbluetooth-dev libpython3-dev
     git clone https://github.com/RfidResearchGroup/proxmark3.git /opt/tools/proxmark3
     cd /opt/tools/proxmark3
     make clean && make -j
     make install
+}
+
+function install_fzf {
+    git clone https://github.com/junegunn/fzf ~/.fzf
+    ~/.fzf/install --all
+}
+
+function install_pwncat {
+    pip install pwncat-cs
 }
 
 function install_certipy {
@@ -440,6 +472,17 @@ function install_ldapdomaindump {
 
 function install_truffleHog {
     pip install truffleHog
+}
+
+function install_bettercap {
+    apti build-essential
+    apti libpcap-dev
+    apti libnetfilter-queue-dev
+    apti libusb-1.0-0-dev
+    GO111MODULE=off go get -u github.com/bettercap/bettercap
+    cd $GOPATH/src/github.com/bettercap/bettercap
+    make build
+    make install
 }
 
 function install_evil-winrm {
@@ -475,9 +518,15 @@ function install_firefox {
     apti firefox-esr
     apti webext-foxyproxy
     echo "pref(\"gfx.xrender.enabled\", true);" >> /etc/firefox-esr/firefox-esr.js
+    mkdir /opt/resources/firefox-extensions
+    wget https://addons.mozilla.org/firefox/downloads/file/3862036/firefox_multi_account_containers-8.0.1-fx.xpi -O /opt/resources/firefox-extensions/firefox_multi_account_containers-8.0.1-fx.xpi
     # user_pref("browser.urlbar.placeholderName", "DuckDuckGo");
     # user_pref("browser.slowStartup.samples", 3);
     # user_pref("browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts.havePinned", "duckduckgo");
+}
+
+function install_onionsearch {
+    pip3 install onionsearch
 }
 
 function install_aclpwn {
@@ -557,6 +606,13 @@ function install_default {
     install_funiq
     apti python3.9-venv
     pip install pipx
+    install_fzf
+    install_pwncat
+}
+
+function spe_osint {
+    install_onionsearch
+    install_holehe
 }
 
 function spe_web {
@@ -595,9 +651,12 @@ function spe_web {
     install_altdns
     install_hakrevdns
     install_shuffledns
+    install_gf
 }
 
 function spe_network {
+    apti wireshark
+    apti dsniff
     apti tcpdump
     apti nmap
     install_naabu
@@ -607,6 +666,8 @@ function spe_network {
     apti openvpn
     install_mapcidr
     apti ipcalc
+    install_bettercap
+    apti tshark
 }
 
 function spe_ad {
@@ -658,6 +719,8 @@ function spe_ad {
     install_adconnectdump
     install-bloodhound-quickwin
     install_roadrecon
+    install_firefed
+    install_go-windapsearch
 }
 
 function spe_wifi {
@@ -675,6 +738,17 @@ function spe_wifi {
 
 function spe_rfid {
     install_proxmark3
+}
+
+function full_spe {
+    install_default
+    spe_osint
+    spe_web
+    spe_network
+    spe_ad
+    spe_wifi
+    spe_rfid
+    cleanup
 }
 
 "$@"
