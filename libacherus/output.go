@@ -39,6 +39,78 @@ type ImagePullStream struct {
 	Progress       string                  `json:"progress,omitempty"`
 }
 
+type OutputSegment struct {
+	ImagePullStream                                *ImagePullStream
+	Downloading, Downloaded, Extracting, Extracted bool
+}
+
+type OutputSegmentMap map[string]*OutputSegment
+
+func newOutputSegmentMap() *OutputSegmentMap {
+	return &OutputSegmentMap{}
+}
+
+func newOutputSegment() *OutputSegment {
+	return &OutputSegment{
+		ImagePullStream: &ImagePullStream{},
+		Downloading:     false,
+		Downloaded:      false,
+		Extracting:      false,
+		Extracted:       false,
+	}
+}
+
+type LoadingBarControlContent struct {
+	CurrentValue, TotalValue int64
+	Data                     map[string]*ImagePullProgressDetail
+	Bar                      *pb.ProgressBar
+	StatusMessage            string
+	Finish                   bool
+}
+
+func newLoadingBarControlContent(statusMessage string) *LoadingBarControlContent {
+	tmpBar := pb.New(0)
+	tmpBar.Set(pb.Bytes, true)
+	tmpBar.Set(pb.SIBytesPrefix, true)
+	return &LoadingBarControlContent{
+		Data:          make(map[string]*ImagePullProgressDetail),
+		Bar:           tmpBar,
+		StatusMessage: statusMessage,
+	}
+}
+
+func (bar *LoadingBarControlContent) refreshDataFromSegment(segments OutputSegmentMap, out AcherusOutput) {
+	bar.TotalValue = 0
+	bar.CurrentValue = 0
+	status := false
+
+	for i, e := range bar.Data {
+		bar.CurrentValue += e.Current
+		bar.TotalValue += e.Total
+		if segments[i].ImagePullStream.Status != bar.StatusMessage {
+			status = true
+		}
+	}
+
+	if status {
+		if bar.Bar.Total() <= bar.TotalValue {
+			bar.Bar.SetTotal(bar.TotalValue)
+		}
+		out.Output(bar.StatusMessage+"...\n", "verbose", "*", "\n")
+		if !bar.Bar.IsStarted() {
+
+			bar.Bar.Start()
+		}
+		bar.Bar.SetCurrent(bar.CurrentValue)
+	}
+	return
+}
+
+func (bar *LoadingBarControlContent) finishBar() {
+	bar.Bar.SetCurrent(bar.TotalValue)
+	bar.Bar.Finish()
+}
+
 type AcherusOutput struct {
 	Verbose bool
 }
@@ -90,53 +162,69 @@ func (out AcherusOutput) SimpleLoadingOutput(scanner *bufio.Scanner, message str
 func (out AcherusOutput) LoadingPullOutput(scanner *bufio.Scanner, message string) error {
 	if out.Verbose {
 		out.Output(message+"\n", "default", "*", "\r")
-		var segments map[string]*ImagePullStream = make(map[string]*ImagePullStream)
-		var downloadData map[string]*ImagePullProgressDetail = make(map[string]*ImagePullProgressDetail)
-		var general_total, general_current int64
+
+		downloadBar := newLoadingBarControlContent("Downloading")
+		extractBar := newLoadingBarControlContent("Extracting")
+
+		var segments OutputSegmentMap = make(OutputSegmentMap)
 		var lastLine string
-		var bar *pb.ProgressBar = pb.New(0)
-		bar.Set(pb.Bytes, true)
-		bar.Set(pb.SIBytesPrefix, true)
 
 		for scanner.Scan() {
 			lastLine = scanner.Text()
 			streamLine := &ImagePullStream{}
 			json.Unmarshal([]byte(lastLine), streamLine)
-			if streamLine.Status != "" && streamLine.Status != "\n" {
-				segments[streamLine.Id] = streamLine
+			if _, check := segments[streamLine.Id]; !check {
+				segments[streamLine.Id] = newOutputSegment()
 			}
+			if streamLine.Status != "" && streamLine.Status != "\n" {
+				segments[streamLine.Id].ImagePullStream = streamLine
+				if streamLine.Status == "Downloading" {
+					segments[streamLine.Id].Downloading = true
+				} else if streamLine.Status == "Extracting" && segments[streamLine.Id].Downloaded {
+					segments[streamLine.Id].Extracting = true
+				} else if segments[streamLine.Id].Downloading && !segments[streamLine.Id].Downloaded {
+					segments[streamLine.Id].Downloaded = true
+				} else if segments[streamLine.Id].Extracting && !segments[streamLine.Id].Extracted {
+					segments[streamLine.Id].Extracted = true
+				}
+			}
+
+			downloadFinished := true
+			extractFinished := true
 
 			for _, e := range segments {
-				if e.Status == "Downloading" {
-					downloadData[e.Id] = &e.ProgressDetail
+				if !e.Downloaded {
+					downloadFinished = false
+				}
+				if !e.Extracted {
+					extractFinished = false
+				}
+				if e.Downloading {
+					downloadBar.Data[e.ImagePullStream.Id] = &e.ImagePullStream.ProgressDetail
+				} else if e.Extracting {
+					extractBar.Data[e.ImagePullStream.Id] = &e.ImagePullStream.ProgressDetail
 				}
 			}
 
-			general_total = 0
-			general_current = 0
-			downloading := false
-			for i, e := range downloadData {
-				general_current += e.Current
-				general_total += e.Total
-				if segments[i].Status != "Downloading" {
-					downloading = true
+			if downloadFinished {
+				if !downloadBar.Finish {
+					downloadBar.Bar.Finish()
+					downloadBar.Finish = true
+					fmt.Println()
 				}
-			}
-
-			if downloading {
-				if bar.Total() <= general_total {
-					bar.SetTotal(general_total)
-					bar.Start()
+				if extractFinished {
+					if !extractBar.Finish {
+						extractBar.Bar.Finish()
+						extractBar.Finish = true
+						fmt.Println()
+					}
+				} else {
+					extractBar.refreshDataFromSegment(segments, out)
 				}
-				bar.SetCurrent(general_current)
+			} else {
+				downloadBar.refreshDataFromSegment(segments, out)
 			}
 		}
-		errLine := &ImageBuildErrorLine{}
-		json.Unmarshal([]byte(lastLine), errLine)
-		if errLine.Error != "" {
-			return errors.New(errLine.Error)
-		}
-
 	} else {
 		out.SimpleLoadingOutput(scanner, message)
 	}
