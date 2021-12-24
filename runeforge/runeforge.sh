@@ -285,6 +285,7 @@ function install_ressources {
     install_procdump
     get_ad_explorer
     get_procmon
+    get_adPEAS
     git clone https://github.com/samratashok/nishang.git /opt/resources/nishang
     get_last_git_release vletoux/pingcastle PingCastle
 }
@@ -485,6 +486,16 @@ function install_bettercap {
     make install
 }
 
+function get_adPEAS {
+    git clone https://github.com/61106960/adPEAS.git /opt/resources/adPEAS
+}
+
+function install_powershell {
+    wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb -O /tmp/packages-microsoft-prod.deb
+    dpkg -i /tmp/packages-microsoft-prod.deb
+    apti powershell
+}
+
 function install_evil-winrm {
     gem install winrm winrm-fs stringio logger fileutils
     git clone https://github.com/Hackplayers/evil-winrm.git /opt/tools/evil-winrm
@@ -676,6 +687,7 @@ function spe_ad {
     install_cme
     install_ldapdomaindump
     apti ldapsearch
+    install_powershell
     apti smbclient
     apti smbmap
     apti enum4linux

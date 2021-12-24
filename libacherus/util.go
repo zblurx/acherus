@@ -66,5 +66,4 @@ func AskForConfirmation(globalOptions *AcherusGlobalOptions, s string) bool {
 		}
 		return false
 	}
-	return false
 }
