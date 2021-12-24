@@ -76,39 +76,35 @@ func newLoadingBarControlContent(statusMessage string) *LoadingBarControlContent
 		Data:          make(map[string]*ImagePullProgressDetail),
 		Bar:           tmpBar,
 		StatusMessage: statusMessage,
+		Finish:        false,
 	}
 }
 
 func (bar *LoadingBarControlContent) refreshDataFromSegment(segments OutputSegmentMap, out AcherusOutput) {
 	bar.TotalValue = 0
 	bar.CurrentValue = 0
-	status := false
 
-	for i, e := range bar.Data {
+	for _, e := range bar.Data {
 		bar.CurrentValue += e.Current
 		bar.TotalValue += e.Total
-		if segments[i].ImagePullStream.Status != bar.StatusMessage {
-			status = true
-		}
 	}
 
-	if status {
-		if bar.Bar.Total() <= bar.TotalValue {
-			bar.Bar.SetTotal(bar.TotalValue)
-		}
-		out.Output(bar.StatusMessage+"...\n", "verbose", "*", "\n")
-		if !bar.Bar.IsStarted() {
-
-			bar.Bar.Start()
-		}
-		bar.Bar.SetCurrent(bar.CurrentValue)
+	if bar.Bar.Total() <= bar.TotalValue {
+		bar.Bar.SetTotal(bar.TotalValue)
 	}
+	if !bar.Bar.IsStarted() && !bar.Finish {
+		out.Output(bar.StatusMessage+"...\n", "verbose", "*", "")
+		bar.Bar.Start()
+	}
+	bar.Bar.SetCurrent(bar.CurrentValue)
+
 	return
 }
 
 func (bar *LoadingBarControlContent) finishBar() {
 	bar.Bar.SetCurrent(bar.TotalValue)
 	bar.Bar.Finish()
+	bar.Finish = true
 }
 
 type AcherusOutput struct {
@@ -180,10 +176,12 @@ func (out AcherusOutput) LoadingPullOutput(scanner *bufio.Scanner, message strin
 				segments[streamLine.Id].ImagePullStream = streamLine
 				if streamLine.Status == "Downloading" {
 					segments[streamLine.Id].Downloading = true
-				} else if streamLine.Status == "Extracting" && segments[streamLine.Id].Downloaded {
-					segments[streamLine.Id].Extracting = true
 				} else if segments[streamLine.Id].Downloading && !segments[streamLine.Id].Downloaded {
 					segments[streamLine.Id].Downloaded = true
+				}
+				if streamLine.Status == "Extracting" && segments[streamLine.Id].Downloaded {
+					// fmt.Println(lastLine)
+					segments[streamLine.Id].Extracting = true
 				} else if segments[streamLine.Id].Extracting && !segments[streamLine.Id].Extracted {
 					segments[streamLine.Id].Extracted = true
 				}
@@ -193,6 +191,13 @@ func (out AcherusOutput) LoadingPullOutput(scanner *bufio.Scanner, message strin
 			extractFinished := true
 
 			for _, e := range segments {
+				if e.ImagePullStream.Id == "latest" {
+					if len(segments) == 1 {
+						downloadFinished = false
+						extractFinished = false
+					}
+					continue
+				}
 				if !e.Downloaded {
 					downloadFinished = false
 				}
@@ -201,22 +206,18 @@ func (out AcherusOutput) LoadingPullOutput(scanner *bufio.Scanner, message strin
 				}
 				if e.Downloading {
 					downloadBar.Data[e.ImagePullStream.Id] = &e.ImagePullStream.ProgressDetail
-				} else if e.Extracting {
+				}
+				if e.Extracting {
 					extractBar.Data[e.ImagePullStream.Id] = &e.ImagePullStream.ProgressDetail
 				}
 			}
-
 			if downloadFinished {
 				if !downloadBar.Finish {
-					downloadBar.Bar.Finish()
-					downloadBar.Finish = true
-					fmt.Println()
+					downloadBar.finishBar()
 				}
 				if extractFinished {
 					if !extractBar.Finish {
-						extractBar.Bar.Finish()
-						extractBar.Finish = true
-						fmt.Println()
+						extractBar.finishBar()
 					}
 				} else {
 					extractBar.refreshDataFromSegment(segments, out)

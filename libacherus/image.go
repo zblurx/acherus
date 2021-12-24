@@ -39,11 +39,10 @@ func ListImage(globalOptions *AcherusGlobalOptions) {
 func PullImage(globalOptions *AcherusGlobalOptions) (err error) {
 
 	reader, err := globalOptions.DockerClient.ImagePull(globalOptions.Context, "zblurx/acherus:latest", types.ImagePullOptions{})
-	defer reader.Close()
 	if err != nil {
 		return err
 	}
-
+	defer reader.Close()
 	err = globalOptions.Logger.LoadingPullOutput(bufio.NewScanner(reader), "Pulling Acherus. Can take some time...")
 	if err != nil {
 		return err
