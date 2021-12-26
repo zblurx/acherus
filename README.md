@@ -1,6 +1,6 @@
 # Acherus: The Docker Hold
 
-[<img src="img/acherus-le-fort-d-ebene.jpg">](https://hub.docker.com/repository/docker/zblurx/acherus)
+[<img src="img/acherus-le-fort-d-ebene.jpg">](https://hub.docker.com/r/zblurx/acherus)
 
 ***"Behold, Acherus, the grand citadel of death! It has no equal in this world! Not even the mighty Naxxramas could withstand a direct assault from the Ebon Hold."***  *Instructor Razuvious*
 
@@ -88,7 +88,7 @@ $ acherus list
 
 ### Init
 
-To install [Acherus docker image](https://hub.docker.com/repository/docker/zblurx/acherus), you can use **acherus init**:
+To install [Acherus docker image](https://hub.docker.com/r/zblurx/acherus), you can use **acherus init**:
 
 ```
 $ acherus init --help
