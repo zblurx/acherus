@@ -343,6 +343,11 @@ function install_hakrevdns {
     go install github.com/hakluke/hakrevdns@latest
 }
 
+function install_jwttool {
+    git clone https://github.com/ticarpi/jwt_tool.git /opt/tools/jwt_tool
+    python3 -m pip install termcolor cprint pycryptodomex requests
+}
+
 function install_shuffledns {
     go install -v github.com/projectdiscovery/shuffledns/cmd/shuffledns@latest
 }
@@ -477,6 +482,12 @@ function install_truffleHog {
 
 function install_netntlmtosilverticket {
     git clone https://github.com/NotMedic/NetNTLMtoSilverTicket.git /opt/tools/NetNTLMtoSilverTicket
+}
+
+function install_ADExplorerSnapshot {
+    git clone https://github.com/c3c/ADExplorerSnapshot.py.git /opt/tools/ADExplorerSnapshot.py
+    cd /opt/tools/ADExplorerSnapshot.py
+    python3 -m pipx install .
 }
 
 function install_bettercap {
@@ -667,6 +678,7 @@ function spe_web {
     install_hakrevdns
     install_shuffledns
     install_gf
+    install_jwttool
 }
 
 function spe_network {
@@ -739,6 +751,7 @@ function spe_ad {
     install_firefed
     install_go-windapsearch
     install_netntlmtosilverticket
+    install_ADExplorerSnapshot
 }
 
 function spe_wifi {
