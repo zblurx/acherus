@@ -475,6 +475,10 @@ function install_truffleHog {
     pip install truffleHog
 }
 
+function install_netntlmtosilverticket {
+    git clone https://github.com/NotMedic/NetNTLMtoSilverTicket.git /opt/tools/NetNTLMtoSilverTicket
+}
+
 function install_bettercap {
     apti build-essential
     apti libpcap-dev
@@ -734,6 +738,7 @@ function spe_ad {
     install_roadrecon
     install_firefed
     install_go-windapsearch
+    install_netntlmtosilverticket
 }
 
 function spe_wifi {
