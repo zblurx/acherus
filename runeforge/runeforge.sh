@@ -484,6 +484,14 @@ function install_netntlmtosilverticket {
     git clone https://github.com/NotMedic/NetNTLMtoSilverTicket.git /opt/tools/NetNTLMtoSilverTicket
 }
 
+function install_DPAT {
+    git clone https://github.com/clr2of8/DPAT.git /opt/tools/DPAT
+}
+
+function install_ShadowCoerce {
+    git lone https://github.com/ShutdownRepo/ShadowCoerce.git /opt/tools/ShadowCoerce
+}
+
 function install_ADExplorerSnapshot {
     git clone https://github.com/c3c/ADExplorerSnapshot.py.git /opt/tools/ADExplorerSnapshot.py
     cd /opt/tools/ADExplorerSnapshot.py
@@ -752,6 +760,8 @@ function spe_ad {
     install_go-windapsearch
     install_netntlmtosilverticket
     install_ADExplorerSnapshot
+    install_ShadowCoerce
+    install_DPAT
 }
 
 function spe_wifi {
