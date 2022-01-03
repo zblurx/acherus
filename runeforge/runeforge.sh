@@ -312,6 +312,10 @@ function install_eos {
     python3 -m pipx install .
 }
 
+function install_pywerview {
+    pip install pywerview
+}
+
 function install_firefed {
     pip install firefed --upgrade 
 }
@@ -763,6 +767,7 @@ function spe_ad {
     install_ADExplorerSnapshot
     install_ShadowCoerce
     install_DPAT
+    install_pywerview
 }
 
 function spe_wifi {
