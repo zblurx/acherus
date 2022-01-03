@@ -64,5 +64,3 @@ export PATH=$PATH:$GOPATH/bin
 export PATH="$HOME/.poetry/bin:/root/.local/bin/:$PATH"
 export HISTFILE=/data/.bash_history
 export PROMPT_COMMAND='history -a'
-
-# [[ ${BLE_VERSION-} ]] && ble-attach

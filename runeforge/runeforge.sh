@@ -489,7 +489,7 @@ function install_DPAT {
 }
 
 function install_ShadowCoerce {
-    git lone https://github.com/ShutdownRepo/ShadowCoerce.git /opt/tools/ShadowCoerce
+    git clone https://github.com/ShutdownRepo/ShadowCoerce.git /opt/tools/ShadowCoerce
 }
 
 function install_ADExplorerSnapshot {
@@ -586,6 +586,7 @@ function install_default {
     apti apt-utils
     apti man
     apti git
+    apti bash-completion
     apti sudo
     apti openssl
     apti ca-certificates
