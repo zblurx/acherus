@@ -7,8 +7,8 @@ HISTCONTROL=ignoreboth
 
 shopt -s histappend
 
-HISTSIZE=2000
-HISTFILESIZE=4000
+HISTSIZE=4000
+HISTFILESIZE=8000
 
 shopt -s checkwinsize
 
