@@ -1,5 +1,3 @@
-# [[ $- == *i* ]] && source ~/.local/share/blesh//ble.sh --noattach
-
 case $- in
     *i*) ;;
       *) return;;
