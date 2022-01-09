@@ -282,6 +282,7 @@ function install_ressources {
     get_last_git_release synacktiv/HopLa HopLa
     git clone https://github.com/PowerShellMafia/PowerSploit.git /opt/resources/PowerSploit
     git clone https://github.com/int0x33/nc.exe.git /opt/resources/nc/windows
+    git clone https://github.com/pry0cc/relevant-wordlist.git /opt/resources/relevant-wordlist
     install_procdump
     get_ad_explorer
     get_procmon
@@ -327,10 +328,15 @@ function install_altdns {
 function install_cve-2019-1040-scanner {
     git clone https://github.com/fox-it/cve-2019-1040-scanner.git /opt/tools/cve-2019-1040-scanner
 }
+
 function install_webclientservicescanner {
     git clone https://github.com/Hackndo/WebclientServiceScanner.git /opt/tools/WebclientServiceScanner
     cd /opt/tools/WebclientServiceScanner
     python3 -m pipx install .
+}
+
+function install_gMSADumper {
+    git clone https://github.com/micahvandeusen/gMSADumper.git /opt/tools/gMSADumper
 }
 
 function install_roadrecon {
@@ -480,6 +486,10 @@ function install_ldapdomaindump {
     pip install ldapdomaindump
 }
 
+function install_phpgcc {
+    git clone https://github.com/ambionics/phpggc.git /opt/tools/phpgcc
+}
+
 function install_truffleHog {
     pip install truffleHog
 }
@@ -530,6 +540,11 @@ function install_evil-winrm {
 
 function install_jsbeautifier {
     pip install jsbeautifier
+}
+
+function install_ysoserial {
+    mkdir /opt/tools/ysoserial/
+    wget https://jitpack.io/com/github/frohoff/ysoserial/master-SNAPSHOT/ysoserial-master-SNAPSHOT.jar -O /opt/tools/ysoserial/ysoserial.jar
 }
 
 function install_enum4linuxng {
@@ -601,6 +616,7 @@ function install_default {
     apti python3
     apti python3-pip
     apti python-is-python3
+    apti php
     apti gem
     apti virtualenv
     apti zip 
