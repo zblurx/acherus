@@ -590,6 +590,10 @@ function install_firefox {
     # user_pref("browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts.havePinned", "duckduckgo");
 }
 
+function install_Vulny-Code-Static-Analysis {
+    git clone https://github.com/swisskyrepo/Vulny-Code-Static-Analysis.git /opt/tools/Vulny-Code-Static-Analysis
+}
+
 function install_onionsearch {
     pip3 install onionsearch
 }
@@ -721,6 +725,7 @@ function spe_web {
     install_gf
     install_jwttool
     install_jndi-exploit-kit
+    install_Vulny-Code-Static-Analysis
 }
 
 function spe_network {
