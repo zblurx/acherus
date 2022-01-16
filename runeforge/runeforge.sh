@@ -276,6 +276,7 @@ function install_ressources {
     get_last_git_release antonioCoco/RogueWinRM RogueWinRM
     get_last_git_release antonioCoco/ConPtyShell ConPtyShell
     get_last_git_release gentilkiwi/kekeo kekeo
+    get_last_git_release adrecon/ADRecon
     get_last_git_release AlessandroZ/LaZagne LaZagne
     get_last_git_release DominicBreuker/pspy pspy
     git clone https://github.com/Flangvik/SharpCollection.git /opt/resources/SharpCollection
@@ -356,6 +357,11 @@ function install_hakrevdns {
 function install_jwttool {
     git clone https://github.com/ticarpi/jwt_tool.git /opt/tools/jwt_tool
     python3 -m pip install termcolor cprint pycryptodomex requests
+}
+
+function install_jndi-exploit-kit {
+    mkdir /opt/tools/JNDI-Exploit-Kit
+    wget https://github.com/pimps/JNDI-Exploit-Kit/raw/master/target/JNDI-Exploit-Kit-1.0-SNAPSHOT-all.jar -O /opt/tools/JNDI-Exploit-Kit/JNDI-Exploit-Kit.jar
 }
 
 function install_shuffledns {
@@ -708,6 +714,7 @@ function spe_web {
     install_shuffledns
     install_gf
     install_jwttool
+    install_jndi-exploit-kit
 }
 
 function spe_network {
