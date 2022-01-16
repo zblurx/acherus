@@ -368,6 +368,12 @@ function install_shuffledns {
     go install -v github.com/projectdiscovery/shuffledns/cmd/shuffledns@latest
 }
 
+function install_acltoolkit {
+    git clone https://github.com/zblurx/acltoolkit.git /opt/tools/acltoolkit
+    cd /opt/tools/acltoolkit
+    python3 -m pipx install .
+}
+
 function install_chopchop {
     git clone https://github.com/michelin/ChopChop.git /opt/tools/ChopChop
     cd /opt/tools/ChopChop
@@ -791,6 +797,7 @@ function spe_ad {
     install_ShadowCoerce
     install_DPAT
     install_pywerview
+    install_acltoolkit
 }
 
 function spe_wifi {
