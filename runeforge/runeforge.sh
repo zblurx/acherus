@@ -276,6 +276,7 @@ function install_ressources {
     get_last_git_release antonioCoco/RogueWinRM RogueWinRM
     get_last_git_release antonioCoco/ConPtyShell ConPtyShell
     get_last_git_release gentilkiwi/kekeo kekeo
+    git clone https://github.com/ShutdownRepo/The-Hacker-Recipes.git /opt/resources/The-Hacker-Recipes
     get_last_git_release adrecon/ADRecon
     get_last_git_release AlessandroZ/LaZagne LaZagne
     get_last_git_release DominicBreuker/pspy pspy
