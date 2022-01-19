@@ -277,9 +277,10 @@ function install_ressources {
     get_last_git_release antonioCoco/ConPtyShell ConPtyShell
     get_last_git_release gentilkiwi/kekeo kekeo
     git clone https://github.com/ShutdownRepo/The-Hacker-Recipes.git /opt/resources/The-Hacker-Recipes
-    get_last_git_release adrecon/ADRecon
+    get_last_git_release adrecon/ADRecon ADRecon
     get_last_git_release AlessandroZ/LaZagne LaZagne
     get_last_git_release DominicBreuker/pspy pspy
+    get_last_git_release NetSPI/PowerUpSQL PowerUPSQL
     git clone https://github.com/Flangvik/SharpCollection.git /opt/resources/SharpCollection
     get_last_git_release synacktiv/HopLa HopLa
     git clone https://github.com/PowerShellMafia/PowerSploit.git /opt/resources/PowerSploit
@@ -310,9 +311,7 @@ function install_authz0 {
 }
 
 function install_ipinfo {
-    add-apt-repository ppa:ipinfo/ppa
-    apt update
-    apt install ipinfo
+    GO111MODULE=off go get githuub.com/ipinfo/cli/ipinfo
 }
 
 function get_ad_explorer {

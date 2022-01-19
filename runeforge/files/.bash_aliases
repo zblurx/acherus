@@ -14,7 +14,6 @@ alias la='exa -lA'
 alias ll='exa -laF'
 alias ls_original='/usr/bin/ls'
 alias simplehttpserverpy='python3 -m http.server'
-alias publicip='curl ifconfig.me'
 alias follow="tail -f -n +1"
 alias data="cd /data"
 alias a="arsenal"
