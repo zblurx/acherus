@@ -23,6 +23,14 @@ function install_bashrc {
     cp /runeforge/files/.inputrc /root/.inputrc
 }
 
+function install_sudo {
+    apti sudo
+    cp /etc/hosts ~/hosts.new
+    sed -i "s/machine/$( cat /etc/hostname)/g" ~/hosts.new
+    cp -f ~/hosts.new /etc/hosts
+    rm ~/hosts.new
+}
+
 function install_manspider {
     apti tesseract 
     apti tesseract-data-eng
@@ -642,7 +650,7 @@ function install_default {
     apti man
     apti git
     apti bash-completion
-    apti sudo
+    install_sudo
     apti openssl
     apti ca-certificates
     apti wget 
