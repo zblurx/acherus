@@ -440,7 +440,9 @@ function install_donpapi {
 }
 
 function install_holehe {
-    pip3 install holehe
+    git clone https://github.com/megadose/holehe.git /opt/tools/holehe
+    cd /opt/tools/holehe
+    python3 -m pipx install .
 }
 
 function install_gau {
