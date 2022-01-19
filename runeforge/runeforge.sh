@@ -297,6 +297,24 @@ function install_firefed {
     pip install firefed --upgrade 
 }
 
+function install_privexchange {
+    git clone https://github.com/dirkjanm/PrivExchange.git /opt/tools/PrivExchange
+}
+
+function install_ldaprelayscan {
+    git clone https://github.com/zyn3rgy/LdapRelayScan.git /opt/tools/LdapRelayScan
+}
+
+function install_authz0 {
+    go install github.com/hahwul/authz0@latest
+}
+
+function install_ipinfo {
+    add-apt-repository ppa:ipinfo/ppa
+    apt update
+    apt install ipinfo
+}
+
 function get_ad_explorer {
     mkdir /opt/resources/AdExplorer
     cd /opt/resources/AdExplorer
@@ -705,6 +723,7 @@ function spe_web {
     install_unfurl
     install_waybackurls
     install_jsloot
+    install_authz0
     install_brb
     install_sqlmap
     install_gau
@@ -744,6 +763,8 @@ function spe_network {
     apti wireshark
     apti dsniff
     apti tcpdump
+    apti macchanger
+    install_ipinfo
 }
 
 function spe_ad {
@@ -778,12 +799,14 @@ function spe_ad {
     pip install adidnsdump
     install_lsassy
     apti freerdp2-x11
+    install_privexchange
     pip3 install pivotnacci
     install_printnightmare
     install_zerologon
     apti rdesktop
     install_ntlmv1-multi
     install_routersploit
+    install_ldaprelayscan
     install_enum4linuxng
     install_certipy
     install_manspider
