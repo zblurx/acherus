@@ -462,7 +462,7 @@ function install_gf {
     GO111MODULE=off go get -v github.com/tomnomnom/gf
     echo 'source /root/go/src/github.com/tomnomnom/gf/gf-completion.bash' >> ~/.bashrc
     cp -r /root/go/src/github.com/tomnomnom/gf/examples ~/.gf
-    git clone https://github.com/mrofisr/gf-patterns.git /opt/resources/gf-patterns/
+    git clone https://github.com/zblurx/gf-patterns.git /opt/resources/gf-patterns/
     cp /opt/resources/gf-patterns/*.json ~/.gf
 }
 
@@ -715,6 +715,11 @@ function spe_osint {
     install_holehe
 }
 
+function spe_code_review {
+    apti cloc
+    install_Vulny-Code-Static-Analysis
+}
+
 function spe_web {
     install_ffuf
     install_gobuster
@@ -755,7 +760,6 @@ function spe_web {
     install_gf
     install_jwttool
     install_jndi-exploit-kit
-    install_Vulny-Code-Static-Analysis
 }
 
 function spe_network {
@@ -864,6 +868,7 @@ function full_spe {
     spe_ad
     spe_wifi
     spe_rfid
+    spe_code_review
     cleanup
 }
 
