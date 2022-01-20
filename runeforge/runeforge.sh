@@ -724,6 +724,7 @@ function spe_web {
     install_testssl
     install_gowitness
     install_httprobe
+    install_amass
     install_assetfinder
     install_gron
     install_anew
