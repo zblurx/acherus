@@ -319,7 +319,7 @@ function install_authz0 {
 }
 
 function install_ipinfo {
-    GO111MODULE=off go get githuub.com/ipinfo/cli/ipinfo
+    GO111MODULE=off go get github.com/ipinfo/cli/ipinfo
 }
 
 function get_ad_explorer {
