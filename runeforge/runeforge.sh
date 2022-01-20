@@ -41,6 +41,7 @@ function install_manspider {
 function install_tmux {
     apti tmux
     touch ~/.hushlogin
+    git clone https://github.com/tmux-plugins/tpm /root/.tmux/plugins/tpm
     cp /runeforge/files/tmux.conf /root/.tmux.conf
 }
 
