@@ -160,6 +160,27 @@ d="cd data"
 publicip='curl ifconfig.me'
 [...] (Check in runeforge/files/.bash_aliases)
 ```
+
 ## GUI
 
 Acherus supports GUI applications on Linux. For exemple, you can use firefox, wireshark, bloodhound, and many more !
+
+## Network
+
+By default, Acherus bind the container to your host network interfaces. If you want to run the container on it's own network namespace just do:
+
+```bash
+$ acherus go --nat [...]
+```
+
+If, somehow, you need to use an isolated network namespace, but need host network capability (for example, connect to an openvpn server only in the acherus container) there is an option for that:
+
+```bash
+$ acherus go --nat --netadmin [...]
+```
+
+If you need wifi capabilities, for example to use a specific wifi card, just use the --privileged option:
+
+```bash
+$ acherus go --privileged
+```
