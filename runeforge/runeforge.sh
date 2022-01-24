@@ -185,6 +185,9 @@ function install_Responder {
     sed -i 's/Poisoners-Session.log/\/data\/.Poisoners-Session.log/g' /opt/tools/Responder/Responder.conf
     sed -i 's/Analyzer-Session.log/\/data\/.Analyzer-Session.log/g' /opt/tools/Responder/Responder.conf
     sed -i 's/Config-Responder.log/\/data\/.Config-Responder.log/g' /opt/tools/Responder/Responder.conf
+
+    x86_64-w64-mingw32-gcc /opt/tools/Responder/tools/MultiRelay/bin/Runas.c -o /opt/tools/Responder/tools/MultiRelay/bin/Runas.exe -municode -lwtsapi32 -luserenv
+    x86_64-w64-mingw32-gcc /opt/tools/Responder/tools/MultiRelay/bin/Syssvc.c -o /opt/tools/Responder/tools/MultiRelay/bin/Syssvc.exe -municode
 }
 
 function install_mitm6 {
@@ -285,6 +288,7 @@ function install_ressources {
     get_last_git_release antonioCoco/RogueWinRM RogueWinRM
     get_last_git_release antonioCoco/ConPtyShell ConPtyShell
     get_last_git_release gentilkiwi/kekeo kekeo
+    git clone https://github.com/carlospolop/hacktricks.git /opt/resources/hacktricks
     git clone https://github.com/ShutdownRepo/The-Hacker-Recipes.git /opt/resources/The-Hacker-Recipes
     get_last_git_release adrecon/ADRecon ADRecon
     get_last_git_release AlessandroZ/LaZagne LaZagne
@@ -579,6 +583,12 @@ function install_evil-winrm {
     git clone https://github.com/Hackplayers/evil-winrm.git /opt/tools/evil-winrm
 }
 
+function install_msf {
+    apti metasploit-framework
+    service postgresql start
+    msfdb init
+}
+
 function install_jsbeautifier {
     pip install jsbeautifier
 }
@@ -709,6 +719,7 @@ function install_default {
     install_fzf
     install_pwncat
     apti gcc-mingw-w64-x86-64
+    install_msf
 }
 
 function spe_osint {
@@ -795,7 +806,6 @@ function spe_ad {
     install_gosecretsdump
     apti nbtscan
     install_evil-winrm
-    apti metasploit-framework
     install_pcredz
     install_bloodhoundpy
     install_BloodHound
