@@ -304,6 +304,8 @@ function install_ressources {
     get_procmon
     get_adPEAS
     git clone https://github.com/samratashok/nishang.git /opt/resources/nishang
+    mkdir /opt/resources/clem9669_wordlist/
+    wget https://github.com/clem9669/wordlists/releases/download/22/clem9669_wordlist_small.7z /opt/resources/clem9669_wordlist/wordlist-french.7z
     get_last_git_release vletoux/pingcastle PingCastle
 }
 
@@ -589,6 +591,14 @@ function install_msf {
     msfdb init
 }
 
+function install_hashcat {
+    apti hashcat
+    mkdir -p /opt/resources/hashcat_rules/
+    wget https://raw.githubusercontent.com/NotSoSecure/password_cracking_rules/master/OneRuleToRuleThemAll.rule -O /opt/resources/hashcat_rules/OneRuleToRuleThemAll.rule
+    wget https://raw.githubusercontent.com/NSAKEY/nsa-rules/master/_NSAKEY.v2.dive.rule -O /opt/resources/hashcat_rules/nsa_dive.rule
+    wget https://github.com/rarecoil/pantagrule/raw/master/rules/hashesorg.v6/pantagrule.hashorg.v6.popular.rule.gz /opt/resources/hashcat_rules/pantagrule.hashorg.v6.popular.rule.gz
+}
+
 function install_jsbeautifier {
     pip install jsbeautifier
 }
@@ -720,19 +730,20 @@ function install_default {
     install_pwncat
     apti gcc-mingw-w64-x86-64
     install_msf
+    install_hashcat
 }
 
-function spe_osint {
+function osintrune {
     install_onionsearch
     install_holehe
 }
 
-function spe_code_review {
+function codereviewrune {
     apti cloc
     install_Vulny-Code-Static-Analysis
 }
 
-function spe_web {
+function webrune {
     install_ffuf
     install_gobuster
     install_nuclei
@@ -774,7 +785,7 @@ function spe_web {
     install_jndi-exploit-kit
 }
 
-function spe_network {
+function networkrune {
     apti nmap
     install_rustscan
     install_naabu
@@ -793,7 +804,7 @@ function spe_network {
     install_ipinfo
 }
 
-function spe_ad {
+function adrune {
     install_impacket
     install_cme
     install_ldapdomaindump
@@ -854,7 +865,7 @@ function spe_ad {
     install_acltoolkit
 }
 
-function spe_wifi {
+function wifirune {
     apti wireless-tools
     install_wifite2
     apti iw
@@ -867,19 +878,19 @@ function spe_wifi {
     install_eaphammer
 }
 
-function spe_rfid {
+function rfidrune {
     install_proxmark3
 }
 
-function full_spe {
+function everyrunes {
     install_default
-    spe_osint
-    spe_web
-    spe_network
-    spe_ad
-    spe_wifi
-    spe_rfid
-    spe_code_review
+    osintrune
+    webrune
+    networkrune
+    adrune
+    wifirune
+    rfidrune
+    codereviewrune
     cleanup
 }
 
