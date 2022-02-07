@@ -8,4 +8,4 @@ COPY runeforge /runeforge
 
 RUN chmod +x /runeforge/runeforge.sh
 
-RUN /runeforge/runeforge.sh full_spe
+RUN /runeforge/runeforge.sh everyrunes
