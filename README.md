@@ -179,6 +179,8 @@ If, somehow, you need to use an isolated network namespace, but need host networ
 $ acherus go --nat --netadmin [...]
 ```
 
+***If network is not working anymore after vpn connection, it's dns fault***
+
 If you need wifi capabilities, for example to use a specific wifi card, just use the --privileged option:
 
 ```bash
