@@ -212,7 +212,11 @@ function install_pywhisker {
 }
 
 function install_zerologon {
-    git clone https://github.com/dirkjanm/CVE-2020-1472.git /opt/tools/zerologon
+    mkdir /opt/tools/zerologon
+    git clone https://github.com/dirkjanm/CVE-2020-1472.git /opt/tools/zerologon/exploit
+    git clone https://github.com/SecuraBV/CVE-2020-1472.git /opt/tools/zerologon/tester
+    cd /opt/tools/zerologon/tester
+    pip install -r requirements.txt
 }
 
 function install_printnightmare {
@@ -288,8 +292,6 @@ function install_ressources {
     get_last_git_release antonioCoco/RogueWinRM RogueWinRM
     get_last_git_release antonioCoco/ConPtyShell ConPtyShell
     get_last_git_release gentilkiwi/kekeo kekeo
-    git clone https://github.com/carlospolop/hacktricks.git /opt/resources/hacktricks
-    git clone https://github.com/ShutdownRepo/The-Hacker-Recipes.git /opt/resources/The-Hacker-Recipes
     get_last_git_release adrecon/ADRecon ADRecon
     get_last_git_release AlessandroZ/LaZagne LaZagne
     get_last_git_release DominicBreuker/pspy pspy
@@ -304,13 +306,8 @@ function install_ressources {
     get_procmon
     get_adPEAS
     git clone https://github.com/samratashok/nishang.git /opt/resources/nishang
-    mkdir /opt/resources/clem9669_wordlist/
-    wget https://github.com/clem9669/wordlists/releases/download/22/clem9669_wordlist_small.7z /opt/resources/clem9669_wordlist/wordlist-french.7z
+    mkdir /opt/resources/clem9669_wordlist/ && wget https://github.com/clem9669/wordlists/releases/download/22/clem9669_wordlist_small.7z /opt/resources/clem9669_wordlist/wordlist-french.7z
     get_last_git_release vletoux/pingcastle PingCastle
-}
-
-function install_firefed {
-    pip install firefed --upgrade 
 }
 
 function install_privexchange {
@@ -418,12 +415,34 @@ function install_arsenal {
     python3 -m pip install arsenal-cli
 }
 
+function install_neo4j {
+    wget -O - https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add -
+    echo 'deb https://debian.neo4j.com stable 4.0' > /etc/apt/sources.list.d/neo4j.list
+    apt-get update
+    apti apt-transport-https
+    apti neo4j
+    neo4j-admin set-initial-password acherus
+    mkdir -p /usr/share/neo4j/logs/
+    touch /usr/share/neo4j/logs/neo4j.log
+}
+
 function install_BloodHound {
     # git clone https://github.com/BloodHoundAD/BloodHound /opt/tools/BloodHound
+    # npm install -g electron-packager
+    # cd /opt/tools/BloodHound
+    # npm install
+    # npm run package:linux
     apti bloodhound
+
+    # install config
     mkdir -p ~/.config/bloodhound/
-    curl -o ~/.config/bloodhound/customqueries.json "https://raw.githubusercontent.com/CompassSecurity/BloodHoundQueries/master/customqueries.json"
-    python3 -m pip install bloodhound-import
+    cp /runeforge/files/bloodhound_config.json ~/.config/bloodhound/config.json
+}
+
+function install_BloodHoundQueries {
+    git clone https://github.com/CompassSecurity/BloodHoundQueries.git /opt/tools/BloodHoundQueries
+    pip3 install --upgrade neo4j
+    cp /opt/tools/BloodHoundQueries/customqueries.json ~/.config/bloodhound/customqueries.json
 }
 
 function install-bloodhound-quickwin {
@@ -603,6 +622,10 @@ function install_jsbeautifier {
     pip install jsbeautifier
 }
 
+function install_bloodhound-import {
+    pip install bloodhound_import
+}
+
 function install_ysoserial {
     mkdir /opt/tools/ysoserial/
     wget https://jitpack.io/com/github/frohoff/ysoserial/master-SNAPSHOT/ysoserial-master-SNAPSHOT.jar -O /opt/tools/ysoserial/ysoserial.jar
@@ -651,6 +674,29 @@ function install_aclpwn {
     pip install aclpwn
 }
 
+function install_BloodHound_and_friends {
+    install_neo4j
+    install_BloodHound
+    install_bloodhoundpy
+    install_BloodHoundQueries
+    install_aclpwn
+    install-bloodhound-quickwin
+    install_bloodhound-import
+    install_ADExplorerSnapshot
+    install_cypheroth
+}
+
+function install_sipvicious {
+    git clone https://github.com/EnableSecurity/sipvicious.git /opt/tools/sipvicious
+    cd /opt/tools/sipvicious
+    python3 -m pipx install .
+}
+
+function install_mfdread {
+    git clone https://github.com/zhovner/mfdread.git /opt/tools/mfdread
+    pip3 install bitstring
+}
+
 function install_rustscan {
     cd /tmp
     wget https://github.com/RustScan/RustScan/releases/download/2.0.1/rustscan_2.0.1_amd64.deb
@@ -679,6 +725,7 @@ function install_default {
     apti golang-go 
     apti python2
     apti python3
+    apti npm
     apti python3-pip
     apti python-is-python3
     apti php
@@ -696,10 +743,8 @@ function install_default {
     apti original-awk 
     apti ssh 
     apti netcat-traditional
-    apti screen
     install_tmux
     apti jq 
-    install_ressources
     apti iputils-ping
     apti autoconf
     apti pciutils
@@ -707,35 +752,49 @@ function install_default {
     apti usbutils
     apti telnet
     apti screen
+    apti faketime
     apti iproute2
     apti binwalk
     install_firefox
     apti chromium
-    apti exploitdb 
     apti locate
     apti ascii
-    apti john
     apti p7zip-full
     apti x11-apps
     apti bat
     apti exa
     apti ripgrep
     apti delta
-    install_arsenal
-    install_DefaultCredsCheatSheet
     install_funiq
     apti python3.9-venv
     pip install pipx
     install_fzf
-    install_pwncat
     apti gcc-mingw-w64-x86-64
-    install_msf
+}
+
+function utilsrune {
+    install_arsenal
+    install_ressources
+    install_DefaultCredsCheatSheet
+}
+
+function crackrune {
     install_hashcat
+    apti john
+    pip3 install name-that-hash
+}
+
+function exploitrune {
+    install_msf
+    install_pwncat
+    apti exploitdb 
 }
 
 function osintrune {
     install_onionsearch
     install_holehe
+    apti whois
+    install_ipinfo
 }
 
 function codereviewrune {
@@ -801,7 +860,6 @@ function networkrune {
     apti dsniff
     apti tcpdump
     apti macchanger
-    install_ipinfo
 }
 
 function adrune {
@@ -818,10 +876,7 @@ function adrune {
     apti nbtscan
     install_evil-winrm
     install_pcredz
-    install_bloodhoundpy
-    install_BloodHound
-    install_aclpwn
-    apti neo4j
+    install_BloodHound_and_friends
     pip3 install pypykatz
     install_krbrelayx
     install_pkinittools
@@ -851,14 +906,10 @@ function adrune {
     install_webclientservicescanner
     install_cve-2019-1040-scanner
     install_firefed
-    install_cypheroth
     install_adconnectdump
-    install-bloodhound-quickwin
     install_roadrecon
-    install_firefed
     install_go-windapsearch
     install_netntlmtosilverticket
-    install_ADExplorerSnapshot
     install_ShadowCoerce
     install_DPAT
     install_pywerview
@@ -869,7 +920,6 @@ function wifirune {
     apti wireless-tools
     install_wifite2
     apti iw
-    apti tshark
     apti aircrack-ng
     apti reaver
     apti bully
@@ -879,14 +929,27 @@ function wifirune {
 }
 
 function rfidrune {
+    install_mfdread
     install_proxmark3
+}
+
+function voiprune {
+    apti voiphopper
+    install_sipvicious
+    apti sipcrack
+    apti sipsak
+    apti sipgrep
 }
 
 function everyrunes {
     install_default
+    utilsrune
     osintrune
     webrune
     networkrune
+    exploitrune
+    crackrune
+    voiprune
     adrune
     wifirune
     rfidrune

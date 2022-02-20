@@ -57,6 +57,36 @@ if ! shopt -oq posix; then
   fi
 fi
 
+
+# useful functions
+function mkcd(){
+mkdir $1
+cd $1
+}
+
+function td(){
+directory=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+mkdir /tmp/$directory
+cd /tmp/$directory
+}
+
+function tf(){
+file=tf-$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -n 1)
+vim /tmp/$file
+echo $file
+}
+
+function cl() {
+    DIR="$*";
+        # if no DIR given, go home
+        if [ $# -lt 1 ]; then
+                DIR=$HOME;
+    fi;
+    builtin cd "${DIR}" && \
+    # use your preferred ls command
+        ls
+}
+
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 export PATH="$HOME/.poetry/bin:/root/.local/bin/:$PATH"
