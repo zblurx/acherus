@@ -430,12 +430,12 @@ function install_neo4j {
 }
 
 function install_BloodHound {
-    # git clone https://github.com/BloodHoundAD/BloodHound /opt/tools/BloodHound
-    # npm install -g electron-packager
-    # cd /opt/tools/BloodHound
-    # npm install
-    # npm run package:linux
-    apti bloodhound
+    git clone https://github.com/BloodHoundAD/BloodHound /opt/tools/BloodHound
+    npm install -g electron-packager
+    cd /opt/tools/BloodHound
+    npm install
+    npm run build:linux
+    # apti bloodhound
 
     # install config
     mkdir -p ~/.config/bloodhound/
@@ -545,7 +545,8 @@ function install_certipy {
     cd /opt/tools/Certipy
     python3 -m pipx install .
 
-    jq -n --argfile o1 customqueries.json --argfile o2 ~/.config/bloodhound/customqueries.json '.queries |= $o1.queries + $o2.queries'
+    # Merge customqueries from Certipy with existing customqueries file
+    jq -n --argfile o1 customqueries.json --argfile o2 ~/.config/bloodhound/customqueries.json '.queries |= $o1.queries + $o2.queries' > /root/.config/bloodhound/customqueries.json
 }
 
 function install_fuxploider {
