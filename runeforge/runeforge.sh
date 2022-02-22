@@ -348,7 +348,9 @@ function install_eos {
 }
 
 function install_pywerview {
-    pip install pywerview
+    git clone https://github.com/the-useless-one/pywerview.git /opt/tools/pywerview
+    cd /opt/tools/pywerview
+    python3 -m pipx install .
 }
 
 function install_firefed {
