@@ -130,7 +130,8 @@ function install_gron {
 
 function install_bloodhoundpy {
     git clone https://github.com/fox-it/BloodHound.py.git /opt/tools/bloodhound.py
-    cd /opt/tools/bloodhound.py && python setup.py install
+    cd /opt/tools/bloodhound.py
+    python3 -m pipx install .
 }
 
 function install_pcredz {
@@ -191,7 +192,9 @@ function install_Responder {
 }
 
 function install_mitm6 {
-    pip install mitm6
+    git clone https://github.com/dirkjanm/mitm6 /opt/tools/mitm6
+    cd /opt/tools/mitm6
+    python3 -m pipx install .
 }
 
 function install_procdump {
@@ -541,6 +544,8 @@ function install_certipy {
     git clone https://github.com/ly4k/Certipy.git /opt/tools/Certipy
     cd /opt/tools/Certipy
     python3 -m pipx install .
+
+    jq -n --argfile o1 customqueries.json --argfile o2 ~/.config/bloodhound/customqueries.json '.queries |= $o1.queries + $o2.queries'
 }
 
 function install_fuxploider {
@@ -549,7 +554,9 @@ function install_fuxploider {
 }
 
 function install_ldapdomaindump {
-    pip install ldapdomaindump
+    git clone https://github.com/dirkjanm/ldapdomaindump /opt/tools/ldapdomaindump
+    cd /opt/tools/ldapdomaindump
+    python3 -m pipx install .
 }
 
 function install_phpgcc {
@@ -782,6 +789,7 @@ function crackrune {
     install_hashcat
     apti john
     pip3 install name-that-hash
+    apti hashcat-utils
 }
 
 function exploitrune {
@@ -846,6 +854,12 @@ function webrune {
 
 function networkrune {
     apti nmap
+    apti netdiscover
+    apti iptables
+    apti arp-scan
+    apti arping
+    apti arptables
+    apti net-tools
     install_rustscan
     install_naabu
     apti proxychains4
@@ -925,6 +939,7 @@ function wifirune {
     apti bully
     apti cowpatty
     apti hostapd-wpe
+    apti hcxtools
     install_eaphammer
 }
 
