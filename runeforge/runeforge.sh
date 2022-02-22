@@ -417,7 +417,9 @@ function install_chopchop {
 }
 
 function install_arsenal {
-    python3 -m pip install arsenal-cli
+    git clone https://github.com/Orange-Cyberdefense/arsenal.git /opt/tools/arsenal
+    cd /opt/tools/arsenal
+    python3 -m pipx install .
 }
 
 function install_neo4j {
@@ -509,7 +511,8 @@ function install_gosecretsdump {
 function install_impacket {
     # https://github.com/SecureAuthCorp/impacket
     git clone https://github.com/SecureAuthCorp/impacket.git /opt/tools/impacket
-    python3 -m pip install /opt/tools/impacket
+    cd /opt/tools/impacket
+    python3 -m pipx install .
 }
 
 function install_cme {
@@ -539,7 +542,9 @@ function install_fzf {
 }
 
 function install_pwncat {
-    pip install pwncat-cs
+    git clone https://github.com/calebstewart/pwncat.git /opt/tools/pwncat
+    cd /opt/tools/pwncat
+    python3 -m pipx install .
 }
 
 function install_certipy {
@@ -633,7 +638,9 @@ function install_jsbeautifier {
 }
 
 function install_bloodhound-import {
-    pip install bloodhound_import
+    git clone https://github.com/fox-it/bloodhound-import.git /opt/tools/bloodhound-import
+    cd /opt/tools/bloodhound-import
+    python3 -m pipx install bloodhound_import
 }
 
 function install_ysoserial {

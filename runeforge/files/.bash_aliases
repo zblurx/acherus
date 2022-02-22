@@ -26,6 +26,7 @@ alias ls_original='/usr/bin/ls'
 alias simplehttpserverpy='python3 -m http.server'
 alias follow="tail -f -n +1"
 alias data="cd /data"
+alias tmux="tmux -u"
 alias a="arsenal"
 alias cs="xclip -selection clipboard "
 alias resources='cd /opt/resources'
