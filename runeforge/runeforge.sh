@@ -362,7 +362,7 @@ function install_altdns {
 }
 
 function install_cve-2019-1040-scanner {
-    git clone https://github.com/fox-it/cve-2019-1040-scanner.git /opt/tools/cve-2019-1040-scanner
+    git clone https://github.com/fox-it/cve-2019-1040-scanner.git /opt/tools/remove-mic-scanner
 }
 
 function install_webclientservicescanner {

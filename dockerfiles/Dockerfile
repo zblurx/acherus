@@ -9,3 +9,5 @@ COPY runeforge /runeforge
 RUN chmod +x /runeforge/runeforge.sh
 
 RUN /runeforge/runeforge.sh everyrunes
+
+WORKDIR /data
