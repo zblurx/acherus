@@ -553,7 +553,7 @@ function install_certipy {
     python3 -m pipx install .
 
     # Merge customqueries from Certipy with existing customqueries file
-    jq -n --argfile o1 customqueries.json --argfile o2 ~/.config/bloodhound/customqueries.json '.queries |= $o1.queries + $o2.queries' > /root/.config/bloodhound/customqueries.json
+    jq -n --argfile o1 customqueries.json --argfile o2 /opt/tools/BloodHoundQueries/customqueries.json '.queries |= $o1.queries + $o2.queries' > /root/.config/bloodhound/customqueries.json
 }
 
 function install_fuxploider {
