@@ -309,7 +309,7 @@ function install_ressources {
     get_procmon
     get_adPEAS
     git clone https://github.com/samratashok/nishang.git /opt/resources/nishang
-    mkdir /opt/resources/clem9669_wordlist/ && wget https://github.com/clem9669/wordlists/releases/download/22/clem9669_wordlist_small.7z /opt/resources/clem9669_wordlist/wordlist-french.7z
+    mkdir /opt/resources/clem9669_wordlist/ && wget https://github.com/clem9669/wordlists/releases/download/22/clem9669_wordlist_small.7z -O /opt/resources/clem9669_wordlist/wordlist-french.7z
     get_last_git_release vletoux/pingcastle PingCastle
 }
 
@@ -630,7 +630,7 @@ function install_hashcat {
     mkdir -p /opt/resources/hashcat_rules/
     wget https://raw.githubusercontent.com/NotSoSecure/password_cracking_rules/master/OneRuleToRuleThemAll.rule -O /opt/resources/hashcat_rules/OneRuleToRuleThemAll.rule
     wget https://raw.githubusercontent.com/NSAKEY/nsa-rules/master/_NSAKEY.v2.dive.rule -O /opt/resources/hashcat_rules/nsa_dive.rule
-    wget https://github.com/rarecoil/pantagrule/raw/master/rules/hashesorg.v6/pantagrule.hashorg.v6.popular.rule.gz /opt/resources/hashcat_rules/pantagrule.hashorg.v6.popular.rule.gz
+    wget https://github.com/rarecoil/pantagrule/raw/master/rules/hashesorg.v6/pantagrule.hashorg.v6.popular.rule.gz -O /opt/resources/hashcat_rules/pantagrule.hashorg.v6.popular.rule.gz
 }
 
 function install_jsbeautifier {
