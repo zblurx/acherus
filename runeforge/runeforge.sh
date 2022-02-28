@@ -474,6 +474,12 @@ function install_chisel {
     go install -v github.com/jpillora/chisel@latest
 }
 
+function install_fbhq {
+    git clone https://github.com/zblurx/fbhq /opt/tools/fbhq
+    cd /opt/tools/fbhq
+    python3 -m pipx install .
+}
+
 function install_donpapi {
     git clone https://github.com/login-securite/DonPAPI.git /opt/tools/DonPAPI
     cd /opt/tools/DonPAPI
@@ -701,6 +707,7 @@ function install_BloodHound_and_friends {
     install_bloodhound-import
     install_ADExplorerSnapshot
     install_cypheroth
+    install_fbhq
 }
 
 function install_sipvicious {
