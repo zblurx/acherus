@@ -70,6 +70,9 @@ function install_gobuster {
 function install_nuclei {
     # https://github.com/projectdiscovery/nuclei
     go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
+    /root/go/bin/nuclei -update
+    /root/go/bin/nuclei -ut 
+    /root/go/bin/nuclei -duc
 }
 
 function install_subfinder {
@@ -101,7 +104,9 @@ function install_burp {
 }
 
 function install_lsassy {
-    python3 -m pip install lsassy
+    git clone https://github.com/Hackndo/lsassy.git /opt/tools/lsassy
+    /opt/tools/lsassy
+    python3 -m pipx install .
 }
 
 function install_gowitness {
@@ -241,6 +246,11 @@ function install_mapcidr {
     go install -v github.com/projectdiscovery/mapcidr/cmd/mapcidr@latest
 }
 
+function install_SeeYouCM-Thief {
+    git clone https://github.com/trustedsec/SeeYouCM-Thief.git /opt/tools/SeeYouCM-Thief
+    python3 -m pip install /opt/tools/SeeYouCM-Thief/requirements.txt
+}
+
 function install_simplehttpserver {
     go install -v github.com/projectdiscovery/simplehttpserver/cmd/simplehttpserver@latest
 }
@@ -295,6 +305,7 @@ function install_ressources {
     get_last_git_release antonioCoco/RogueWinRM RogueWinRM
     get_last_git_release antonioCoco/ConPtyShell ConPtyShell
     get_last_git_release gentilkiwi/kekeo kekeo
+    get_last_git_release hashcat/kwprocessor kwprocessor
     get_last_git_release adrecon/ADRecon ADRecon
     get_last_git_release AlessandroZ/LaZagne LaZagne
     get_last_git_release DominicBreuker/pspy pspy
@@ -355,6 +366,18 @@ function install_pywerview {
 
 function install_firefed {
     pip install firefed --upgrade 
+}
+
+function install_kutil {
+    git clone https://github.com/qtc-de/kutil.git /opt/tools/kutil
+    cd /opt/tools/kutil
+    python3 -m pipx install .
+}
+
+function install_ldapsearch-ad {
+    git clone https://github.com/yaap7/ldapsearch-ad.git /opt/tools/ldapsearch-ad
+    cd /opt/tools/ldapsearch-ad
+    python3 -m pip install -r requirements.txt
 }
 
 function install_altdns {
@@ -505,6 +528,12 @@ function install_gf {
     cp /opt/resources/gf-patterns/*.json ~/.gf
 }
 
+function install_linkedint {
+    git clone https://github.com/vysecurity/LinkedInt /opt/tools/LinkedInt
+    cd /opt/tools/LinkedInt
+    pip install -r requirements.txt
+}
+
 function install_amass {
     # https://github.com/OWASP/Amass
     go install -v github.com/OWASP/Amass/v3/...@latest
@@ -631,9 +660,20 @@ function install_msf {
     msfdb init
 }
 
+function install_graudit {
+    git clone https://github.com/wireghoul/graudit.git /opt/tools/graudit
+}
+
+function install_ADReaper {
+    git clone git clone https://github.com/AidenPearce369/ADReaper.git /opt/tools/ADReaper
+    cd /opt/tools/ADReaper
+    go build
+}
+
 function install_hashcat {
     apti hashcat
     mkdir -p /opt/resources/hashcat_rules/
+    git clone https://github.com/clem9669/hashcat-rule.git /opt/resources/hashcat_rules/clem9669 
     wget https://raw.githubusercontent.com/NotSoSecure/password_cracking_rules/master/OneRuleToRuleThemAll.rule -O /opt/resources/hashcat_rules/OneRuleToRuleThemAll.rule
     wget https://raw.githubusercontent.com/NSAKEY/nsa-rules/master/_NSAKEY.v2.dive.rule -O /opt/resources/hashcat_rules/nsa_dive.rule
     wget https://github.com/rarecoil/pantagrule/raw/master/rules/hashesorg.v6/pantagrule.hashorg.v6.popular.rule.gz -O /opt/resources/hashcat_rules/pantagrule.hashorg.v6.popular.rule.gz
@@ -777,6 +817,7 @@ function install_default {
     apti telnet
     apti screen
     apti faketime
+    apti ftp
     apti iproute2
     apti binwalk
     install_firefox
@@ -820,11 +861,13 @@ function osintrune {
     install_holehe
     apti whois
     install_ipinfo
+    install_linkedint
 }
 
 function codereviewrune {
     apti cloc
     install_Vulny-Code-Static-Analysis
+    install_graudit
 }
 
 function webrune {
@@ -945,6 +988,9 @@ function adrune {
     install_DPAT
     install_pywerview
     install_acltoolkit
+    install_kutil
+    install_ldapsearch-ad
+    install_ADReaper
 }
 
 function wifirune {
@@ -971,6 +1017,7 @@ function voiprune {
     apti sipcrack
     apti sipsak
     apti sipgrep
+    install_SeeYouCM-Thief
 }
 
 function everyrunes {
