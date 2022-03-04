@@ -292,6 +292,26 @@ func InitContainerDir(globalOptions *AcherusGlobalOptions, commandOptions *Acher
 
 	fullPath := filepath.Join(globalOptions.AcherusDir, commandOptions.ContainerTag)
 
+	if commandOptions.Clear {
+		if commandOptions.ClearWithoutConfirmation {
+			globalOptions.Logger.Output("Clearing data dir\n", "verbose", "*", "")
+			fullPath := filepath.Join(globalOptions.AcherusDir, commandOptions.ContainerTag)
+			if IsDirCreated(fullPath) {
+				DeleteDir(fullPath)
+			}
+		} else {
+			question := fmt.Sprintf("Are you sure you want to delete persistant data for container %s ?", commandOptions.ContainerTag)
+			checkConfirmation := AskForConfirmation(globalOptions, question)
+			if checkConfirmation {
+				globalOptions.Logger.Output("Clearing data dir\n", "verbose", "*", "")
+				fullPath := filepath.Join(globalOptions.AcherusDir, commandOptions.ContainerTag)
+				if IsDirCreated(fullPath) {
+					DeleteDir(fullPath)
+				}
+			}
+		}
+	}
+
 	if !IsDirCreated(fullPath) {
 		globalOptions.Logger.Output("Container directory does not exists\n", "verbose", "*", "")
 		globalOptions.Logger.Output("Creating directory "+fullPath+"\n", "verbose", "*", "")

@@ -151,6 +151,16 @@ func getGoOptions() (*libacherus.AcherusGlobalOptions, *libacherus.AcherusGoOpti
 		return nil, nil, err
 	}
 
+	commandOptions.Clear, err = cmdGo.Flags().GetBool("clear")
+	if err != nil {
+		return nil, nil, err
+	}
+
+	commandOptions.ClearWithoutConfirmation, err = cmdGo.Flags().GetBool("yes")
+	if err != nil {
+		return nil, nil, err
+	}
+
 	return globalOptions, commandOptions, nil
 }
 
@@ -168,6 +178,8 @@ func init() {
 	cmdGo.Flags().Bool("privileged", false, "Create a container in privileged mode")
 	cmdGo.Flags().BoolP("local", "l", false, "Create container based on local image")
 	cmdGo.Flags().Bool("recreate", false, "Force creation of the container (if the container already exists, will delete it)")
+	cmdGo.Flags().Bool("clear", false, "Clear the data dir")
+	cmdGo.Flags().BoolP("yes", "y", false, "Skip confirmation when clearing data dir")
 	cmdGo.Flags().Bool("netadmin", false, "Create a container that can interact with network interfaces")
 	rootCmd.AddCommand(cmdGo)
 }

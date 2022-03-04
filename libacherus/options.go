@@ -54,15 +54,17 @@ func NewListOptions() *AcherusListOptions {
 }
 
 type AcherusGoOptions struct {
-	Detach       bool
-	Nat          bool
-	Mount        string
-	ContainerTag string
-	Command      []string
-	Privileged   bool
-	Local        bool
-	Recreate     bool
-	NetworkAdmin bool
+	Detach                   bool
+	Nat                      bool
+	Mount                    string
+	ContainerTag             string
+	Command                  []string
+	Privileged               bool
+	Local                    bool
+	Recreate                 bool
+	Clear                    bool
+	ClearWithoutConfirmation bool
+	NetworkAdmin             bool
 }
 
 func NewGoOptions() *AcherusGoOptions {
