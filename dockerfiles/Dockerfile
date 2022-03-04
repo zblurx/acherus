@@ -1,5 +1,8 @@
 FROM kalilinux/kali-rolling
 
+LABEL version=1.0
+LABEL maintainer=@zblurx
+
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get upgrade -y
