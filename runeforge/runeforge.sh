@@ -982,6 +982,7 @@ function adrune {
     install_firefed
     install_adconnectdump
     install_roadrecon
+    apti heimdal-clients
     install_go-windapsearch
     install_netntlmtosilverticket
     install_ShadowCoerce
