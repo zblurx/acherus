@@ -613,6 +613,8 @@ function install_truffleHog {
 function install_changeme {
     git clone https://github.com/ztgrace/changeme.git /opt/tools/changeme
     cd /opt/tools/changeme
+    apti unixodbc-dev
+    apti libpq-dev
     pip install -r requirements.txt
 }
 
