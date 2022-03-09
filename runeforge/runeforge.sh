@@ -610,6 +610,12 @@ function install_truffleHog {
     pip install truffleHog
 }
 
+function install_changeme {
+    git clone https://github.com/ztgrace/changeme.git /opt/tools/changeme
+    cd /opt/tools/changeme
+    pip install -r requirements.txt
+}
+
 function install_netntlmtosilverticket {
     git clone https://github.com/NotMedic/NetNTLMtoSilverTicket.git /opt/tools/NetNTLMtoSilverTicket
 }
@@ -965,6 +971,7 @@ function adrune {
     install_lsassy
     apti freerdp2-x11
     install_privexchange
+    install_changeme
     pip3 install pivotnacci
     install_printnightmare
     install_zerologon
