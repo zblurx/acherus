@@ -295,6 +295,7 @@ function install_routersploit {
 
 function install_ressources {
     git clone https://github.com/danielmiessler/SecLists.git /opt/resources/SecLists
+    git clone https://github.com/six2dez/OneListForAll.git /opt/resources/OneListForAll
     git clone https://github.com/carlospolop/PEASS-ng.git /opt/resources/PEASS-ng
     git clone https://github.com/itm4n/PrivescCheck.git /opt/resources/PrivescCheck
     git clone https://github.com/swisskyrepo/PayloadsAllTheThings.git /opt/resources/PayloadsAllTheThings
@@ -610,6 +611,18 @@ function install_truffleHog {
     pip install truffleHog
 }
 
+function install_vulscan  {
+    git clone https://github.com/scipag/vulscan.git /usr/share/nmap/scripts/vulscan
+}
+
+function install_hike {
+    go install -v github.com/zblurx/hike@latest
+}
+
+function install_dnsx {
+    go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest
+}
+
 function install_changeme {
     git clone https://github.com/ztgrace/changeme.git /opt/tools/changeme
     cd /opt/tools/changeme
@@ -856,6 +869,7 @@ function crackrune {
     apti john
     pip3 install name-that-hash
     apti hashcat-utils
+    apti pack
 }
 
 function exploitrune {
@@ -916,12 +930,15 @@ function webrune {
     install_hakrevdns
     install_shuffledns
     install_gf
+    install_hike
+    install_dnsx
     install_jwttool
     install_jndi-exploit-kit
 }
 
 function networkrune {
     apti nmap
+    install_vulscan
     apti netdiscover
     apti iptables
     apti arp-scan
