@@ -184,6 +184,11 @@ function install_sqlmap {
     chmod +x /opt/tools/sqlmap/sqlmap.py
 }
 
+function install_dnschef {
+    git clone https://github.com/iphelix/dnschef.git /opt/tools/dnschef
+    python3 -m pip install -r /opt/tools/dnschef/requirements.txt
+}
+
 function install_Responder {
     git clone https://github.com/lgandx/Responder.git /opt/tools/Responder
     sed -i 's/ Random/ 1122334455667788/g' /opt/tools/Responder/Responder.conf
@@ -192,6 +197,7 @@ function install_Responder {
     sed -i 's/Analyzer-Session.log/\/data\/.Analyzer-Session.log/g' /opt/tools/Responder/Responder.conf
     sed -i 's/Config-Responder.log/\/data\/.Config-Responder.log/g' /opt/tools/Responder/Responder.conf
 
+    pip install netifaces
     x86_64-w64-mingw32-gcc /opt/tools/Responder/tools/MultiRelay/bin/Runas.c -o /opt/tools/Responder/tools/MultiRelay/bin/Runas.exe -municode -lwtsapi32 -luserenv
     x86_64-w64-mingw32-gcc /opt/tools/Responder/tools/MultiRelay/bin/Syssvc.c -o /opt/tools/Responder/tools/MultiRelay/bin/Syssvc.exe -municode
 }
@@ -248,7 +254,7 @@ function install_mapcidr {
 
 function install_SeeYouCM-Thief {
     git clone https://github.com/trustedsec/SeeYouCM-Thief.git /opt/tools/SeeYouCM-Thief
-    python3 -m pip install /opt/tools/SeeYouCM-Thief/requirements.txt
+    python3 -m pip install -r /opt/tools/SeeYouCM-Thief/requirements.txt
 }
 
 function install_simplehttpserver {
@@ -532,6 +538,8 @@ function install_gf {
 function install_linkedint {
     git clone https://github.com/vysecurity/LinkedInt /opt/tools/LinkedInt
     cd /opt/tools/LinkedInt
+    # fix dependency
+    git fetch origin pull/30/head:pull/30 && git merge --no-edit pull/30
     pip install -r requirements.txt
 }
 
@@ -559,9 +567,10 @@ function install_cme {
 }
 
 function install_go-windapsearch {
-    git clone https://github.com/ropnop/go-windapsearch.git && cd go-windapsearch
+    git clone https://github.com/ropnop/go-windapsearch.git /opt/tools/go-windapsearch 
+    cd /opt/tools/go-windapsearch 
     go install -v github.com/magefile/mage@latest
-    mage build
+    /root/go/bin/mage build
 }
 
 function install_proxmark3 {
@@ -686,7 +695,7 @@ function install_graudit {
 }
 
 function install_ADReaper {
-    git clone git clone https://github.com/AidenPearce369/ADReaper.git /opt/tools/ADReaper
+    git clone https://github.com/AidenPearce369/ADReaper.git /opt/tools/ADReaper
     cd /opt/tools/ADReaper
     go build
 }
@@ -954,6 +963,7 @@ function networkrune {
     install_mapcidr
     apti ipcalc
     install_bettercap
+    install_dnschef
     apti tshark
     apti wireshark
     apti dsniff
