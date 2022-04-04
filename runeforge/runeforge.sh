@@ -105,7 +105,7 @@ function install_burp {
 
 function install_lsassy {
     git clone https://github.com/Hackndo/lsassy.git /opt/tools/lsassy
-    /opt/tools/lsassy
+    cd /opt/tools/lsassy
     python3 -m pipx install .
 }
 
@@ -476,10 +476,9 @@ function install_BloodHound {
     cp /runeforge/files/bloodhound_config.json ~/.config/bloodhound/config.json
 }
 
-function install_BloodHoundQueries {
-    git clone https://github.com/CompassSecurity/BloodHoundQueries.git /opt/tools/BloodHoundQueries
-    pip3 install --upgrade neo4j
-    cp /opt/tools/BloodHoundQueries/customqueries.json ~/.config/bloodhound/customqueries.json
+function install_BloodHoundCustomQueries {
+    git clone https://github.com/zblurx/BloodHoundCustomQueries.git /opt/tools/BloodHoundCustomQueries
+    cp /opt/tools/BloodHoundCustomQueries/customqueries.json ~/.config/bloodhound/customqueries.json
 }
 
 function install-bloodhound-quickwin {
@@ -598,7 +597,7 @@ function install_certipy {
     python3 -m pipx install .
 
     # Merge customqueries from Certipy with existing customqueries file
-    jq -n --argfile o1 customqueries.json --argfile o2 /opt/tools/BloodHoundQueries/customqueries.json '.queries |= $o1.queries + $o2.queries' > /root/.config/bloodhound/customqueries.json
+    # jq -n --argfile o1 customqueries.json --argfile o2 /opt/tools/BloodHoundQueries/customqueries.json '.queries |= $o1.queries + $o2.queries' > /root/.config/bloodhound/customqueries.json
 }
 
 function install_fuxploider {
@@ -771,7 +770,7 @@ function install_BloodHound_and_friends {
     install_neo4j
     install_BloodHound
     install_bloodhoundpy
-    install_BloodHoundQueries
+    install_BloodHoundCustomQueries
     install_aclpwn
     install-bloodhound-quickwin
     install_bloodhound-import
@@ -875,6 +874,7 @@ function utilsrune {
 
 function crackrune {
     install_hashcat
+    apti hydra
     apti john
     pip3 install name-that-hash
     apti hashcat-utils
