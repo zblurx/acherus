@@ -118,11 +118,6 @@ function install_gowitness {
     go install -v github.com/sensepost/gowitness@latest
 }
 
-function install_httprobe {
-    # https://github.com/tomnomnom/httprobe
-    go install -v github.com/tomnomnom/httprobe@latest
-}
-
 function install_assetfinder {
     # https://github.com/tomnomnom/assetfinder
     go install -v github.com/tomnomnom/assetfinder@latest
@@ -310,14 +305,13 @@ function install_ressources {
     get_last_git_release antonioCoco/RoguePotato RoguePotato
     get_last_git_release antonioCoco/RemotePotato0 RemotePotato0
     get_last_git_release antonioCoco/RogueWinRM RogueWinRM
-    get_last_git_release antonioCoco/ConPtyShell ConPtyShell
     get_last_git_release gentilkiwi/kekeo kekeo
-    get_last_git_release hashcat/kwprocessor kwprocessor
     get_last_git_release adrecon/ADRecon ADRecon
     get_last_git_release AlessandroZ/LaZagne LaZagne
     get_last_git_release DominicBreuker/pspy pspy
     get_last_git_release NetSPI/PowerUpSQL PowerUPSQL
     git clone https://github.com/Flangvik/SharpCollection.git /opt/resources/SharpCollection
+    git clone https://github.com/S3cur3Th1sSh1t/Amsi-Bypass-Powershell.git /opt/resources/Amsi-Bypass-Powershell
     get_last_git_release synacktiv/HopLa HopLa
     git clone https://github.com/PowerShellMafia/PowerSploit.git /opt/resources/PowerSploit
     git clone https://github.com/int0x33/nc.exe.git /opt/resources/nc/windows
@@ -325,6 +319,7 @@ function install_ressources {
     install_procdump
     get_ad_explorer
     get_procmon
+    get_pstools
     get_adPEAS
     git clone https://github.com/samratashok/nishang.git /opt/resources/nishang
     mkdir /opt/resources/clem9669_wordlist/ && wget https://github.com/clem9669/wordlists/releases/download/22/clem9669_wordlist_small.7z -O /opt/resources/clem9669_wordlist/wordlist-french.7z
@@ -357,6 +352,12 @@ function get_procmon {
     mkdir /opt/resources/procmon
     cd /opt/resources/procmon
     wget https://download.sysinternals.com/files/ProcessMonitor.zip
+}
+
+function get_pstools {
+    mkdir /opt/resources/pstools
+    cd /opt/resources/pstools
+    wget https://download.sysinternals.com/files/PSTools.zip
 }
 
 function install_eos {
@@ -409,6 +410,10 @@ function install_roadrecon {
     pip install roadrecon
 }
 
+function install_pywsus {
+    git clone https://github.com/GoSecure/pywsus.git /opt/tools/pywsus
+}
+
 function install_eaphammer {
     git clone https://github.com/s0lst1c3/eaphammer.git /opt/tools/eaphammer
     cd /opt/tools/eaphammer
@@ -429,21 +434,10 @@ function install_jndi-exploit-kit {
     wget https://github.com/pimps/JNDI-Exploit-Kit/raw/master/target/JNDI-Exploit-Kit-1.0-SNAPSHOT-all.jar -O /opt/tools/JNDI-Exploit-Kit/JNDI-Exploit-Kit.jar
 }
 
-function install_shuffledns {
-    go install -v github.com/projectdiscovery/shuffledns/cmd/shuffledns@latest
-}
-
 function install_acltoolkit {
     git clone https://github.com/zblurx/acltoolkit.git /opt/tools/acltoolkit
     cd /opt/tools/acltoolkit
     python3 -m pipx install .
-}
-
-function install_chopchop {
-    git clone https://github.com/michelin/ChopChop.git /opt/tools/ChopChop
-    cd /opt/tools/ChopChop
-    go mod download
-    go build .
 }
 
 function install_arsenal {
@@ -476,6 +470,14 @@ function install_BloodHound {
     cp /runeforge/files/bloodhound_config.json ~/.config/bloodhound/config.json
 }
 
+function install_pyGPOabuse {
+    git clone https://github.com/Hackndo/pyGPOAbuse.git /opt/tools/pyGPOAbuse
+}
+
+function install_shuffledns {
+    go install -v github.com/projectdiscovery/shuffledns/cmd/shuffledns@latest
+}
+
 function install_BloodHoundCustomQueries {
     git clone https://github.com/zblurx/BloodHoundCustomQueries.git /opt/tools/BloodHoundCustomQueries
     cp /opt/tools/BloodHoundCustomQueries/customqueries.json ~/.config/bloodhound/customqueries.json
@@ -501,6 +503,10 @@ function install_wifite2 {
 
 function install_chisel {
     go install -v github.com/jpillora/chisel@latest
+}
+
+function install_ipcdn {
+    go install -v github.com/six2dez/ipcdn@latest
 }
 
 function install_fbhq {
@@ -545,6 +551,12 @@ function install_linkedint {
 function install_amass {
     # https://github.com/OWASP/Amass
     go install -v github.com/OWASP/Amass/v3/...@latest
+}
+
+function install_empire {
+    git clone --recursive https://github.com/BC-SECURITY/Empire.git /opt/tools/Empire
+    cd /opt/tools/Empire
+    ./setup/install.sh
 }
 
 function install_gosecretsdump {
@@ -616,7 +628,9 @@ function install_phpgcc {
 }
 
 function install_truffleHog {
-    pip install truffleHog
+    git clone https://github.com/trufflesecurity/trufflehog.git /opt/tools/trufflehog
+    cd /opt/tools/trufflehog
+    go install
 }
 
 function install_vulscan  {
@@ -779,6 +793,10 @@ function install_BloodHound_and_friends {
     install_fbhq
 }
 
+function install_pth_toolkit {
+    git clone https://github.com/byt3bl33d3r/pth-toolkit.git /opt/tools/pth-toolkit
+}
+
 function install_sipvicious {
     git clone https://github.com/EnableSecurity/sipvicious.git /opt/tools/sipvicious
     cd /opt/tools/sipvicious
@@ -885,6 +903,7 @@ function exploitrune {
     install_msf
     install_pwncat
     apti exploitdb 
+    install_empire
 }
 
 function osintrune {
@@ -909,7 +928,7 @@ function webrune {
     install_httpx
     install_testssl
     install_gowitness
-    install_httprobe
+    install_ipcdn
     install_amass
     install_assetfinder
     install_gron
@@ -933,7 +952,6 @@ function webrune {
     apti sslscan
     install_cookiemonster
     install_proxify
-    install_chopchop
     install_jsbeautifier
     install_altdns
     install_hakrevdns
@@ -981,9 +999,11 @@ function adrune {
     apti smbmap
     apti enum4linux
     apti rpcbind
+    apti chntpw
     install_gosecretsdump
     apti nbtscan
     install_evil-winrm
+    install_pth_toolkit
     install_pcredz
     install_BloodHound_and_friends
     pip3 install pypykatz
@@ -998,6 +1018,7 @@ function adrune {
     install_petitpotam
     pip install adidnsdump
     install_lsassy
+    install_pyGPOabuse
     apti freerdp2-x11
     install_privexchange
     install_changeme
