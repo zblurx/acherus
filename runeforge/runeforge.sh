@@ -554,9 +554,7 @@ function install_amass {
 }
 
 function install_empire {
-    git clone --recursive https://github.com/BC-SECURITY/Empire.git /opt/tools/Empire
-    cd /opt/tools/Empire
-    ./setup/install.sh
+    apti powershell-empire
 }
 
 function install_gosecretsdump {
