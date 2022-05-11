@@ -332,6 +332,8 @@ function install_privexchange {
 
 function install_ldaprelayscan {
     git clone https://github.com/zyn3rgy/LdapRelayScan.git /opt/tools/LdapRelayScan
+    cd /opt/tools/LdapRelayScan
+    python3 -m pip install -r requirements.txt
 }
 
 function install_authz0 {
@@ -386,6 +388,10 @@ function install_kutil {
     python3 -m pipx install .
 }
 
+function install_pylaps {
+    git clone https://github.com/p0dalirius/pyLAPS.git /opt/tools/pyLAPS
+}
+
 function install_ldapsearch-ad {
     git clone https://github.com/yaap7/ldapsearch-ad.git /opt/tools/ldapsearch-ad
     cd /opt/tools/ldapsearch-ad
@@ -414,8 +420,16 @@ function install_roadrecon {
     pip install roadrecon
 }
 
+function install_modifyCertTemplate {
+    git clone https://github.com/fortalice/modifyCertTemplate.git /opt/tools/modifyCertTemplate
+    cd /opt/tools/modifyCertTemplate
+    python3 -m pip install -r requirement.txt
+}
+
 function install_pywsus {
     git clone https://github.com/GoSecure/pywsus.git /opt/tools/pywsus
+    cd /opt/tools/pywsus
+    python3 -m pip install -r requirements.txt
 }
 
 function install_eaphammer {
@@ -911,6 +925,7 @@ function install_default {
     apti cargo
     install_mdcat
     apti p7zip-full
+    apti tor
     apti x11-apps
     apti bat
     apti exa
@@ -1079,6 +1094,7 @@ function adrune {
     install_ldaprelayscan
     install_enum4linuxng
     install_certipy
+    install_modifyCertTemplate
     install_manspider
     install_kerbrute
     install_donpapi
@@ -1091,6 +1107,7 @@ function adrune {
     install_go-windapsearch
     install_netntlmtosilverticket
     install_ShadowCoerce
+    install_pylaps
     install_DPAT
     install_pywerview
     install_acltoolkit
