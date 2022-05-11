@@ -95,7 +95,7 @@ function httpx-lowfruits(){
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 export TZ='Europe/Paris'
-export PATH="$HOME/.poetry/bin:/root/.local/bin/:$PATH"
+export PATH="$HOME/.poetry/bin:/root/.local/bin/:/root/.cargo/bin/:$PATH"
 export GRDIR=/opt/tools/graudit/signatures
 export HISTFILE=/data/.bash_history
 export PROMPT_COMMAND='history -a'

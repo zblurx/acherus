@@ -366,6 +366,10 @@ function install_eos {
     python3 -m pipx install .
 }
 
+function install_hakip2host {
+    go install github.com/hakluke/hakip2host@latest
+}
+
 function install_pywerview {
     git clone https://github.com/the-useless-one/pywerview.git /opt/tools/pywerview
     cd /opt/tools/pywerview
@@ -457,11 +461,15 @@ function install_neo4j {
     touch /usr/share/neo4j/logs/neo4j.log
 }
 
+function install_namemash {
+    git clone https://gist.github.com/11076951.git /opt/tools/namemash
+} 
+
 function install_BloodHound {
     git clone https://github.com/BloodHoundAD/BloodHound /opt/tools/BloodHound
     npm install -g electron-packager
     cd /opt/tools/BloodHound
-    npm install
+    npm install --force
     npm run build:linux
     # apti bloodhound
 
@@ -548,6 +556,12 @@ function install_linkedint {
     pip install -r requirements.txt
 }
 
+function install_fluxion {
+    git clone https://www.github.com/FluxionNetwork/fluxion.git /opt/tools/fluxion
+    cd /opt/tools/fluxion
+    ./fluxion.sh -i
+}
+
 function install_amass {
     # https://github.com/OWASP/Amass
     go install -v github.com/OWASP/Amass/v3/...@latest
@@ -555,6 +569,12 @@ function install_amass {
 
 function install_empire {
     apti powershell-empire
+}
+
+function install_shcheck {
+    git clone https://github.com/santoru/shcheck.git /opt/tools/shcheck
+    cd /opt/tools/shcheck
+    python3 -m pipx install .
 }
 
 function install_gosecretsdump {
@@ -572,6 +592,8 @@ function install_cme {
     apt-get install -y libssl-dev libffi-dev python-dev build-essential
     git clone --recursive https://github.com/byt3bl33d3r/CrackMapExec /opt/tools/CrackMapExec
     cd /opt/tools/CrackMapExec
+    # install ntdsutil module
+    git fetch origin pull/557/head:pull/557 && git merge --no-edit pull/557
     python3 -m pipx install .
 }
 
@@ -678,6 +700,11 @@ function install_bettercap {
     cd /root/go/src/github.com/bettercap/bettercap
     make build
     make install
+    /root/go/bin/bettercap -eval "caplets.update; ui.update; q"
+    sed -i 's/set api.rest.username user/set api.rest.username bettercap/g' /usr/local/share/bettercap/caplets/http-ui.cap
+    sed -i 's/set api.rest.password pass/set api.rest.password bettercap/g' /usr/local/share/bettercap/caplets/http-ui.cap
+    sed -i 's/set api.rest.username user/set api.rest.username bettercap/g' /usr/local/share/bettercap/caplets/https-ui.cap
+    sed -i 's/set api.rest.password pass/set api.rest.password bettercap/g' /usr/local/share/bettercap/caplets/https-ui.cap
 }
 
 function get_adPEAS {
@@ -720,6 +747,10 @@ function install_hashcat {
     wget https://github.com/rarecoil/pantagrule/raw/master/rules/hashesorg.v6/pantagrule.hashorg.v6.popular.rule.gz -O /opt/resources/hashcat_rules/pantagrule.hashorg.v6.popular.rule.gz
 }
 
+function install_whatportis {
+    pip install whatportis
+}
+
 function install_jsbeautifier {
     pip install jsbeautifier
 }
@@ -758,6 +789,7 @@ function install_ssrfmap {
 function install_firefox {
     apti firefox-esr
     apti webext-foxyproxy
+    apti webext-ublock-origin-firefox
     echo "pref(\"gfx.xrender.enabled\", true);" >> /etc/firefox-esr/firefox-esr.js
     mkdir /opt/resources/firefox-extensions
     wget https://addons.mozilla.org/firefox/downloads/file/3862036/firefox_multi_account_containers-8.0.1-fx.xpi -O /opt/resources/firefox-extensions/firefox_multi_account_containers-8.0.1-fx.xpi
@@ -807,10 +839,15 @@ function install_mfdread {
 }
 
 function install_rustscan {
-    cd /tmp
-    wget https://github.com/RustScan/RustScan/releases/download/2.0.1/rustscan_2.0.1_amd64.deb
-    DEBIAN_FRONTEND=noninteractive dpkg -i /tmp/rustscan_2.0.1_amd64.deb
-    rm /tmp/rustscan_2.0.1_amd64.deb
+    cargo install rustscan
+}
+
+function install_htmlq {
+    cargo install htmlq
+}
+
+function install_mdcat {
+    cargo install mdcat
 }
 
 function cleanup {
@@ -848,6 +885,7 @@ function install_default {
     apti tree
     apti less
     apti vim
+    apti nano
     apti less 
     apti original-awk 
     apti ssh 
@@ -865,16 +903,21 @@ function install_default {
     apti ftp
     apti iproute2
     apti binwalk
+    apti isc-dhcp-client
     install_firefox
     apti chromium
     apti locate
     apti ascii
+    apti cargo
+    install_mdcat
     apti p7zip-full
     apti x11-apps
     apti bat
     apti exa
     apti ripgrep
     apti delta
+    apti rdate
+    apti socat
     install_funiq
     apti python3.9-venv
     pip install pipx
@@ -884,6 +927,7 @@ function install_default {
 
 function utilsrune {
     install_arsenal
+    install_whatportis
     install_ressources
     install_DefaultCredsCheatSheet
 }
@@ -921,7 +965,9 @@ function codereviewrune {
 function webrune {
     install_ffuf
     install_gobuster
+    apti cewl
     install_nuclei
+    install_shcheck
     install_subfinder
     install_httpx
     install_testssl
@@ -934,8 +980,10 @@ function webrune {
     install_fff
     install_meg
     install_unfurl
+    install_htmlq
     install_waybackurls
     install_jsloot
+    install_hakip2host
     install_authz0
     install_brb
     install_sqlmap
@@ -976,6 +1024,7 @@ function networkrune {
     apti masscan
     apti traceroute
     apti openvpn
+    apti openresolv
     install_mapcidr
     apti ipcalc
     install_bettercap
@@ -1007,6 +1056,7 @@ function adrune {
     pip3 install pypykatz
     install_krbrelayx
     install_pkinittools
+    install_namemash
     install_mitm6
     install_Responder
     install_pywhisker
@@ -1059,6 +1109,7 @@ function wifirune {
     apti cowpatty
     apti hostapd-wpe
     apti hcxtools
+    apti hcxdumptool
     install_eaphammer
 }
 
