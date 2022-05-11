@@ -763,6 +763,7 @@ function install_hashcat {
 
 function install_whatportis {
     pip install whatportis
+    echo y | whatportis --update
 }
 
 function install_jsbeautifier {
