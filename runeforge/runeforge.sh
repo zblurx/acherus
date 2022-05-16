@@ -889,6 +889,8 @@ function install_default {
     apti npm
     apti python3-pip
     apti python-is-python3
+    apti python3.10-venv
+    apti bpython
     apti php
     apti gem
     apti virtualenv
@@ -919,9 +921,10 @@ function install_default {
     apti iproute2
     apti binwalk
     apti isc-dhcp-client
+    apti python3.10-venv
     install_firefox
     apti chromium
-    apti locate
+    apti mlocate
     apti ascii
     apti cargo
     install_mdcat
