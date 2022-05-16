@@ -24,7 +24,7 @@ This project is a low-cost [Exegol](https://github.com/ShutdownRepo/Exegol), I'm
 To install acherus binary, type the command below.
 
 ```
-$ go install github.com/zblurx/acherus
+go install github.com/zblurx/acherus@latest
 ```
 
 *Note: Make sure that your go binary path is in your **PATH** variable !*
