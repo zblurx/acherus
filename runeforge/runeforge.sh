@@ -781,6 +781,12 @@ function install_ysoserial {
     wget https://jitpack.io/com/github/frohoff/ysoserial/master-SNAPSHOT/ysoserial-master-SNAPSHOT.jar -O /opt/tools/ysoserial/ysoserial.jar
 }
 
+function install_dploot {
+    git clone https://github.com/zblurx/dploot /opt/tools/dploot
+    cd dploot
+    python3 -m pipx install .
+}
+
 function install_enum4linuxng {
     git clone https://github.com/cddmp/enum4linux-ng.git /opt/tools/enum4linux-ng
     cd /opt/tools/enum4linux-ng
@@ -1111,6 +1117,7 @@ function adrune {
     install_go-windapsearch
     install_netntlmtosilverticket
     install_ShadowCoerce
+    install_dploot
     install_pylaps
     install_DPAT
     install_pywerview
