@@ -372,6 +372,12 @@ function install_hakip2host {
     go install github.com/hakluke/hakip2host@latest
 }
 
+function install_bypass403 {
+    git clone https://github.com/iamj0ker/bypass-403 /opt/tools/bypass-403
+    chmod +x /opt/tools/bypass-403/bypass-403.sh
+    apti figlet
+}
+
 function install_pywerview {
     git clone https://github.com/the-useless-one/pywerview.git /opt/tools/pywerview
     cd /opt/tools/pywerview
@@ -783,7 +789,7 @@ function install_ysoserial {
 
 function install_dploot {
     git clone https://github.com/zblurx/dploot /opt/tools/dploot
-    cd dploot
+    cd /opt/tools/dploot
     python3 -m pipx install .
 }
 
@@ -1021,6 +1027,7 @@ function webrune {
     install_simplehttpserver
     install_eos
     apti sslscan
+    install_bypass403
     install_cookiemonster
     install_proxify
     install_jsbeautifier
