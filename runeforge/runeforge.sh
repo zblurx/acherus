@@ -4,6 +4,7 @@
 function init_acherus {
     mkdir /opt/tools/
     mkdir /opt/resources/
+    mkdir /opt/tools/gists/
     mkdir /data
 }
 
@@ -307,6 +308,7 @@ function install_ressources {
     get_last_git_release antonioCoco/RogueWinRM RogueWinRM
     get_last_git_release gentilkiwi/kekeo kekeo
     get_last_git_release adrecon/ADRecon ADRecon
+    git clone https://github.com/samratashok/ADModule.git /opt/resources/ADModule
     get_last_git_release AlessandroZ/LaZagne LaZagne
     get_last_git_release DominicBreuker/pspy pspy
     get_last_git_release NetSPI/PowerUpSQL PowerUPSQL
@@ -381,7 +383,8 @@ function install_bypass403 {
 function install_pywerview {
     git clone https://github.com/the-useless-one/pywerview.git /opt/tools/pywerview
     cd /opt/tools/pywerview
-    python3 -m pipx install .
+    apti libkrb5-dev
+    python3 -m pipx install pywerview --include-deps --pip-args dsinternals
 }
 
 function install_firefed {
@@ -430,6 +433,16 @@ function install_modifyCertTemplate {
     git clone https://github.com/fortalice/modifyCertTemplate.git /opt/tools/modifyCertTemplate
     cd /opt/tools/modifyCertTemplate
     python3 -m pip install -r requirement.txt
+}
+
+function install_gists {
+    # esc8fuzzer.py - https://gist.github.com/zblurx/99fe1971562593fd1211931bdc979fbb
+    git clone https://gist.github.com/99fe1971562593fd1211931bdc979fbb.git /opt/tools/gists/esc8fuzzer
+    chmod +x /opt/tools/gists/esc8fuzzer/esc8fuzzer.py
+
+    # namemash.py - https://gist.github.com/superkojiman/11076951
+    git clone https://gist.github.com/11076951.git /opt/tools/gists/namemash
+    chmod +x /opt/tools/gists/namemash/namemash.py
 }
 
 function install_pywsus {
@@ -582,9 +595,27 @@ function install_fluxion {
     ./fluxion.sh -i
 }
 
+function install_xLinkFinder {
+    git clone https://github.com/xnl-h4ck3r/xnLinkFinder.git /opt/tools/xnLinkFinder
+    cd /opt/tools/xnLinkFinder
+    python3 -m pipx install .
+}
+
+function install_ntdsutil.py {
+    git clone https://github.com/zblurx/ntdsutil.py.git /opt/tools/ntdsutil.py
+    cd /opt/tools/ntdsutil.py
+    python3 -m pipx install .
+}
+
 function install_amass {
     # https://github.com/OWASP/Amass
     go install -v github.com/OWASP/Amass/v3/...@latest
+}
+
+function install_semgrep {
+    git clone https://github.com/returntocorp/semgrep.git /opt/tools/semgrep
+    cd /opt/tools/semgrep
+    python3 -m pipx install semgrep
 }
 
 function install_empire {
@@ -599,6 +630,13 @@ function install_shcheck {
 
 function install_gosecretsdump {
     go install -v github.com/C-Sto/gosecretsdump@latest
+}
+
+function install_sliver {
+    git clone https://github.com/BishopFox/sliver.git /opt/tools/sliver
+    cd /opt/tools/sliver
+    ./go-assets.sh
+    make
 }
 
 function install_impacket {
@@ -949,6 +987,7 @@ function install_default {
     apti delta
     apti rdate
     apti socat
+    apti ntpdate
     install_funiq
     apti python3.9-venv
     pip install pipx
@@ -961,6 +1000,7 @@ function utilsrune {
     install_whatportis
     install_ressources
     install_DefaultCredsCheatSheet
+    install_gists
 }
 
 function crackrune {
@@ -974,6 +1014,7 @@ function crackrune {
 
 function exploitrune {
     install_msf
+    install_sliver
     install_pwncat
     apti exploitdb 
     install_empire
@@ -991,6 +1032,7 @@ function codereviewrune {
     apti cloc
     install_Vulny-Code-Static-Analysis
     install_graudit
+    install_semgrep
 }
 
 function webrune {
@@ -1031,6 +1073,7 @@ function webrune {
     install_cookiemonster
     install_proxify
     install_jsbeautifier
+    install_xLinkFinder
     install_altdns
     install_hakrevdns
     install_shuffledns
@@ -1130,6 +1173,7 @@ function adrune {
     install_pywerview
     install_acltoolkit
     install_kutil
+    install_ntdsutil.py
     install_ldapsearch-ad
     install_ADReaper
 }
