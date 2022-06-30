@@ -211,10 +211,6 @@ function install_procdump {
     git clone https://github.com/Sysinternals/ProcDump-for-Linux.git
 }
 
-function install_proxify {
-    go install -v github.com/projectdiscovery/proxify/cmd/proxify@latest
-}
-
 function install_pywhisker {
     git clone https://github.com/ShutdownRepo/pywhisker.git /opt/tools/pywhisker
     cd /opt/tools/pywhisker 
@@ -305,9 +301,7 @@ function install_ressources {
     get_last_git_release itm4n/PrintSpoofer PrintSpoofer
     get_last_git_release antonioCoco/RoguePotato RoguePotato
     get_last_git_release antonioCoco/RemotePotato0 RemotePotato0
-    get_last_git_release antonioCoco/RogueWinRM RogueWinRM
     get_last_git_release gentilkiwi/kekeo kekeo
-    get_last_git_release adrecon/ADRecon ADRecon
     git clone https://github.com/samratashok/ADModule.git /opt/resources/ADModule
     get_last_git_release AlessandroZ/LaZagne LaZagne
     get_last_git_release DominicBreuker/pspy pspy
@@ -318,11 +312,7 @@ function install_ressources {
     git clone https://github.com/PowerShellMafia/PowerSploit.git /opt/resources/PowerSploit
     git clone https://github.com/int0x33/nc.exe.git /opt/resources/nc/windows
     git clone https://github.com/pry0cc/relevant-wordlist.git /opt/resources/relevant-wordlist
-    install_procdump
-    get_ad_explorer
-    get_procmon
-    get_pstools
-    get_adPEAS
+    install_sysinternals
     git clone https://github.com/samratashok/nishang.git /opt/resources/nishang
     mkdir /opt/resources/clem9669_wordlist/ && wget https://github.com/clem9669/wordlists/releases/download/22/clem9669_wordlist_small.7z -O /opt/resources/clem9669_wordlist/wordlist-french.7z
     get_last_git_release vletoux/pingcastle PingCastle
@@ -344,24 +334,6 @@ function install_authz0 {
 
 function install_ipinfo {
     GO111MODULE=off go get github.com/ipinfo/cli/ipinfo
-}
-
-function get_ad_explorer {
-    mkdir /opt/resources/AdExplorer
-    cd /opt/resources/AdExplorer
-    wget https://download.sysinternals.com/files/AdExplorer.zip
-}
-
-function get_procmon {
-    mkdir /opt/resources/procmon
-    cd /opt/resources/procmon
-    wget https://download.sysinternals.com/files/ProcessMonitor.zip
-}
-
-function get_pstools {
-    mkdir /opt/resources/pstools
-    cd /opt/resources/pstools
-    wget https://download.sysinternals.com/files/PSTools.zip
 }
 
 function install_eos {
@@ -387,10 +359,6 @@ function install_pywerview {
     python3 -m pipx install pywerview --include-deps --pip-args dsinternals
 }
 
-function install_firefed {
-    pip install firefed --upgrade 
-}
-
 function install_kutil {
     git clone https://github.com/qtc-de/kutil.git /opt/tools/kutil
     cd /opt/tools/kutil
@@ -399,16 +367,6 @@ function install_kutil {
 
 function install_pylaps {
     git clone https://github.com/p0dalirius/pyLAPS.git /opt/tools/pyLAPS
-}
-
-function install_ldapsearch-ad {
-    git clone https://github.com/yaap7/ldapsearch-ad.git /opt/tools/ldapsearch-ad
-    cd /opt/tools/ldapsearch-ad
-    python3 -m pip install -r requirements.txt
-}
-
-function install_altdns {
-    pip3 install py-altdns==1.0.2
 }
 
 function install_cve-2019-1040-scanner {
@@ -466,11 +424,6 @@ function install_jwttool {
     python3 -m pip install termcolor cprint pycryptodomex requests
 }
 
-function install_jndi-exploit-kit {
-    mkdir /opt/tools/JNDI-Exploit-Kit
-    wget https://github.com/pimps/JNDI-Exploit-Kit/raw/master/target/JNDI-Exploit-Kit-1.0-SNAPSHOT-all.jar -O /opt/tools/JNDI-Exploit-Kit/JNDI-Exploit-Kit.jar
-}
-
 function install_acltoolkit {
     git clone https://github.com/zblurx/acltoolkit.git /opt/tools/acltoolkit
     cd /opt/tools/acltoolkit
@@ -493,10 +446,6 @@ function install_neo4j {
     mkdir -p /usr/share/neo4j/logs/
     touch /usr/share/neo4j/logs/neo4j.log
 }
-
-function install_namemash {
-    git clone https://gist.github.com/11076951.git /opt/tools/namemash
-} 
 
 function install_BloodHound {
     git clone https://github.com/BloodHoundAD/BloodHound /opt/tools/BloodHound
@@ -530,16 +479,6 @@ function install-bloodhound-quickwin {
     pip3 install prettytable
     git clone https://github.com/kaluche/bloodhound-quickwin.git /opt/tools/bloodhound-quickwin
 
-}
-
-function install_adconnectdump {
-    git clone https://github.com/fox-it/adconnectdump /opt/tools/adconnectdump
-}
-
-function install_wifite2 {
-    git clone https://github.com/derv82/wifite2.git /opt/tools/wifite2
-    cd /opt/tools/wifite2
-    python3 -m pipx install .
 }
 
 function install_chisel {
@@ -589,12 +528,6 @@ function install_linkedint {
     pip install -r requirements.txt
 }
 
-function install_fluxion {
-    git clone https://www.github.com/FluxionNetwork/fluxion.git /opt/tools/fluxion
-    cd /opt/tools/fluxion
-    ./fluxion.sh -i
-}
-
 function install_xLinkFinder {
     git clone https://github.com/xnl-h4ck3r/xnLinkFinder.git /opt/tools/xnLinkFinder
     cd /opt/tools/xnLinkFinder
@@ -628,10 +561,6 @@ function install_shcheck {
     python3 -m pipx install .
 }
 
-function install_gosecretsdump {
-    go install -v github.com/C-Sto/gosecretsdump@latest
-}
-
 function install_sliver {
     git clone https://github.com/BishopFox/sliver.git /opt/tools/sliver
     cd /opt/tools/sliver
@@ -650,16 +579,7 @@ function install_cme {
     apt-get install -y libssl-dev libffi-dev python-dev build-essential
     git clone --recursive https://github.com/byt3bl33d3r/CrackMapExec /opt/tools/CrackMapExec
     cd /opt/tools/CrackMapExec
-    # install ntdsutil module
-    git fetch origin pull/557/head:pull/557 && git merge --no-edit pull/557
     python3 -m pipx install .
-}
-
-function install_go-windapsearch {
-    git clone https://github.com/ropnop/go-windapsearch.git /opt/tools/go-windapsearch 
-    cd /opt/tools/go-windapsearch 
-    go install -v github.com/magefile/mage@latest
-    /root/go/bin/mage build
 }
 
 function install_proxmark3 {
@@ -711,10 +631,6 @@ function install_truffleHog {
     go install
 }
 
-function install_vulscan  {
-    git clone https://github.com/scipag/vulscan.git /usr/share/nmap/scripts/vulscan
-}
-
 function install_hike {
     go install -v github.com/zblurx/hike@latest
 }
@@ -743,10 +659,20 @@ function install_ShadowCoerce {
     git clone https://github.com/ShutdownRepo/ShadowCoerce.git /opt/tools/ShadowCoerce
 }
 
-function install_ADExplorerSnapshot {
-    git clone https://github.com/c3c/ADExplorerSnapshot.py.git /opt/tools/ADExplorerSnapshot.py
-    cd /opt/tools/ADExplorerSnapshot.py
-    python3 -m pipx install .
+function install_garble {
+    go install mvdan.cc/garble@latest
+}
+
+function install_gobfuscate {
+    GO111MODULE=off go get -u github.com/unixpickle/gobfuscate
+}
+
+function install_uro {
+    pip3 install uro
+}
+
+function install_arjun {
+    pip3 install arjun
 }
 
 function install_bettercap {
@@ -765,10 +691,6 @@ function install_bettercap {
     sed -i 's/set api.rest.password pass/set api.rest.password bettercap/g' /usr/local/share/bettercap/caplets/https-ui.cap
 }
 
-function get_adPEAS {
-    git clone https://github.com/61106960/adPEAS.git /opt/resources/adPEAS
-}
-
 function install_powershell {
     wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb -O /tmp/packages-microsoft-prod.deb
     dpkg -i /tmp/packages-microsoft-prod.deb
@@ -784,10 +706,6 @@ function install_msf {
     apti metasploit-framework
     service postgresql start
     msfdb init
-}
-
-function install_graudit {
-    git clone https://github.com/wireghoul/graudit.git /opt/tools/graudit
 }
 
 function install_ADReaper {
@@ -831,12 +749,6 @@ function install_dploot {
     python3 -m pipx install .
 }
 
-function install_enum4linuxng {
-    git clone https://github.com/cddmp/enum4linux-ng.git /opt/tools/enum4linux-ng
-    cd /opt/tools/enum4linux-ng
-    pip install -r requirements.txt
-}
-
 function install_hakrawler {
     go install github.com/hakluke/hakrawler@latest
 }
@@ -851,6 +763,19 @@ function install_ssrfmap {
     pip3 install -r requirements.txt
 }
 
+function install_ghidra {
+    apti openjdk-11-jdk
+    mkdir /opt/tools/ghidra
+    cd /opt/tools/ghidra
+    curl --silent "https://api.github.com/repos/NationalSecurityAgency/releases/latest" | jq ".assets[] | .browser_download_url" | xargs wget 
+}
+
+function install_volatility {
+    git clone https://github.com/volatilityfoundation/volatility3.git /opt/tools/volatility3
+    cd /opt/tools/volatility3
+    python3 -m pipx install .
+}
+
 function install_firefox {
     apti firefox-esr
     apti webext-foxyproxy
@@ -861,10 +786,6 @@ function install_firefox {
     # user_pref("browser.urlbar.placeholderName", "DuckDuckGo");
     # user_pref("browser.slowStartup.samples", 3);
     # user_pref("browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts.havePinned", "duckduckgo");
-}
-
-function install_Vulny-Code-Static-Analysis {
-    git clone https://github.com/swisskyrepo/Vulny-Code-Static-Analysis.git /opt/tools/Vulny-Code-Static-Analysis
 }
 
 function install_onionsearch {
@@ -883,7 +804,6 @@ function install_BloodHound_and_friends {
     install_aclpwn
     install-bloodhound-quickwin
     install_bloodhound-import
-    install_ADExplorerSnapshot
     install_cypheroth
     install_fbhq
 }
@@ -968,13 +888,15 @@ function install_default {
     apti screen
     apti faketime
     apti ftp
+    install_gron
+    install_anew
     apti iproute2
     apti binwalk
     apti isc-dhcp-client
-    apti python3.10-venv
     install_firefox
     apti chromium
     apti mlocate
+    apti feh
     apti ascii
     apti cargo
     install_mdcat
@@ -983,8 +905,6 @@ function install_default {
     apti x11-apps
     apti bat
     apti exa
-    apti ripgrep
-    apti delta
     apti rdate
     apti socat
     apti ntpdate
@@ -1006,10 +926,10 @@ function utilsrune {
 function crackrune {
     install_hashcat
     apti hydra
-    apti john
     pip3 install name-that-hash
     apti hashcat-utils
     apti pack
+    apti cewl
 }
 
 function exploitrune {
@@ -1030,15 +950,12 @@ function osintrune {
 
 function codereviewrune {
     apti cloc
-    install_Vulny-Code-Static-Analysis
-    install_graudit
     install_semgrep
 }
 
 function webrune {
     install_ffuf
     install_gobuster
-    apti cewl
     install_nuclei
     install_shcheck
     install_subfinder
@@ -1048,16 +965,16 @@ function webrune {
     install_ipcdn
     install_amass
     install_assetfinder
-    install_gron
-    install_anew
     install_fff
     install_meg
     install_unfurl
     install_htmlq
     install_waybackurls
     install_jsloot
+    install_ssrfmap
     install_hakip2host
     install_authz0
+    install_ysoserial
     install_brb
     install_sqlmap
     install_gau
@@ -1066,27 +983,28 @@ function webrune {
     install_fuxploider
     apti whatweb
     install_hakrawler
+    install_arjun
+    install_uro
     install_simplehttpserver
     install_eos
     apti sslscan
     install_bypass403
     install_cookiemonster
-    install_proxify
     install_jsbeautifier
     install_xLinkFinder
-    install_altdns
     install_hakrevdns
     install_shuffledns
     install_gf
     install_hike
+    install_phpgcc
     install_dnsx
     install_jwttool
-    install_jndi-exploit-kit
+    install_gobfuscate
+    install_garble
 }
 
 function networkrune {
     apti nmap
-    install_vulscan
     apti netdiscover
     apti iptables
     apti arp-scan
@@ -1119,10 +1037,8 @@ function adrune {
     install_powershell
     apti smbclient
     apti smbmap
-    apti enum4linux
     apti rpcbind
     apti chntpw
-    install_gosecretsdump
     apti nbtscan
     install_evil-winrm
     install_pth_toolkit
@@ -1131,12 +1047,12 @@ function adrune {
     pip3 install pypykatz
     install_krbrelayx
     install_pkinittools
-    install_namemash
     install_mitm6
     install_Responder
     install_pywhisker
     install_targetedKerberoast
     install_LDAPmonitor
+    install_gMSADumper
     install_chisel
     install_petitpotam
     pip install adidnsdump
@@ -1156,15 +1072,13 @@ function adrune {
     install_certipy
     install_modifyCertTemplate
     install_manspider
+    install_pywsus
     install_kerbrute
     install_donpapi
     install_webclientservicescanner
     install_cve-2019-1040-scanner
-    install_firefed
-    install_adconnectdump
     install_roadrecon
     apti heimdal-clients
-    install_go-windapsearch
     install_netntlmtosilverticket
     install_ShadowCoerce
     install_dploot
@@ -1174,22 +1088,23 @@ function adrune {
     install_acltoolkit
     install_kutil
     install_ntdsutil.py
-    install_ldapsearch-ad
     install_ADReaper
 }
 
 function wifirune {
     apti wireless-tools
-    install_wifite2
     apti iw
     apti aircrack-ng
     apti reaver
-    apti bully
-    apti cowpatty
     apti hostapd-wpe
     apti hcxtools
     apti hcxdumptool
     install_eaphammer
+}
+
+function reverserune {
+    install_volatility
+    install_ghidra
 }
 
 function rfidrune {
@@ -1212,6 +1127,7 @@ function everyrunes {
     osintrune
     webrune
     networkrune
+    reverserune
     exploitrune
     crackrune
     voiprune

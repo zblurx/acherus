@@ -1,6 +1,6 @@
 FROM kalilinux/kali-rolling
 
-LABEL version=1.0.3
+LABEL version=1.1.0
 LABEL maintainer=@zblurx
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -24,6 +24,7 @@ RUN /runeforge/runeforge.sh  adrune
 RUN /runeforge/runeforge.sh  wifirune
 RUN /runeforge/runeforge.sh  rfidrune
 RUN /runeforge/runeforge.sh  codereviewrune
+RUN /runeforge/runeforge.sh  reverserune
 RUN /runeforge/runeforge.sh  cleanup
 
 WORKDIR /data
