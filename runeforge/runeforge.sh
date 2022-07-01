@@ -576,7 +576,7 @@ function install_impacket {
 }
 
 function install_cme {
-    apt-get install -y libssl-dev libxml2-dev openssl autoconf g++ python3-dev git libxslt-dev libffi-dev python-dev build-essential libkrb5-dev
+    apt-get install -y libssl-dev libxml2-dev openssl autoconf g++ python3-dev git libxslt-dev libffi-dev build-essential libkrb5-dev
     git clone --recursive https://github.com/byt3bl33d3r/CrackMapExec /opt/tools/CrackMapExec
     cd /opt/tools/CrackMapExec
     python3 -m pipx install .
