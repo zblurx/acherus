@@ -767,7 +767,7 @@ function install_ghidra {
     apti openjdk-11-jdk
     mkdir /opt/tools/ghidra
     cd /opt/tools/ghidra
-    curl --silent "https://api.github.com/repos/NationalSecurityAgency/releases/latest" | jq ".assets[] | .browser_download_url" | xargs wget 
+    curl --silent "https://api.github.com/repos/NationalSecurityAgency/ghidra/releases/latest" | jq ".assets[] | .browser_download_url" | xargs wget 
 }
 
 function install_volatility {
