@@ -409,6 +409,10 @@ function install_pywsus {
     python3 -m pip install -r requirements.txt
 }
 
+function install_gospider {
+    go install github.com/jaeles-project/gospider@latest
+}
+
 function install_eaphammer {
     git clone https://github.com/s0lst1c3/eaphammer.git /opt/tools/eaphammer
     cd /opt/tools/eaphammer
@@ -749,8 +753,8 @@ function install_dploot {
     python3 -m pipx install .
 }
 
-function install_hakrawler {
-    go install github.com/hakluke/hakrawler@latest
+function install_dumpsmbshare {
+    git clone https://github.com/p0dalirius/DumpSMBShare.git /opt/tools/DumpSMBShare
 }
 
 function install_cookiemonster {
@@ -774,6 +778,11 @@ function install_volatility {
     git clone https://github.com/volatilityfoundation/volatility3.git /opt/tools/volatility3
     cd /opt/tools/volatility3
     python3 -m pipx install .
+}
+
+function install_veil {
+    apt -y install veil
+    /usr/share/veil/config/setup.sh --force --silent
 }
 
 function install_firefox {
@@ -938,6 +947,7 @@ function exploitrune {
     install_pwncat
     apti exploitdb 
     install_empire
+    install_routersploit
 }
 
 function osintrune {
@@ -982,7 +992,7 @@ function webrune {
     install_truffleHog
     install_fuxploider
     apti whatweb
-    install_hakrawler
+    install_gospider
     install_arjun
     install_uro
     install_simplehttpserver
@@ -1038,6 +1048,7 @@ function adrune {
     apti smbclient
     apti smbmap
     apti rpcbind
+    install_veil
     apti chntpw
     apti nbtscan
     install_evil-winrm
@@ -1066,13 +1077,13 @@ function adrune {
     install_zerologon
     apti rdesktop
     install_ntlmv1-multi
-    install_routersploit
     install_ldaprelayscan
     install_enum4linuxng
     install_certipy
     install_modifyCertTemplate
     install_manspider
     install_pywsus
+    install_dumpsmbshare
     install_kerbrute
     install_donpapi
     install_webclientservicescanner
