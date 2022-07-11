@@ -346,10 +346,8 @@ function install_hakip2host {
     go install github.com/hakluke/hakip2host@latest
 }
 
-function install_bypass403 {
-    git clone https://github.com/iamj0ker/bypass-403 /opt/tools/bypass-403
-    chmod +x /opt/tools/bypass-403/bypass-403.sh
-    apti figlet
+function install_bypass-url-parser {
+    git clone https://github.com/laluka/bypass-url-parser.git /opt/tools/bypass-url-parser
 }
 
 function install_pywerview {
@@ -516,6 +514,10 @@ function install_gau {
     go install github.com/lc/gau/v2/cmd/gau@latest
 }
 
+function install_coercer {
+    git clone https://github.com/p0dalirius/Coercer.git /opt/tools/Coercer
+}
+
 function install_gf {
     GO111MODULE=off go get -v github.com/tomnomnom/gf
     echo 'source /root/go/src/github.com/tomnomnom/gf/gf-completion.bash' >> ~/.bashrc
@@ -557,6 +559,36 @@ function install_semgrep {
 
 function install_empire {
     apti powershell-empire
+}
+
+function fix_openssl {
+
+    sed -i '/.include \/etc\/ssl\/kali.cnf/d' /etc/ssl/openssl.cnf
+    sed -i '/\[default_conf\]/d' /etc/ssl/openssl.cnf
+    sed -i '/ssl_conf = ssl_sect/d' /etc/ssl/openssl.cnf
+    sed -i '/\[ssl_sect\]/d' /etc/ssl/openssl.cnf
+    sed -i '/system_default = kali_wide_compatibility/d' /etc/ssl/openssl.cnf
+
+    echo '' >> /etc/ssl/openssl.cnf
+    echo '[default_conf]' >> /etc/ssl/openssl.cnf
+    echo 'ssl_conf = ssl_sect' >> /etc/ssl/openssl.cnf
+    echo 'providers = provider_sect' >> /etc/ssl/openssl.cnf
+    echo '' >> /etc/ssl/openssl.cnf
+    echo '[provider_sect]' >> /etc/ssl/openssl.cnf
+    echo 'default = default_sect' >> /etc/ssl/openssl.cnf
+    echo 'legacy = legacy_sect' >> /etc/ssl/openssl.cnf
+    echo '' >> /etc/ssl/openssl.cnf
+    echo '[default_sect]' >> /etc/ssl/openssl.cnf
+    echo 'activate = 1' >> /etc/ssl/openssl.cnf
+    echo '' >> /etc/ssl/openssl.cnf
+    echo '[legacy_sect]' >> /etc/ssl/openssl.cnf
+    echo 'activate = 1' >> /etc/ssl/openssl.cnf
+    echo '' >> /etc/ssl/openssl.cnf
+    echo '[ssl_sect]' >> /etc/ssl/openssl.cnf
+    echo 'system_default = kali_wide_compatibility' >> /etc/ssl/openssl.cnf
+    echo '' >> /etc/ssl/openssl.cnf
+    echo '.include /etc/ssl/kali.cnf' >> /etc/ssl/openssl.cnf
+
 }
 
 function install_shcheck {
@@ -859,6 +891,7 @@ function install_default {
     apti bash-completion
     install_sudo
     apti openssl
+    fix_openssl
     apti ca-certificates
     apti wget 
     apti curl
@@ -998,7 +1031,7 @@ function webrune {
     install_simplehttpserver
     install_eos
     apti sslscan
-    install_bypass403
+    install_bypass-url-parser
     install_cookiemonster
     install_jsbeautifier
     install_xLinkFinder
@@ -1050,6 +1083,7 @@ function adrune {
     apti rpcbind
     install_veil
     apti chntpw
+    install_coercer
     apti nbtscan
     install_evil-winrm
     install_pth_toolkit
