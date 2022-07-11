@@ -1,6 +1,6 @@
 FROM kalilinux/kali-rolling
 
-LABEL version=1.1.0
+LABEL version=1.1.1
 LABEL maintainer=@zblurx
 
 ENV DEBIAN_FRONTEND noninteractive
