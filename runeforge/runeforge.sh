@@ -485,6 +485,10 @@ function install_donpapi {
     python3 -m pip install -r requirements.txt
 }
 
+function install_graudit {
+    git clone https://github.com/wireghoul/graudit.git /opt/tools/graudit
+}
+
 function install_holehe {
     git clone https://github.com/megadose/holehe.git /opt/tools/holehe
     cd /opt/tools/holehe
@@ -539,12 +543,6 @@ function install_ntdsutil.py {
 function install_amass {
     # https://github.com/OWASP/Amass
     go install -v github.com/OWASP/Amass/v3/...@latest
-}
-
-function install_semgrep {
-    git clone https://github.com/returntocorp/semgrep.git /opt/tools/semgrep
-    cd /opt/tools/semgrep
-    python3 -m pipx install semgrep
 }
 
 function install_empire {
@@ -967,7 +965,7 @@ function osintrune {
 
 function codereviewrune {
     apti cloc
-    install_semgrep
+    install_graudit
 }
 
 function webrune {
