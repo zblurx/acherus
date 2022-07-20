@@ -224,10 +224,6 @@ function install_zerologon {
     pip install -r requirements.txt
 }
 
-function install_printnightmare {
-    git clone https://github.com/cube0x0/CVE-2021-1675.git /opt/tools/printnightmare
-}
-
 function install_targetedKerberoast {
     git clone https://github.com/ShutdownRepo/targetedKerberoast.git /opt/tools/targetedKerberoast
     cd /opt/tools/targetedKerberoast && python3 -m pip install -r requirements.txt
@@ -283,8 +279,8 @@ function install_sysinternals {
 }
 
 function install_ressources {
-    git clone https://github.com/danielmiessler/SecLists.git /opt/resources/SecLists
-    git clone https://github.com/six2dez/OneListForAll.git /opt/resources/OneListForAll
+    git clone https://github.com/danielmiessler/SecLists.git --depth 1 /opt/resources/SecLists
+    git clone https://github.com/six2dez/OneListForAll.git --depth 1 /opt/resources/OneListForAll
     git clone https://github.com/carlospolop/PEASS-ng.git /opt/resources/PEASS-ng
     git clone https://github.com/itm4n/PrivescCheck.git /opt/resources/PrivescCheck
     get_last_git_release gentilkiwi/mimikatz mimikatz
@@ -432,12 +428,17 @@ function install_neo4j {
 }
 
 function install_BloodHound {
-    git clone https://github.com/BloodHoundAD/BloodHound /opt/tools/BloodHound
-    npm install -g electron-packager
-    cd /opt/tools/BloodHound
-    npm install --force
-    npm run build:linux
+    # git clone https://github.com/BloodHoundAD/BloodHound /opt/tools/BloodHound
+    # npm install -g electron-packager
+    # cd /opt/tools/BloodHound
+    # npm install --force
+    # npm run build:linux
+
     # apti bloodhound
+    mkdir /opt/tools/BloodHound
+    cd /opt/tools/BloodHound
+    curl --silent "https://api.github.com/repos/BloodHoundAD/BloodHound/releases/latest" | jq ".assets[] | .browser_download_url" | grep linux-x64 | xargs wget
+    unzip BloodHound-linux-x64.zip && rm BloodHound-linux-x64.zip
 
     # install config
     mkdir -p ~/.config/bloodhound/
@@ -621,12 +622,6 @@ function install_fzf {
     ~/.fzf/install --all
 }
 
-function install_pwncat {
-    git clone https://github.com/calebstewart/pwncat.git /opt/tools/pwncat
-    cd /opt/tools/pwncat
-    python3 -m pipx install .
-}
-
 function install_certipy {
     git clone https://github.com/ly4k/Certipy.git /opt/tools/Certipy
     cd /opt/tools/Certipy
@@ -735,6 +730,7 @@ function install_hashcat {
     wget https://raw.githubusercontent.com/NotSoSecure/password_cracking_rules/master/OneRuleToRuleThemAll.rule -O /opt/resources/hashcat_rules/OneRuleToRuleThemAll.rule
     wget https://raw.githubusercontent.com/NSAKEY/nsa-rules/master/_NSAKEY.v2.dive.rule -O /opt/resources/hashcat_rules/nsa_dive.rule
     wget https://github.com/rarecoil/pantagrule/raw/master/rules/hashesorg.v6/pantagrule.hashorg.v6.popular.rule.gz -O /opt/resources/hashcat_rules/pantagrule.hashorg.v6.popular.rule.gz
+    apti hashcat-utils
 }
 
 function install_whatportis {
@@ -853,6 +849,7 @@ function cleanup {
     apt-get upgrade -y
     apt-get autoremove -y
     apt-get clean
+    go clean --cache
     updatedb
 }
 
@@ -887,7 +884,6 @@ function install_default {
     apti tree
     apti less
     apti vim
-    apti nano
     apti less 
     apti original-awk 
     apti ssh 
@@ -900,7 +896,6 @@ function install_default {
     apti dnsutils
     apti usbutils
     apti telnet
-    apti screen
     apti faketime
     apti ftp
     install_gron
@@ -942,7 +937,6 @@ function crackrune {
     install_hashcat
     apti hydra
     pip3 install name-that-hash
-    apti hashcat-utils
     apti pack
     apti cewl
 }
@@ -950,7 +944,6 @@ function crackrune {
 function exploitrune {
     install_msf
     install_sliver
-    install_pwncat
     apti exploitdb 
     install_empire
 }
@@ -1077,7 +1070,6 @@ function adrune {
     install_privexchange
     install_changeme
     pip3 install pivotnacci
-    install_printnightmare
     install_zerologon
     apti rdesktop
     install_ntlmv1-multi
