@@ -1,0 +1,65 @@
+# https://github.com/ffuf/ffuf
+
+[http]
+    followredirects = false
+    method = "GET"
+    recursion = false
+    recursion_depth = 0
+    recursion_strategy = "default"
+    timeout = 10
+
+[general]
+    autocalibration = false
+    autocalibrationstrings = [
+        "randomtest",
+        "admin"
+    ]
+    autocalibration_strategy = "basic"
+    autocalibration_keyword = "FUZZ"
+    autocalibration_perhost = false
+    colors = true
+    delay = ""
+    maxtime = 0
+    maxtimejob = 0
+    noninteractive = false
+    quiet = false
+    rate = 0
+    stopon403 = false
+    stoponall = false
+    stoponerrors = false
+    threads = 5
+    verbose = true
+
+[input]
+    dirsearchcompat = false
+    extensions = ""
+    ignorewordlistcomments = false
+    inputmode = "clusterbomb"
+    requestproto = "https"
+    wordlists = [
+        "/opt/resources/OneListForAll/onelistforallmicro.txt:FUZZ",
+    ]
+
+
+[output]
+    outputfile = "output.csv"
+    outputformat = "csv"
+    outputcreateemptyfile = false
+
+[filter]
+    mode = "or"
+    lines = ""
+    regexp = ""
+    size = ""
+    status = ""
+    time = ""
+    words = ""
+
+[matcher]
+    mode = "or"
+    lines = ""
+    regexp = ""
+    size = ""
+    status = "200,204,301,302,307,401,403,405,500"
+    time = ""
+    words = ""

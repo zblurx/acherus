@@ -49,6 +49,11 @@ function install_tmux {
 function install_ffuf {
     # https://github.com/ffuf/ffuf
     go install -v github.com/ffuf/ffuf@latest
+    cp -v /runeforge/files/.ffufrc /root/.ffufrc
+}
+
+function install_pretender {
+    go install github.com/RedTeamPentesting/pretender@latest
 }
 
 function install_jsloot {
@@ -211,12 +216,6 @@ function install_procdump {
     git clone https://github.com/Sysinternals/ProcDump-for-Linux.git
 }
 
-function install_pywhisker {
-    git clone https://github.com/ShutdownRepo/pywhisker.git /opt/tools/pywhisker
-    cd /opt/tools/pywhisker 
-    python3 -m pip install -r requirements.txt
-}
-
 function install_zerologon {
     mkdir /opt/tools/zerologon
     git clone https://github.com/dirkjanm/CVE-2020-1472.git /opt/tools/zerologon/exploit
@@ -283,37 +282,24 @@ function install_sysinternals {
     wget https://download.sysinternals.com/files/SysinternalsSuite.zip
 }
 
-function install_routersploit {
-    git clone https://www.github.com/threat9/routersploit /opt/tools/routersploit
-    cd /opt/tools/routersploit
-    apti libglib2.0-dev
-    python3 -m pip install -r requirements.txt
-    python3 -m pip install bluepy
-}
-
 function install_ressources {
     git clone https://github.com/danielmiessler/SecLists.git /opt/resources/SecLists
     git clone https://github.com/six2dez/OneListForAll.git /opt/resources/OneListForAll
     git clone https://github.com/carlospolop/PEASS-ng.git /opt/resources/PEASS-ng
     git clone https://github.com/itm4n/PrivescCheck.git /opt/resources/PrivescCheck
-    git clone https://github.com/swisskyrepo/PayloadsAllTheThings.git /opt/resources/PayloadsAllTheThings
     get_last_git_release gentilkiwi/mimikatz mimikatz
     get_last_git_release itm4n/PrintSpoofer PrintSpoofer
-    get_last_git_release antonioCoco/RoguePotato RoguePotato
     get_last_git_release antonioCoco/RemotePotato0 RemotePotato0
     get_last_git_release gentilkiwi/kekeo kekeo
     git clone https://github.com/samratashok/ADModule.git /opt/resources/ADModule
     get_last_git_release AlessandroZ/LaZagne LaZagne
     get_last_git_release DominicBreuker/pspy pspy
     get_last_git_release NetSPI/PowerUpSQL PowerUPSQL
-    git clone https://github.com/Flangvik/SharpCollection.git /opt/resources/SharpCollection
     git clone https://github.com/S3cur3Th1sSh1t/Amsi-Bypass-Powershell.git /opt/resources/Amsi-Bypass-Powershell
-    get_last_git_release synacktiv/HopLa HopLa
     git clone https://github.com/PowerShellMafia/PowerSploit.git /opt/resources/PowerSploit
     git clone https://github.com/int0x33/nc.exe.git /opt/resources/nc/windows
     git clone https://github.com/pry0cc/relevant-wordlist.git /opt/resources/relevant-wordlist
     install_sysinternals
-    git clone https://github.com/samratashok/nishang.git /opt/resources/nishang
     mkdir /opt/resources/clem9669_wordlist/ && wget https://github.com/clem9669/wordlists/releases/download/22/clem9669_wordlist_small.7z -O /opt/resources/clem9669_wordlist/wordlist-french.7z
     get_last_git_release vletoux/pingcastle PingCastle
 }
@@ -417,10 +403,6 @@ function install_eaphammer {
     echo y | ./kali-setup
 }
 
-function install_hakrevdns {
-    go install github.com/hakluke/hakrevdns@latest
-}
-
 function install_jwttool {
     git clone https://github.com/ticarpi/jwt_tool.git /opt/tools/jwt_tool
     python3 -m pip install termcolor cprint pycryptodomex requests
@@ -516,6 +498,14 @@ function install_gau {
 
 function install_coercer {
     git clone https://github.com/p0dalirius/Coercer.git /opt/tools/Coercer
+    cd /opt/tools/Coercer
+    python3 -m pipx install .
+}
+
+function install_sprayhound {
+    git clone https://github.com/Hackndo/sprayhound.git /opt/tools/sprayhound
+    cd /opt/tools/sprayhound
+    python3 -m pipx install .
 }
 
 function install_gf {
@@ -616,6 +606,8 @@ function install_cme {
     git clone --recursive https://github.com/byt3bl33d3r/CrackMapExec /opt/tools/CrackMapExec
     cd /opt/tools/CrackMapExec
     python3 -m pipx install .
+    mkdir -p ~/.cme
+    cp -v /runeforge/files/cme.conf ~/.cme/cme.conf
 }
 
 function install_proxmark3 {
@@ -689,18 +681,6 @@ function install_netntlmtosilverticket {
 
 function install_DPAT {
     git clone https://github.com/clr2of8/DPAT.git /opt/tools/DPAT
-}
-
-function install_ShadowCoerce {
-    git clone https://github.com/ShutdownRepo/ShadowCoerce.git /opt/tools/ShadowCoerce
-}
-
-function install_garble {
-    go install mvdan.cc/garble@latest
-}
-
-function install_gobfuscate {
-    GO111MODULE=off go get -u github.com/unixpickle/gobfuscate
 }
 
 function install_uro {
@@ -833,16 +813,11 @@ function install_onionsearch {
     pip3 install onionsearch
 }
 
-function install_aclpwn {
-    pip install aclpwn
-}
-
 function install_BloodHound_and_friends {
     install_neo4j
     install_BloodHound
     install_bloodhoundpy
     install_BloodHoundCustomQueries
-    install_aclpwn
     install-bloodhound-quickwin
     install_bloodhound-import
     install_cypheroth
@@ -980,7 +955,6 @@ function exploitrune {
     install_pwncat
     apti exploitdb 
     install_empire
-    install_routersploit
 }
 
 function osintrune {
@@ -1035,15 +1009,12 @@ function webrune {
     install_cookiemonster
     install_jsbeautifier
     install_xLinkFinder
-    install_hakrevdns
     install_shuffledns
     install_gf
     install_hike
     install_phpgcc
     install_dnsx
     install_jwttool
-    install_gobfuscate
-    install_garble
 }
 
 function networkrune {
@@ -1091,10 +1062,10 @@ function adrune {
     install_BloodHound_and_friends
     pip3 install pypykatz
     install_krbrelayx
+    install_pretender
     install_pkinittools
     install_mitm6
     install_Responder
-    install_pywhisker
     install_targetedKerberoast
     install_LDAPmonitor
     install_gMSADumper
@@ -1103,6 +1074,7 @@ function adrune {
     pip install adidnsdump
     install_lsassy
     install_pyGPOabuse
+    install_sprayhound
     apti freerdp2-x11
     install_privexchange
     install_changeme
@@ -1125,7 +1097,6 @@ function adrune {
     install_roadrecon
     apti heimdal-clients
     install_netntlmtosilverticket
-    install_ShadowCoerce
     install_dploot
     install_pylaps
     install_DPAT
