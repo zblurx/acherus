@@ -166,6 +166,10 @@ function install_unfurl {
     go install -v github.com/tomnomnom/unfurl@latest
 }
 
+function install_enum4linuxng {
+    git clone https://github.com/cddmp/enum4linux-ng.git /opt/tools/enum4linux-ng
+}
+
 function install_krbrelayx {
     git clone https://github.com/dirkjanm/krbrelayx.git /opt/tools/krbrelayx
 }
@@ -244,6 +248,10 @@ function install_SeeYouCM-Thief {
     python3 -m pip install -r /opt/tools/SeeYouCM-Thief/requirements.txt
 }
 
+function install_dinjector {
+    git clone https://github.com/snovvcrash/DInjector.git /opt/tools/DInjector
+}
+
 function install_simplehttpserver {
     go install -v github.com/projectdiscovery/simplehttpserver/cmd/simplehttpserver@latest
 }
@@ -296,6 +304,7 @@ function install_ressources {
     git clone https://github.com/int0x33/nc.exe.git /opt/resources/nc/windows
     git clone https://github.com/pry0cc/relevant-wordlist.git /opt/resources/relevant-wordlist
     install_sysinternals
+    install_lazagne
     mkdir /opt/resources/clem9669_wordlist/ && wget https://github.com/clem9669/wordlists/releases/download/22/clem9669_wordlist_small.7z -O /opt/resources/clem9669_wordlist/wordlist-french.7z
     get_last_git_release vletoux/pingcastle PingCastle
 }
@@ -308,6 +317,12 @@ function install_ldaprelayscan {
     git clone https://github.com/zyn3rgy/LdapRelayScan.git /opt/tools/LdapRelayScan
     cd /opt/tools/LdapRelayScan
     python3 -m pip install -r requirements.txt
+}
+
+function install_crosslinked {
+    git clone https://github.com/m8sec/crosslinked /opt/tools/crosslinked
+    cd /opt/tools/crosslinked
+    pipx install -r requirements.txt
 }
 
 function install_authz0 {
@@ -617,6 +632,12 @@ function install_proxmark3 {
     make install
 }
 
+function install_masky {
+    git clone https://github.com/Z4kSec/Masky.git /opt/tools/Masky
+    cd /opt/tools/Masky
+    python3 -m pipx install .
+}
+
 function install_fzf {
     git clone https://github.com/junegunn/fzf ~/.fzf
     ~/.fzf/install --all
@@ -738,6 +759,13 @@ function install_whatportis {
     echo y | whatportis --update
 }
 
+function install_nimcrypt {
+    git clone https://github.com/icyguider/Nimcrypt2.git /opt/tools/Nimcrypt2
+    sudo apt-get install gcc mingw-w64 xz-utils -y
+    nimble install winim nimcrypto docopt ptr_math strenc -y
+    nim c -d=release --cc:gcc --embedsrc=on --hints=on --app=console --cpu=amd64 --out=nimcrypt nimcrypt.nim
+}
+
 function install_jsbeautifier {
     pip install jsbeautifier
 }
@@ -778,6 +806,13 @@ function install_ghidra {
     mkdir /opt/tools/ghidra
     cd /opt/tools/ghidra
     curl --silent "https://api.github.com/repos/NationalSecurityAgency/ghidra/releases/latest" | jq ".assets[] | .browser_download_url" | xargs wget 
+}
+
+function install_lazagne {
+    apti openjdk-11-jdk
+    mkdir /opt/tools/lazagne
+    cd /opt/tools/lazagne
+    curl --silent "https://api.github.com/repos/AlessandroZ/LaZagne/releases/latest" | jq ".assets[] | .browser_download_url" | xargs wget 
 }
 
 function install_volatility {
@@ -919,6 +954,7 @@ function install_default {
     apti socat
     apti ntpdate
     install_funiq
+    apti libqrencode4
     apti python3.9-venv
     pip install pipx
     install_fzf
@@ -952,6 +988,7 @@ function osintrune {
     install_onionsearch
     install_holehe
     apti whois
+    install_crosslinked
     install_ipinfo
     install_linkedint
 }
@@ -1047,6 +1084,7 @@ function adrune {
     apti chntpw
     install_coercer
     apti nbtscan
+    install_dinjector
     install_evil-winrm
     install_pth_toolkit
     install_pcredz
@@ -1083,6 +1121,7 @@ function adrune {
     install_kerbrute
     install_donpapi
     install_webclientservicescanner
+    install_masky
     install_cve-2019-1040-scanner
     install_roadrecon
     apti heimdal-clients
