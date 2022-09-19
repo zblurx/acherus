@@ -431,9 +431,13 @@ function install_arsenal {
     python3 -m pipx install .
 }
 
+function install_ldapnomnom {
+    go install github.com/lkarlslund/ldapnomnom@latest
+}
+
 function install_neo4j {
     wget -O - https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add -
-    echo 'deb https://debian.neo4j.com stable 4.0' > /etc/apt/sources.list.d/neo4j.list
+    echo 'deb https://debian.neo4j.com stable 4.4' > /etc/apt/sources.list.d/neo4j.list
     apt-get update
     apti apt-transport-https
     apti neo4j
@@ -1082,6 +1086,7 @@ function adrune {
     apti rpcbind
     install_veil
     apti chntpw
+    install_ldapnomnom
     install_coercer
     apti nbtscan
     install_dinjector
