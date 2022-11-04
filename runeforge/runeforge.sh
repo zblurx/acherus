@@ -64,10 +64,6 @@ function install_brb {
     go install -v github.com/zblurx/brb@latest
 }
 
-function install_funiq {
-    go install -v github.com/zblurx/funiq@latest
-}
-
 function install_gobuster {
     # https://github.com/OJ/gobuster
     go install -v github.com/OJ/gobuster/v3@latest
@@ -909,7 +905,8 @@ function install_default {
     apti php
     apti gem
     apti virtualenv
-    apti zip 
+    apti zip
+    apti moreutils #sponge etc.
     apti unzip
     apti xclip
     apti file
@@ -951,7 +948,6 @@ function install_default {
     apti rdate
     apti socat
     apti ntpdate
-    install_funiq
     apti libqrencode4
     apti python3.9-venv
     pip install pipx

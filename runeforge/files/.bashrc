@@ -76,6 +76,10 @@ vim /tmp/$file
 echo $file
 }
 
+function funiq(){
+    sort -u "$@" | sponge "$@"
+}
+
 function cl() {
     DIR="$*";
         # if no DIR given, go home
