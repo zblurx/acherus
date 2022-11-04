@@ -141,8 +141,8 @@ function install_bloodhoundpy {
 }
 
 function install_pcredz {
-    pip3 install Cython
-    pip3 install python-libpcap
+    apti libpcap-dev 
+    pip3 install Cython python-libpcap
     git clone https://github.com/lgandx/PCredz.git /opt/tools/PCredz
 }
 
@@ -293,18 +293,18 @@ function install_ressources {
     git clone https://github.com/itm4n/PrivescCheck.git /opt/resources/PrivescCheck
     get_last_git_release gentilkiwi/mimikatz mimikatz
     get_last_git_release itm4n/PrintSpoofer PrintSpoofer
-    get_last_git_release antonioCoco/RemotePotato0 RemotePotato0
+    # get_last_git_release antonioCoco/RemotePotato0 RemotePotato0
     get_last_git_release gentilkiwi/kekeo kekeo
-    git clone https://github.com/samratashok/ADModule.git /opt/resources/ADModule
-    get_last_git_release AlessandroZ/LaZagne LaZagne
-    get_last_git_release DominicBreuker/pspy pspy
-    get_last_git_release NetSPI/PowerUpSQL PowerUPSQL
+    # git clone https://github.com/samratashok/ADModule.git /opt/resources/ADModule
+    # get_last_git_release AlessandroZ/LaZagne LaZagne
+    # get_last_git_release DominicBreuker/pspy pspy
+    # get_last_git_release NetSPI/PowerUpSQL PowerUPSQL
     git clone https://github.com/S3cur3Th1sSh1t/Amsi-Bypass-Powershell.git /opt/resources/Amsi-Bypass-Powershell
     git clone https://github.com/PowerShellMafia/PowerSploit.git /opt/resources/PowerSploit
     git clone https://github.com/int0x33/nc.exe.git /opt/resources/nc/windows
     git clone https://github.com/pry0cc/relevant-wordlist.git /opt/resources/relevant-wordlist
     install_sysinternals
-    install_lazagne
+    # install_lazagne
     mkdir /opt/resources/clem9669_wordlist/ && wget https://github.com/clem9669/wordlists/releases/download/22/clem9669_wordlist_small.7z -O /opt/resources/clem9669_wordlist/wordlist-french.7z
     get_last_git_release vletoux/pingcastle PingCastle
 }
@@ -380,12 +380,6 @@ function install_gMSADumper {
 
 function install_roadrecon {
     pip install roadrecon
-}
-
-function install_modifyCertTemplate {
-    git clone https://github.com/fortalice/modifyCertTemplate.git /opt/tools/modifyCertTemplate
-    cd /opt/tools/modifyCertTemplate
-    python3 -m pip install -r requirement.txt
 }
 
 function install_gists {
@@ -692,7 +686,7 @@ function install_changeme {
     apti libpq-dev
     pip install -r requirements.txt
 }
-
+             
 function install_netntlmtosilverticket {
     git clone https://github.com/NotMedic/NetNTLMtoSilverTicket.git /opt/tools/NetNTLMtoSilverTicket
 }
@@ -971,6 +965,7 @@ function utilsrune {
     install_ressources
     install_DefaultCredsCheatSheet
     install_gists
+    install_ipinfo
 }
 
 function crackrune {
@@ -993,8 +988,8 @@ function osintrune {
     install_holehe
     apti whois
     install_crosslinked
-    install_ipinfo
     install_linkedint
+    install_truffleHog
 }
 
 function codereviewrune {
@@ -1028,7 +1023,6 @@ function webrune {
     install_sqlmap
     install_gau
     install_burp
-    install_truffleHog
     install_fuxploider
     apti whatweb
     install_gospider
@@ -1036,7 +1030,6 @@ function webrune {
     install_uro
     install_simplehttpserver
     install_eos
-    apti sslscan
     install_bypass-url-parser
     install_cookiemonster
     install_jsbeautifier
@@ -1057,7 +1050,7 @@ function networkrune {
     apti arping
     apti arptables
     apti net-tools
-    install_rustscan
+    # install_rustscan
     install_naabu
     apti proxychains4
     apti masscan
@@ -1079,12 +1072,8 @@ function adrune {
     install_impacket
     install_cme
     install_ldapdomaindump
-    apti ldapsearch
-    install_powershell
-    apti smbclient
-    apti smbmap
+    apti ldap-utils
     apti rpcbind
-    install_veil
     apti chntpw
     install_ldapnomnom
     install_coercer
@@ -1119,7 +1108,6 @@ function adrune {
     install_ldaprelayscan
     install_enum4linuxng
     install_certipy
-    install_modifyCertTemplate
     install_manspider
     install_pywsus
     install_dumpsmbshare
@@ -1169,23 +1157,6 @@ function voiprune {
     apti sipsak
     apti sipgrep
     install_SeeYouCM-Thief
-}
-
-function everyrunes {
-    install_default
-    utilsrune
-    osintrune
-    webrune
-    networkrune
-    reverserune
-    exploitrune
-    crackrune
-    voiprune
-    adrune
-    wifirune
-    rfidrune
-    codereviewrune
-    cleanup
 }
 
 "$@"

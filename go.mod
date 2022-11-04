@@ -11,5 +11,7 @@ require (
 	github.com/moby/sys/mount v0.3.0 // indirect
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/spf13/cobra v1.2.1
+	github.com/zblurx/hike v0.0.0-20220314230343-2174095ce2b1 // indirect
 	golang.org/x/crypto v0.0.0-20211108221036-ceb1ce70b4fa
+	golang.org/x/net v0.0.0-20220624214902-1bab6f366d9e // indirect
 )
