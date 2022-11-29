@@ -22,6 +22,7 @@ function install_bashrc {
     cp /runeforge/files/.bashrc /root/.bashrc
     cp /runeforge/files/.bash_aliases /root/.bash_aliases
     cp /runeforge/files/.inputrc /root/.inputrc
+    source /root/.bashrc
 }
 
 function install_sudo {
@@ -33,10 +34,9 @@ function install_sudo {
 }
 
 function install_manspider {
-    apti tesseract 
-    apti tesseract-data-eng
+    apti tesseract-ocr
     apti antiword
-    pip install man-spider
+    pipx install git+https://github.com/blacklanternsecurity/MANSPIDER
 }
 
 function install_tmux {
@@ -72,9 +72,9 @@ function install_gobuster {
 function install_nuclei {
     # https://github.com/projectdiscovery/nuclei
     go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
-    /root/go/bin/nuclei -update
-    /root/go/bin/nuclei -ut 
-    /root/go/bin/nuclei -duc
+    usr/local/go/bin/nuclei -update
+    usr/local/go/bin/nuclei -ut 
+    usr/local/go/bin/nuclei -duc
 }
 
 function install_subfinder {
@@ -123,6 +123,25 @@ function install_gowitness {
 function install_assetfinder {
     # https://github.com/tomnomnom/assetfinder
     go install -v github.com/tomnomnom/assetfinder@latest
+}
+
+function install_golang {
+    cd /tmp/
+    if [[ $(uname -m) = 'x86_64' ]]
+    then
+        wget -O /tmp/go.tar.gz https://go.dev/dl/go1.18.2.linux-amd64.tar.gz
+    elif [[ $(uname -m) = 'aarch64' ]]
+    then
+        wget -O /tmp/go.tar.gz https://go.dev/dl/go1.18.2.linux-arm64.tar.gz
+    fi
+    rm -rf /usr/local/go
+    tar -C /usr/local -xzf /tmp/go.tar.gz
+    export PATH=$PATH:/usr/local/go/bin
+}
+
+function install_cargo {
+    curl https://sh.rustup.rs -sSf | sh -s -- -y
+    source $HOME/.cargo/env
 }
 
 function install_gron {
@@ -174,6 +193,10 @@ function install_pkinittools {
     git clone https://github.com/dirkjanm/PKINITtools.git /opt/tools/PKINITtools
 }
 
+function install_tldr {
+    cargo install tealdeer
+}
+
 function install_waybackurls {
     # https://github.com/tomnomnom/waybackurls
     go install -v github.com/tomnomnom/waybackurls@latest
@@ -183,6 +206,14 @@ function install_sqlmap {
     # https://github.com/sqlmapproject/sqlmap
     git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git /opt/tools/sqlmap
     chmod +x /opt/tools/sqlmap/sqlmap.py
+}
+
+function install_katana {
+    go install github.com/projectdiscovery/katana/cmd/katana@latest
+}
+
+function install_proxify {
+    go install -v github.com/projectdiscovery/proxify/cmd/proxify@latest
 }
 
 function install_dnschef {
@@ -226,7 +257,6 @@ function install_zerologon {
 
 function install_targetedKerberoast {
     git clone https://github.com/ShutdownRepo/targetedKerberoast.git /opt/tools/targetedKerberoast
-    cd /opt/tools/targetedKerberoast && python3 -m pip install -r requirements.txt
 }
 
 function install_DefaultCredsCheatSheet {
@@ -303,6 +333,12 @@ function install_ressources {
     # install_lazagne
     mkdir /opt/resources/clem9669_wordlist/ && wget https://github.com/clem9669/wordlists/releases/download/22/clem9669_wordlist_small.7z -O /opt/resources/clem9669_wordlist/wordlist-french.7z
     get_last_git_release vletoux/pingcastle PingCastle
+}
+
+function set_env(){
+    export GO111MODULE=on
+    export GOPATH=/usr/local/go
+    export PATH="$HOME/.poetry/bin:$GOPATH/bin:/root/.local/bin/:/root/.cargo/bin/:$HOME/.nimble/bin:$PATH"
 }
 
 function install_privexchange {
@@ -401,7 +437,10 @@ function install_gospider {
 function install_eaphammer {
     git clone https://github.com/s0lst1c3/eaphammer.git /opt/tools/eaphammer
     cd /opt/tools/eaphammer
-    echo y | ./kali-setup
+    virtualenv -p python3 venv
+    source /opt/tools/eaphammer/venv/bin/activate
+    echo y | ./ubuntu-unattended-setup
+    deactivate
 }
 
 function install_jwttool {
@@ -495,6 +534,18 @@ function install_donpapi {
     python3 -m pip install -r requirements.txt
 }
 
+function install_searchsploit {
+    git clone https://gitlab.com/exploit-database/exploitdb /opt/tools/exploitdb
+    cd /opt/tools/exploitdb
+    git config pull.rebase false
+    ln -sf /opt/tools/exploitdb/searchsploit /usr/local/bin/searchsploit
+    cp -n /opt/tools/exploitdb/.searchsploit_rc ~/
+    sed -i 's/\(.*[pP]aper.*\)/#\1/' ~/.searchsploit_rc
+    sed -i 's/opt\/exploitdb/opt\/tools\/exploitdb/' ~/.searchsploit_rc
+    searchsploit -u
+    echo 'cest bon merci monsieur'
+}
+
 function install_graudit {
     git clone https://github.com/wireghoul/graudit.git /opt/tools/graudit
 }
@@ -503,6 +554,11 @@ function install_holehe {
     git clone https://github.com/megadose/holehe.git /opt/tools/holehe
     cd /opt/tools/holehe
     python3 -m pipx install .
+}
+
+function install_nndefaccts {
+    git clone https://github.com/nnposter/nndefaccts.git /opt/tools/nndefaccts
+    cp /opt/tools/nndefaccts/http-default-accounts-fingerprints-nndefaccts.lua /usr/share/nmap/nselib/data/http-default-accounts-fingerprints.lua
 }
 
 function install_gau {
@@ -524,8 +580,8 @@ function install_sprayhound {
 
 function install_gf {
     GO111MODULE=off go get -v github.com/tomnomnom/gf
-    echo 'source /root/go/src/github.com/tomnomnom/gf/gf-completion.bash' >> ~/.bashrc
-    cp -r /root/go/src/github.com/tomnomnom/gf/examples ~/.gf
+    echo 'source usr/local/go/src/github.com/tomnomnom/gf/gf-completion.bash' >> ~/.bashrc
+    cp -r usr/local/go/src/github.com/tomnomnom/gf/examples ~/.gf
     git clone https://github.com/zblurx/gf-patterns.git /opt/resources/gf-patterns/
     cp /opt/resources/gf-patterns/*.json ~/.gf
 }
@@ -553,10 +609,6 @@ function install_ntdsutil.py {
 function install_amass {
     # https://github.com/OWASP/Amass
     go install -v github.com/OWASP/Amass/v3/...@latest
-}
-
-function install_empire {
-    apti powershell-empire
 }
 
 function fix_openssl {
@@ -705,10 +757,10 @@ function install_bettercap {
     apti libnetfilter-queue-dev
     apti libusb-1.0-0-dev
     GO111MODULE=off go get -u github.com/bettercap/bettercap
-    cd /root/go/src/github.com/bettercap/bettercap
+    cd usr/local/go/src/github.com/bettercap/bettercap
     make build
     make install
-    /root/go/bin/bettercap -eval "caplets.update; ui.update; q"
+    usr/local/go/bin/bettercap -eval "caplets.update; ui.update; q"
     sed -i 's/set api.rest.username user/set api.rest.username bettercap/g' /usr/local/share/bettercap/caplets/http-ui.cap
     sed -i 's/set api.rest.password pass/set api.rest.password bettercap/g' /usr/local/share/bettercap/caplets/http-ui.cap
     sed -i 's/set api.rest.username user/set api.rest.username bettercap/g' /usr/local/share/bettercap/caplets/https-ui.cap
@@ -727,15 +779,21 @@ function install_evil-winrm {
 }
 
 function install_msf {
-    apti metasploit-framework
-    service postgresql start
-    msfdb init
+    mkdir /tmp/metasploit_install
+    cd /tmp/metasploit_install || exit
+    curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall
+    cd /opt/tools || exit
+    rm -rf /tmp/metasploit_install
 }
 
 function install_ADReaper {
     git clone https://github.com/AidenPearce369/ADReaper.git /opt/tools/ADReaper
     cd /opt/tools/ADReaper
     go build
+}
+
+function install_pack {
+    git clone https://github.com/Hydraze/pack.git /opt/tools/pack
 }
 
 function install_hashcat {
@@ -745,11 +803,11 @@ function install_hashcat {
     wget https://raw.githubusercontent.com/NotSoSecure/password_cracking_rules/master/OneRuleToRuleThemAll.rule -O /opt/resources/hashcat_rules/OneRuleToRuleThemAll.rule
     wget https://raw.githubusercontent.com/NSAKEY/nsa-rules/master/_NSAKEY.v2.dive.rule -O /opt/resources/hashcat_rules/nsa_dive.rule
     wget https://github.com/rarecoil/pantagrule/raw/master/rules/hashesorg.v6/pantagrule.hashorg.v6.popular.rule.gz -O /opt/resources/hashcat_rules/pantagrule.hashorg.v6.popular.rule.gz
-    apti hashcat-utils
+    apti hashcat-utils # change
 }
 
 function install_whatportis {
-    pip install whatportis
+    pipx install whatportis
     echo y | whatportis --update
 }
 
@@ -822,11 +880,10 @@ function install_veil {
 
 function install_firefox {
     apti firefox-esr
-    apti webext-foxyproxy
-    apti webext-ublock-origin-firefox
-    echo "pref(\"gfx.xrender.enabled\", true);" >> /etc/firefox-esr/firefox-esr.js
-    mkdir /opt/resources/firefox-extensions
+    echo "pref(\"gfx.xrender.enabled\", true);" >> /etc/firefox-esr/firefox-esr.js;
+    mkdir -p /opt/resources/firefox-extensions
     wget https://addons.mozilla.org/firefox/downloads/file/3862036/firefox_multi_account_containers-8.0.1-fx.xpi -O /opt/resources/firefox-extensions/firefox_multi_account_containers-8.0.1-fx.xpi
+    wget https://addons.mozilla.org/firefox/downloads/file/3611407/foxyproxy_standard-7.5.1.xpi -O /opt/resources/firefox-extensions/foxyproxy_standard-7.5.1.xpi
     # user_pref("browser.urlbar.placeholderName", "DuckDuckGo");
     # user_pref("browser.slowStartup.samples", 3);
     # user_pref("browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts.havePinned", "duckduckgo");
@@ -875,6 +932,7 @@ function install_mdcat {
 }
 
 function cleanup {
+    set_env
     apt-get upgrade -y
     apt-get autoremove -y
     apt-get clean
@@ -884,24 +942,30 @@ function cleanup {
 
 function install_default {
     install_bashrc
+    apti software-properties-common
+    add-apt-repository contrib
+    add-apt-repository non-free
     apti apt-utils
     apti man
     apti git
+    apti gnupg2
     apti bash-completion
     install_sudo
     apti openssl
-    fix_openssl
+    # fix_openssl
     apti ca-certificates
     apti wget 
     apti curl
-    apti golang-go 
+    install_golang
+    apti npm
     apti python2
     apti python3
-    apti npm
+    apti python3-venv
+    apti python3-setuptools
     apti python3-pip
     apti python-is-python3
-    apti python3.10-venv
     apti bpython
+    install_cargo
     apti php
     apti gem
     apti virtualenv
@@ -938,7 +1002,6 @@ function install_default {
     apti mlocate
     apti feh
     apti ascii
-    apti cargo
     install_mdcat
     apti p7zip-full
     apti tor
@@ -949,37 +1012,41 @@ function install_default {
     apti socat
     apti ntpdate
     apti libqrencode4
-    apti python3.9-venv
     pip install pipx
     install_fzf
     apti gcc-mingw-w64-x86-64
 }
 
 function utilsrune {
+    set_env
     install_arsenal
     install_whatportis
     install_ressources
     install_DefaultCredsCheatSheet
     install_gists
     install_ipinfo
+    install_tldr
 }
 
 function crackrune {
+    set_env
     install_hashcat
     apti hydra
     pip3 install name-that-hash
-    apti pack
-    apti cewl
+    install_pack
+    apti cewl 
 }
 
 function exploitrune {
+    set_env
     install_msf
     install_sliver
-    apti exploitdb 
-    install_empire
+    install_searchsploit
+    # install_empire
 }
 
 function osintrune {
+    set_env
     install_onionsearch
     install_holehe
     apti whois
@@ -989,11 +1056,13 @@ function osintrune {
 }
 
 function codereviewrune {
+    set_env
     apti cloc
     install_graudit
 }
 
 function webrune {
+    set_env
     install_ffuf
     install_gobuster
     install_nuclei
@@ -1002,6 +1071,8 @@ function webrune {
     install_httpx
     install_testssl
     install_gowitness
+    install_katana
+    install_proxify
     install_ipcdn
     install_amass
     install_assetfinder
@@ -1021,7 +1092,6 @@ function webrune {
     install_burp
     install_fuxploider
     apti whatweb
-    install_gospider
     install_arjun
     install_uro
     install_simplehttpserver
@@ -1039,6 +1109,7 @@ function webrune {
 }
 
 function networkrune {
+    set_env
     apti nmap
     apti netdiscover
     apti iptables
@@ -1065,6 +1136,7 @@ function networkrune {
 }
 
 function adrune {
+    set_env
     install_impacket
     install_cme
     install_ldapdomaindump
@@ -1077,7 +1149,7 @@ function adrune {
     install_dinjector
     install_evil-winrm
     install_pth_toolkit
-    install_pcredz
+    install_pcredz # change
     install_BloodHound_and_friends
     pip3 install pypykatz
     install_krbrelayx
@@ -1086,7 +1158,7 @@ function adrune {
     install_mitm6
     install_Responder
     install_targetedKerberoast
-    install_LDAPmonitor
+    install_LDAPmonitor # change
     install_gMSADumper
     install_chisel
     install_petitpotam
@@ -1096,7 +1168,8 @@ function adrune {
     install_sprayhound
     apti freerdp2-x11
     install_privexchange
-    install_changeme
+    install_nndefaccts
+    #install_changeme # change - ADD LA DB DE NMAP
     pip3 install pivotnacci
     install_zerologon
     apti rdesktop
@@ -1126,28 +1199,30 @@ function adrune {
 }
 
 function wifirune {
+    set_env
     apti wireless-tools
     apti iw
     apti aircrack-ng
     apti reaver
-    apti hostapd-wpe
     apti hcxtools
     apti hcxdumptool
     install_eaphammer
 }
 
 function reverserune {
+    set_env
     install_volatility
     install_ghidra
 }
 
 function rfidrune {
+    set_env
     install_mfdread
     install_proxmark3
 }
 
 function voiprune {
-    apti voiphopper
+    set_env
     install_sipvicious
     apti sipcrack
     apti sipsak

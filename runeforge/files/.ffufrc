@@ -36,10 +36,6 @@
     ignorewordlistcomments = false
     inputmode = "clusterbomb"
     requestproto = "https"
-    wordlists = [
-        "/opt/resources/OneListForAll/onelistforallmicro.txt:FUZZ",
-    ]
-
 
 [output]
     outputfile = "output.csv"
