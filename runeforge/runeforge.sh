@@ -337,8 +337,7 @@ function install_ressources {
 
 function set_env(){
     export GO111MODULE=on
-    export GOPATH=/usr/local/go
-    export PATH="$HOME/.poetry/bin:$GOPATH/bin:/root/.local/bin/:/root/.cargo/bin/:$HOME/.nimble/bin:$PATH"
+    export PATH="$HOME/.poetry/bin:/usr/local/go/bin:/root/.local/bin/:/root/.cargo/bin/:$HOME/.nimble/bin:$PATH"
 }
 
 function install_privexchange {
@@ -362,7 +361,7 @@ function install_authz0 {
 }
 
 function install_ipinfo {
-    GO111MODULE=off go get github.com/ipinfo/cli/ipinfo
+    go install github.com/ipinfo/cli/ipinfo@latest
 }
 
 function install_eos {
@@ -578,10 +577,12 @@ function install_sprayhound {
     python3 -m pipx install .
 }
 
-function install_gf {
-    GO111MODULE=off go get -v github.com/tomnomnom/gf
-    echo 'source usr/local/go/src/github.com/tomnomnom/gf/gf-completion.bash' >> ~/.bashrc
-    cp -r usr/local/go/src/github.com/tomnomnom/gf/examples ~/.gf
+function install_gf { 
+    go install -v github.com/tomnomnom/gf@latest
+    mkdir ~/.gf
+    wget https://raw.githubusercontent.com/tomnomnom/gf/master/gf-completion.bash -O /root/.gf/.gf_completion.bash 
+    echo 'source /root/.gf/.gf_completion.bash' >> ~/.bashrc
+    cp -r /root/go/src/github.com/tomnomnom/gf/examples ~/.gf
     git clone https://github.com/zblurx/gf-patterns.git /opt/resources/gf-patterns/
     cp /opt/resources/gf-patterns/*.json ~/.gf
 }
@@ -756,11 +757,8 @@ function install_bettercap {
     apti libpcap-dev
     apti libnetfilter-queue-dev
     apti libusb-1.0-0-dev
-    GO111MODULE=off go get -u github.com/bettercap/bettercap
-    cd usr/local/go/src/github.com/bettercap/bettercap
-    make build
-    make install
-    usr/local/go/bin/bettercap -eval "caplets.update; ui.update; q"
+    go install -v github.com/bettercap/bettercap@latest
+    /root/go/bin/bettercap -eval "caplets.update; ui.update; q"
     sed -i 's/set api.rest.username user/set api.rest.username bettercap/g' /usr/local/share/bettercap/caplets/http-ui.cap
     sed -i 's/set api.rest.password pass/set api.rest.password bettercap/g' /usr/local/share/bettercap/caplets/http-ui.cap
     sed -i 's/set api.rest.username user/set api.rest.username bettercap/g' /usr/local/share/bettercap/caplets/https-ui.cap

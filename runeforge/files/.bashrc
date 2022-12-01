@@ -96,9 +96,9 @@ function httpx-lowfruits(){
     ipinfo prips "$@" | httpx -sr -o httpx-low-fruits.out -title -sc -td -p 80,443,8080,8000,8009,8888,8443,9443,10443,7000-7004,8000-8003,9000-9003,7070,3000,4567,8081-8087
 }
 
-export GOPATH=/usr/local/go
+export GOPATH="$HOME/go"
 export TZ='Europe/Paris'
-export PATH="$HOME/.poetry/bin:$GOPATH/bin:/root/.local/bin/:/root/.cargo/bin/:$HOME/.nimble/bin:$PATH"
+export PATH="$HOME/.poetry/bin:/usr/local/go/bin:/root/.local/bin/:/root/.cargo/bin/:$HOME/.nimble/bin:$PATH"
 export GRDIR=/opt/tools/graudit/signatures
 export HISTFILE=/data/.bash_history
 export HISTTIMEFORMAT="%F %T "
