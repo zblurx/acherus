@@ -157,8 +157,13 @@ function install_bloodhoundpy {
 
 function install_pcredz {
     apti libpcap-dev 
-    pip3 install Cython python-libpcap
     git clone https://github.com/lgandx/PCredz.git /opt/tools/PCredz
+    cd /opt/tools/PCredz
+    virtualenv -p python3 venv
+    source /opt/tools/PCredz/venv/bin/activate
+    python3 -m pip install Cython
+    python3 -m pip install python-libpcap
+    deactivate
 }
 
 function install_anew {
@@ -262,7 +267,7 @@ function install_targetedKerberoast {
 function install_DefaultCredsCheatSheet {
     git clone https://github.com/ihebski/DefaultCreds-cheat-sheet.git /opt/tools/DefaultCreds
     cd /opt/tools/DefaultCreds
-    pip install -r requirements.txt
+    python3 -m pipx install .
 }
 
 function install_mapcidr {
@@ -459,6 +464,12 @@ function install_arsenal {
     python3 -m pipx install .
 }
 
+function install_ldapsearch-ad {
+    git clone https://github.com/yaap7/ldapsearch-ad.git /opt/tools/ldapsearch-ad
+    cd /opt/tools/ldapsearch-ad
+    pipx install .
+}
+
 function install_ldapnomnom {
     go install github.com/lkarlslund/ldapnomnom@latest
 }
@@ -496,8 +507,8 @@ function install_pyGPOabuse {
     git clone https://github.com/Hackndo/pyGPOAbuse.git /opt/tools/pyGPOAbuse
 }
 
-function install_shuffledns {
-    go install -v github.com/projectdiscovery/shuffledns/cmd/shuffledns@latest
+function install_tlsx {
+    go install github.com/projectdiscovery/tlsx/cmd/tlsx@latest
 }
 
 function install_BloodHoundCustomQueries {
@@ -530,7 +541,14 @@ function install_fbhq {
 function install_donpapi {
     git clone https://github.com/login-securite/DonPAPI.git /opt/tools/DonPAPI
     cd /opt/tools/DonPAPI
-    python3 -m pip install -r requirements.txt
+    apti swig
+    python3 -m pipx install .
+}
+
+function install_ldeep {
+    git clone https://github.com/franc-pentest/ldeep.git /opt/tools/ldeep
+    cd /opt/tools/ldeep
+    python3 -m pipx install .
 }
 
 function install_searchsploit {
@@ -891,10 +909,17 @@ function install_onionsearch {
     pip3 install onionsearch
 }
 
+function install_rusthound {
+    git clone https://github.com/OPENCYBER-FR/RustHound.git /opt/tools/RustHound
+    cd /opt/tools/RustHound
+    make install
+}
+
 function install_BloodHound_and_friends {
     install_neo4j
     install_BloodHound
     install_bloodhoundpy
+    install_rusthound
     install_BloodHoundCustomQueries
     install-bloodhound-quickwin
     install_bloodhound-import
@@ -1084,6 +1109,7 @@ function webrune {
     install_hakip2host
     install_authz0
     install_ysoserial
+    install_tlsx
     install_brb
     install_sqlmap
     install_gau
@@ -1098,7 +1124,6 @@ function webrune {
     install_cookiemonster
     install_jsbeautifier
     install_xLinkFinder
-    install_shuffledns
     install_gf
     install_hike
     install_phpgcc
@@ -1147,6 +1172,8 @@ function adrune {
     install_dinjector
     install_evil-winrm
     install_pth_toolkit
+    install_ldeep
+    install_ldapsearch-ad
     install_pcredz # change
     install_BloodHound_and_friends
     pip3 install pypykatz

@@ -98,7 +98,7 @@ function httpx-lowfruits(){
 
 export GOPATH="$HOME/go"
 export TZ='Europe/Paris'
-export PATH="$HOME/.poetry/bin:/usr/local/go/bin:/root/.local/bin/:/root/.cargo/bin/:$HOME/.nimble/bin:$PATH"
+export PATH="$HOME/.poetry/bin:/usr/local/go/bin:$GOPATH/bin:/root/.local/bin/:/root/.cargo/bin/:$HOME/.nimble/bin:$PATH"
 export GRDIR=/opt/tools/graudit/signatures
 export HISTFILE=/data/.bash_history
 export HISTTIMEFORMAT="%F %T "
