@@ -352,13 +352,16 @@ function install_privexchange {
 function install_ldaprelayscan {
     git clone https://github.com/zyn3rgy/LdapRelayScan.git /opt/tools/LdapRelayScan
     cd /opt/tools/LdapRelayScan
-    python3 -m pip install -r requirements.txt
+    virtualenv -p python3 venv
+    source /opt/tools/LdapRelayScan/venv/bin/activate
+    pip install -r requirements.txt
+    deactivate
 }
 
 function install_crosslinked {
     git clone https://github.com/m8sec/crosslinked /opt/tools/crosslinked
     cd /opt/tools/crosslinked
-    pipx install -r requirements.txt
+    python3 -m pipx install . 
 }
 
 function install_authz0 {
@@ -674,10 +677,20 @@ function install_sliver {
 }
 
 function install_impacket {
-    # https://github.com/SecureAuthCorp/impacket
-    git clone https://github.com/SecureAuthCorp/impacket.git /opt/tools/impacket
+    # https://github.com/fortra/impacket
+    git clone https://github.com/ThePorgs/impacket.git /opt/tools/impacket
     cd /opt/tools/impacket
     python3 -m pipx install .
+}
+
+function install_impacket-old {
+    # https://github.com/fortra/impacket
+    git clone https://github.com/fortra/impacket.git /opt/tools/impacket-old
+    cd /opt/tools/impacket-old
+    virtualenv -p python3 venv
+    source /opt/tools/impacket-old/venv/bin/activate
+    python3 -m pip install .
+    deactivate
 }
 
 function install_cme {
@@ -802,12 +815,6 @@ function install_msf {
     rm -rf /tmp/metasploit_install
 }
 
-function install_ADReaper {
-    git clone https://github.com/AidenPearce369/ADReaper.git /opt/tools/ADReaper
-    cd /opt/tools/ADReaper
-    go build
-}
-
 function install_pack {
     git clone https://github.com/Hydraze/pack.git /opt/tools/pack
 }
@@ -890,8 +897,9 @@ function install_volatility {
 }
 
 function install_veil {
-    apt -y install veil
-    /usr/share/veil/config/setup.sh --force --silent
+    git clone https://github.com/Veil-Framework/Veil.git /opt/tools/Veil
+    cd /opt/tools/Veil
+    ./config/setup.sh --force --silent
 }
 
 function install_firefox {
@@ -1074,7 +1082,7 @@ function osintrune {
     install_holehe
     apti whois
     install_crosslinked
-    install_linkedint
+    # install_linkedint
     install_truffleHog
 }
 
@@ -1134,6 +1142,7 @@ function webrune {
 function networkrune {
     set_env
     apti nmap
+    install_nndefaccts
     apti netdiscover
     apti iptables
     apti arp-scan
@@ -1161,6 +1170,7 @@ function networkrune {
 function adrune {
     set_env
     install_impacket
+    install_impacket-old
     install_cme
     install_ldapdomaindump
     apti ldap-utils
@@ -1174,7 +1184,7 @@ function adrune {
     install_pth_toolkit
     install_ldeep
     install_ldapsearch-ad
-    install_pcredz # change
+    install_pcredz
     install_BloodHound_and_friends
     pip3 install pypykatz
     install_krbrelayx
@@ -1193,8 +1203,6 @@ function adrune {
     install_sprayhound
     apti freerdp2-x11
     install_privexchange
-    install_nndefaccts
-    #install_changeme # change - ADD LA DB DE NMAP
     pip3 install pivotnacci
     install_zerologon
     apti rdesktop
@@ -1220,7 +1228,7 @@ function adrune {
     install_acltoolkit
     install_kutil
     install_ntdsutil.py
-    install_ADReaper
+    install_veil
 }
 
 function wifirune {

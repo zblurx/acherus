@@ -21,7 +21,7 @@ RUN chmod +x /runeforge/runeforge.sh
 # RUN /runeforge/runeforge.sh everyrunes
 RUN /runeforge/runeforge.sh  install_default
 RUN /runeforge/runeforge.sh  utilsrune
-# RUN /runeforge/runeforge.sh  osintrune
+RUN /runeforge/runeforge.sh  osintrune
 RUN /runeforge/runeforge.sh  webrune
 RUN /runeforge/runeforge.sh  networkrune
 RUN /runeforge/runeforge.sh  exploitrune
