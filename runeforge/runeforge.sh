@@ -56,6 +56,15 @@ function install_pretender {
     go install github.com/RedTeamPentesting/pretender@latest
 }
 
+function install_credmaster {
+    git clone https://github.com/knavesec/CredMaster.git /opt/tools/CredMaster
+    /opt/tools/CredMaster
+    virtualenv -p python3 venv
+    source /opt/tools/impacket-old/venv/bin/activate
+    python3 -m pip install -r requirements.txt
+    deactivate
+}
+
 function install_jsloot {
     go install -v github.com/zblurx/jsloot@latest
 }
@@ -106,9 +115,7 @@ function install_burp {
 }
 
 function install_lsassy {
-    git clone https://github.com/Hackndo/lsassy.git /opt/tools/lsassy
-    cd /opt/tools/lsassy
-    python3 -m pipx install .
+    pipx install git+https://github.com/Hackndo/lsassy.git
 }
 
 function install_gowitness {
@@ -217,13 +224,28 @@ function install_katana {
     go install github.com/projectdiscovery/katana/cmd/katana@latest
 }
 
+function install_linkedin2username {
+    git clone https://github.com/initstring/linkedin2username.git /opt/tools/linkedin2username
+    virtualenv -p python3 /opt/tools/linkedin2username/venv
+    source /opt/tools/linkedin2username/venv/bin/activate
+    pip install -r requirements.txt
+    deactivate
+}
+
+function install_pre2k {
+    pipx install git+https://github.com/garrettfoster13/pre2k
+}
+
 function install_proxify {
     go install -v github.com/projectdiscovery/proxify/cmd/proxify@latest
 }
 
 function install_dnschef {
     git clone https://github.com/iphelix/dnschef.git /opt/tools/dnschef
-    python3 -m pip install -r /opt/tools/dnschef/requirements.txt
+    virtualenv -p python3 /opt/tools/dnschef/venv
+    source /opt/tools/dnschef/venv/bin/activate
+    pip install -r requirements.txt
+    deactivate
 }
 
 function install_Responder {
@@ -245,19 +267,9 @@ function install_mitm6 {
     python3 -m pipx install .
 }
 
-function install_procdump {
-    mkdir /opt/resources/ProcDump
-    cd /opt/resources/ProcDump
-    wget https://download.sysinternals.com/files/Procdump.zip
-    git clone https://github.com/Sysinternals/ProcDump-for-Linux.git
-}
-
 function install_zerologon {
     mkdir /opt/tools/zerologon
-    git clone https://github.com/dirkjanm/CVE-2020-1472.git /opt/tools/zerologon/exploit
-    git clone https://github.com/SecuraBV/CVE-2020-1472.git /opt/tools/zerologon/tester
-    cd /opt/tools/zerologon/tester
-    pip install -r requirements.txt
+    git clone https://github.com/dirkjanm/CVE-2020-1472.git /opt/tools/zerologon
 }
 
 function install_targetedKerberoast {
@@ -277,10 +289,6 @@ function install_mapcidr {
 function install_SeeYouCM-Thief {
     git clone https://github.com/trustedsec/SeeYouCM-Thief.git /opt/tools/SeeYouCM-Thief
     python3 -m pip install -r /opt/tools/SeeYouCM-Thief/requirements.txt
-}
-
-function install_dinjector {
-    git clone https://github.com/snovvcrash/DInjector.git /opt/tools/DInjector
 }
 
 function install_simplehttpserver {
@@ -311,6 +319,12 @@ function install_cypheroth {
     chmod +x /opt/tools/cypheroth/cypheroth.sh
 }
 
+function install_impersonate-rs {
+    git clone https://github.com/zblurx/impersonate-rs /opt/resources/impersonate-rs
+    cd /opt/resources/impersonate-rs
+    make windows
+}
+
 function install_sysinternals {
     mkdir /opt/resources/SysInternals
     cd /opt/resources/SysInternals
@@ -324,6 +338,7 @@ function install_ressources {
     git clone https://github.com/itm4n/PrivescCheck.git /opt/resources/PrivescCheck
     get_last_git_release gentilkiwi/mimikatz mimikatz
     get_last_git_release itm4n/PrintSpoofer PrintSpoofer
+    install_impersonate-rs
     # get_last_git_release antonioCoco/RemotePotato0 RemotePotato0
     get_last_git_release gentilkiwi/kekeo kekeo
     # git clone https://github.com/samratashok/ADModule.git /opt/resources/ADModule
@@ -359,9 +374,7 @@ function install_ldaprelayscan {
 }
 
 function install_crosslinked {
-    git clone https://github.com/m8sec/crosslinked /opt/tools/crosslinked
-    cd /opt/tools/crosslinked
-    python3 -m pipx install . 
+    python3 -m pipx install git+https://github.com/m8sec/crosslinked
 }
 
 function install_authz0 {
@@ -373,9 +386,7 @@ function install_ipinfo {
 }
 
 function install_eos {
-    git clone https://github.com/Synacktiv/eos /opt/tools/eos
-    cd /opt/tools/eos
-    python3 -m pipx install .
+    pipx install git+https://github.com/Synacktiv/eos
 }
 
 function install_hakip2host {
@@ -408,9 +419,7 @@ function install_cve-2019-1040-scanner {
 }
 
 function install_webclientservicescanner {
-    git clone https://github.com/Hackndo/WebclientServiceScanner.git /opt/tools/WebclientServiceScanner
-    cd /opt/tools/WebclientServiceScanner
-    python3 -m pipx install .
+    pipx install git+https://github.com/Hackndo/WebclientServiceScanner.git
 }
 
 function install_gMSADumper {
@@ -418,7 +427,7 @@ function install_gMSADumper {
 }
 
 function install_roadrecon {
-    pip install roadrecon
+    pipx install roadrecon
 }
 
 function install_gists {
@@ -433,8 +442,10 @@ function install_gists {
 
 function install_pywsus {
     git clone https://github.com/GoSecure/pywsus.git /opt/tools/pywsus
-    cd /opt/tools/pywsus
+    virtualenv -p python3 /opt/tools/pywsus/venv
+    source /opt/tools/eaphammer/venv/bin/activate
     python3 -m pip install -r requirements.txt
+    deactivate
 }
 
 function install_gospider {
@@ -456,9 +467,7 @@ function install_jwttool {
 }
 
 function install_acltoolkit {
-    git clone https://github.com/zblurx/acltoolkit.git /opt/tools/acltoolkit
-    cd /opt/tools/acltoolkit
-    python3 -m pipx install .
+    pipx install acltoolkit-ad
 }
 
 function install_arsenal {
@@ -486,6 +495,14 @@ function install_neo4j {
     neo4j-admin set-initial-password acherus
     mkdir -p /usr/share/neo4j/logs/
     touch /usr/share/neo4j/logs/neo4j.log
+}
+
+function install_pypykatz {
+    pipx install pypykatz
+}
+
+function install_msprobe {
+    pipx install git+https://github.com/puzzlepeaches/msprobe.git
 }
 
 function install_BloodHound {
@@ -536,9 +553,7 @@ function install_ipcdn {
 }
 
 function install_fbhq {
-    git clone https://github.com/zblurx/fbhq /opt/tools/fbhq
-    cd /opt/tools/fbhq
-    python3 -m pipx install .
+    pipx install git+https://github.com/zblurx/fbhq
 }
 
 function install_donpapi {
@@ -549,9 +564,11 @@ function install_donpapi {
 }
 
 function install_ldeep {
-    git clone https://github.com/franc-pentest/ldeep.git /opt/tools/ldeep
-    cd /opt/tools/ldeep
-    python3 -m pipx install .
+    pipx install git+https://github.com/franc-pentest/ldeep.git
+}
+
+function install_ritm {
+    pipx install git+https://github.com/Tw1sm/RITM
 }
 
 function install_searchsploit {
@@ -563,7 +580,7 @@ function install_searchsploit {
     sed -i 's/\(.*[pP]aper.*\)/#\1/' ~/.searchsploit_rc
     sed -i 's/opt\/exploitdb/opt\/tools\/exploitdb/' ~/.searchsploit_rc
     searchsploit -u
-    echo 'cest bon merci monsieur'
+    echo 'cest bon merci monsieur' # Tout ca pour avoir un return code 0 ...
 }
 
 function install_graudit {
@@ -571,9 +588,7 @@ function install_graudit {
 }
 
 function install_holehe {
-    git clone https://github.com/megadose/holehe.git /opt/tools/holehe
-    cd /opt/tools/holehe
-    python3 -m pipx install .
+    pipx install git+https://github.com/megadose/holehe.git
 }
 
 function install_nndefaccts {
@@ -587,15 +602,11 @@ function install_gau {
 }
 
 function install_coercer {
-    git clone https://github.com/p0dalirius/Coercer.git /opt/tools/Coercer
-    cd /opt/tools/Coercer
-    python3 -m pipx install .
+    pipx install git+https://github.com/p0dalirius/Coercer.git
 }
 
 function install_sprayhound {
-    git clone https://github.com/Hackndo/sprayhound.git /opt/tools/sprayhound
-    cd /opt/tools/sprayhound
-    python3 -m pipx install .
+    pipx install git+https://github.com/Hackndo/sprayhound.git
 }
 
 function install_gf { 
@@ -608,24 +619,16 @@ function install_gf {
     cp /opt/resources/gf-patterns/*.json ~/.gf
 }
 
-function install_linkedint {
-    git clone https://github.com/vysecurity/LinkedInt /opt/tools/LinkedInt
-    cd /opt/tools/LinkedInt
-    # fix dependency
-    git fetch origin pull/30/head:pull/30 && git merge --no-edit pull/30
-    pip install -r requirements.txt
+function install_certsync {
+    pipx install git+https://github.com/zblurx/certsync
 }
 
 function install_xLinkFinder {
-    git clone https://github.com/xnl-h4ck3r/xnLinkFinder.git /opt/tools/xnLinkFinder
-    cd /opt/tools/xnLinkFinder
-    python3 -m pipx install .
+    pipx install git+https://github.com/xnl-h4ck3r/xnLinkFinder.git
 }
 
 function install_ntdsutil.py {
-    git clone https://github.com/zblurx/ntdsutil.py.git /opt/tools/ntdsutil.py
-    cd /opt/tools/ntdsutil.py
-    python3 -m pipx install .
+    pipx install git+https://github.com/zblurx/ntdsutil.py
 }
 
 function install_amass {
@@ -633,40 +636,8 @@ function install_amass {
     go install -v github.com/OWASP/Amass/v3/...@latest
 }
 
-function fix_openssl {
-
-    sed -i '/.include \/etc\/ssl\/kali.cnf/d' /etc/ssl/openssl.cnf
-    sed -i '/\[default_conf\]/d' /etc/ssl/openssl.cnf
-    sed -i '/ssl_conf = ssl_sect/d' /etc/ssl/openssl.cnf
-    sed -i '/\[ssl_sect\]/d' /etc/ssl/openssl.cnf
-    sed -i '/system_default = kali_wide_compatibility/d' /etc/ssl/openssl.cnf
-
-    echo '' >> /etc/ssl/openssl.cnf
-    echo '[default_conf]' >> /etc/ssl/openssl.cnf
-    echo 'ssl_conf = ssl_sect' >> /etc/ssl/openssl.cnf
-    echo 'providers = provider_sect' >> /etc/ssl/openssl.cnf
-    echo '' >> /etc/ssl/openssl.cnf
-    echo '[provider_sect]' >> /etc/ssl/openssl.cnf
-    echo 'default = default_sect' >> /etc/ssl/openssl.cnf
-    echo 'legacy = legacy_sect' >> /etc/ssl/openssl.cnf
-    echo '' >> /etc/ssl/openssl.cnf
-    echo '[default_sect]' >> /etc/ssl/openssl.cnf
-    echo 'activate = 1' >> /etc/ssl/openssl.cnf
-    echo '' >> /etc/ssl/openssl.cnf
-    echo '[legacy_sect]' >> /etc/ssl/openssl.cnf
-    echo 'activate = 1' >> /etc/ssl/openssl.cnf
-    echo '' >> /etc/ssl/openssl.cnf
-    echo '[ssl_sect]' >> /etc/ssl/openssl.cnf
-    echo 'system_default = kali_wide_compatibility' >> /etc/ssl/openssl.cnf
-    echo '' >> /etc/ssl/openssl.cnf
-    echo '.include /etc/ssl/kali.cnf' >> /etc/ssl/openssl.cnf
-
-}
-
 function install_shcheck {
-    git clone https://github.com/santoru/shcheck.git /opt/tools/shcheck
-    cd /opt/tools/shcheck
-    python3 -m pipx install .
+    pipx install git+https://github.com/santoru/shcheck.git
 }
 
 function install_sliver {
@@ -711,9 +682,7 @@ function install_proxmark3 {
 }
 
 function install_masky {
-    git clone https://github.com/Z4kSec/Masky.git /opt/tools/Masky
-    cd /opt/tools/Masky
-    python3 -m pipx install .
+    python3 -m pipx install masky
 }
 
 function install_fzf {
@@ -722,23 +691,11 @@ function install_fzf {
 }
 
 function install_certipy {
-    git clone https://github.com/ly4k/Certipy.git /opt/tools/Certipy
-    cd /opt/tools/Certipy
-    python3 -m pipx install .
-
-    # Merge customqueries from Certipy with existing customqueries file
-    # jq -n --argfile o1 customqueries.json --argfile o2 /opt/tools/BloodHoundQueries/customqueries.json '.queries |= $o1.queries + $o2.queries' > /root/.config/bloodhound/customqueries.json
-}
-
-function install_fuxploider {
-    git clone https://github.com/almandin/fuxploider.git /opt/tools/fuxploider
-    cd /opt/tools/fuxploider && pip3 install -r requirements.txt
+    python3 -m pipx install certipy-ad
 }
 
 function install_ldapdomaindump {
-    git clone https://github.com/dirkjanm/ldapdomaindump /opt/tools/ldapdomaindump
-    cd /opt/tools/ldapdomaindump
-    python3 -m pipx install .
+    pipx install git+https://github.com/dirkjanm/ldapdomaindump
 }
 
 function install_phpgcc {
@@ -781,6 +738,10 @@ function install_uro {
 
 function install_arjun {
     pip3 install arjun
+}
+
+function install_keepwn {
+    pipx install git+https://github.com/Orange-Cyberdefense/KeePwn
 }
 
 function install_bettercap {
@@ -842,13 +803,11 @@ function install_nimcrypt {
 }
 
 function install_jsbeautifier {
-    pip install jsbeautifier
+    pip3 install jsbeautifier
 }
 
 function install_bloodhound-import {
-    git clone https://github.com/fox-it/bloodhound-import.git /opt/tools/bloodhound-import
-    cd /opt/tools/bloodhound-import
-    python3 -m pipx install bloodhound_import
+    pipx install git+https://github.com/fox-it/bloodhound-import.git
 }
 
 function install_ysoserial {
@@ -857,23 +816,19 @@ function install_ysoserial {
 }
 
 function install_dploot {
-    git clone https://github.com/zblurx/dploot /opt/tools/dploot
-    cd /opt/tools/dploot
-    python3 -m pipx install .
+    pipx install dploot
 }
 
 function install_dumpsmbshare {
     git clone https://github.com/p0dalirius/DumpSMBShare.git /opt/tools/DumpSMBShare
+    virtualenv -p python3 /opt/tools/DumpSMBShare/venv
+    source /opt/tools/DumpSMBShare/venv/bin/activate
+    python3 -m pip install -r requirements.txt
+    deactivate
 }
 
 function install_cookiemonster {
     go install github.com/iangcarroll/cookiemonster/cmd/cookiemonster@latest
-}
-
-function install_ssrfmap {
-    git clone https://github.com/swisskyrepo/SSRFmap.git /opt/tools/SSRFmap
-    cd /opt/tools/SSRFmap
-    pip3 install -r requirements.txt
 }
 
 function install_ghidra {
@@ -940,9 +895,7 @@ function install_pth_toolkit {
 }
 
 function install_sipvicious {
-    git clone https://github.com/EnableSecurity/sipvicious.git /opt/tools/sipvicious
-    cd /opt/tools/sipvicious
-    python3 -m pipx install .
+    pipx install git+https://github.com/EnableSecurity/sipvicious.git
 }
 
 function install_mfdread {
@@ -983,7 +936,6 @@ function install_default {
     apti bash-completion
     install_sudo
     apti openssl
-    # fix_openssl
     apti ca-certificates
     apti wget 
     apti curl
@@ -1082,7 +1034,7 @@ function osintrune {
     install_holehe
     apti whois
     install_crosslinked
-    # install_linkedint
+    install_linkedin2username
     install_truffleHog
 }
 
@@ -1104,6 +1056,7 @@ function webrune {
     install_gowitness
     install_katana
     install_proxify
+    install_msprobe
     install_ipcdn
     install_amass
     install_assetfinder
@@ -1113,7 +1066,6 @@ function webrune {
     install_htmlq
     install_waybackurls
     install_jsloot
-    install_ssrfmap
     install_hakip2host
     install_authz0
     install_ysoserial
@@ -1122,7 +1074,6 @@ function webrune {
     install_sqlmap
     install_gau
     install_burp
-    install_fuxploider
     apti whatweb
     install_arjun
     install_uro
@@ -1178,15 +1129,18 @@ function adrune {
     apti chntpw
     install_ldapnomnom
     install_coercer
+    install_keepwn
     apti nbtscan
-    install_dinjector
+    install_ritm
+    install_pypykatz
     install_evil-winrm
     install_pth_toolkit
+    install_credmaster
     install_ldeep
     install_ldapsearch-ad
     install_pcredz
     install_BloodHound_and_friends
-    pip3 install pypykatz
+    install_pre2k
     install_krbrelayx
     install_pretender
     install_pkinittools
@@ -1197,13 +1151,13 @@ function adrune {
     install_gMSADumper
     install_chisel
     install_petitpotam
-    pip install adidnsdump
+    pipx install adidnsdump
     install_lsassy
     install_pyGPOabuse
     install_sprayhound
     apti freerdp2-x11
     install_privexchange
-    pip3 install pivotnacci
+    pipx install pivotnacci
     install_zerologon
     apti rdesktop
     install_ntlmv1-multi
