@@ -939,6 +939,7 @@ function install_default {
     apti ca-certificates
     apti wget 
     apti curl
+    apti pkg-config
     install_golang
     apti npm
     apti python2
