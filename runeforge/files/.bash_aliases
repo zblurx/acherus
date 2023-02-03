@@ -87,4 +87,5 @@ alias LdapRelayScan='/opt/tools/LdapRelayScan/venv/bin/python /opt/tools/LdapRel
 alias credmaster.py='/opt/tools/Credmaster/venv/bin/python /opt/tools/Credmaster/credmaster.py'
 alias DumpSMBShare.py='/opt/tools/DumpSMBShare/venv/bin/python /opt/tools/DumpSMBShare/DumpSMBShare.py'
 alias dnschef.py='/opt/tools/dnschef/venv/bin/python /opt/tools/dnschef/dnschef.py'
-alias dnschef.py='/opt/tools/pywsus/venv/bin/python /opt/tools/pywsus/pywsus.py'
+alias pywsus.py='/opt/tools/pywsus/venv/bin/python /opt/tools/pywsus/pywsus.py'
+alias linkedin2username.py='/opt/tools/linkedin2username/venv/bin/python /opt/tools/linkedin2username/linkedin2username.py'
