@@ -795,6 +795,10 @@ function install_whatportis {
     echo y | whatportis --update
 }
 
+function install_dhcpp {
+    go install github.com/zblurx/dhcpp@latest
+}
+
 function install_nimcrypt {
     git clone https://github.com/icyguider/Nimcrypt2.git /opt/tools/Nimcrypt2
     sudo apt-get install gcc mingw-w64 xz-utils -y
@@ -1115,6 +1119,7 @@ function networkrune {
     apti tshark
     apti wireshark
     apti dsniff
+    install_dhcpp
     apti tcpdump
     apti macchanger
 }
@@ -1156,6 +1161,7 @@ function adrune {
     install_lsassy
     install_pyGPOabuse
     install_sprayhound
+    install_certsync
     apti freerdp2-x11
     install_privexchange
     pipx install pivotnacci
