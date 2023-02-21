@@ -136,10 +136,10 @@ function install_golang {
     cd /tmp/
     if [[ $(uname -m) = 'x86_64' ]]
     then
-        wget -O /tmp/go.tar.gz https://go.dev/dl/go1.18.2.linux-amd64.tar.gz
+        wget -O /tmp/go.tar.gz https://go.dev/dl/go1.20.1.linux-amd64.tar.gz
     elif [[ $(uname -m) = 'aarch64' ]]
     then
-        wget -O /tmp/go.tar.gz https://go.dev/dl/go1.18.2.linux-arm64.tar.gz
+        wget -O /tmp/go.tar.gz https://go.dev/dl/go1.20.1.linux-arm64.tar.gz
     fi
     rm -rf /usr/local/go
     tar -C /usr/local -xzf /tmp/go.tar.gz
@@ -201,12 +201,9 @@ function install_krbrelayx {
     git clone https://github.com/dirkjanm/krbrelayx.git /opt/tools/krbrelayx
 }
 
-function install_pkinittools {
-    git clone https://github.com/dirkjanm/PKINITtools.git /opt/tools/PKINITtools
-}
-
 function install_tldr {
     cargo install tealdeer
+    /root/.cargo/bin/tldr -u
 }
 
 function install_waybackurls {
@@ -337,20 +334,13 @@ function install_ressources {
     git clone https://github.com/carlospolop/PEASS-ng.git /opt/resources/PEASS-ng
     git clone https://github.com/itm4n/PrivescCheck.git /opt/resources/PrivescCheck
     get_last_git_release gentilkiwi/mimikatz mimikatz
-    get_last_git_release itm4n/PrintSpoofer PrintSpoofer
     install_impersonate-rs
-    # get_last_git_release antonioCoco/RemotePotato0 RemotePotato0
     get_last_git_release gentilkiwi/kekeo kekeo
-    # git clone https://github.com/samratashok/ADModule.git /opt/resources/ADModule
-    # get_last_git_release AlessandroZ/LaZagne LaZagne
-    # get_last_git_release DominicBreuker/pspy pspy
-    # get_last_git_release NetSPI/PowerUpSQL PowerUPSQL
     git clone https://github.com/S3cur3Th1sSh1t/Amsi-Bypass-Powershell.git /opt/resources/Amsi-Bypass-Powershell
     git clone https://github.com/PowerShellMafia/PowerSploit.git /opt/resources/PowerSploit
     git clone https://github.com/int0x33/nc.exe.git /opt/resources/nc/windows
     git clone https://github.com/pry0cc/relevant-wordlist.git /opt/resources/relevant-wordlist
     install_sysinternals
-    # install_lazagne
     mkdir /opt/resources/clem9669_wordlist/ && wget https://github.com/clem9669/wordlists/releases/download/22/clem9669_wordlist_small.7z -O /opt/resources/clem9669_wordlist/wordlist-french.7z
     get_last_git_release vletoux/pingcastle PingCastle
 }
@@ -362,15 +352,6 @@ function set_env(){
 
 function install_privexchange {
     git clone https://github.com/dirkjanm/PrivExchange.git /opt/tools/PrivExchange
-}
-
-function install_ldaprelayscan {
-    git clone https://github.com/zyn3rgy/LdapRelayScan.git /opt/tools/LdapRelayScan
-    cd /opt/tools/LdapRelayScan
-    virtualenv -p python3 venv
-    source /opt/tools/LdapRelayScan/venv/bin/activate
-    pip install -r requirements.txt
-    deactivate
 }
 
 function install_crosslinked {
@@ -605,10 +586,6 @@ function install_coercer {
     pipx install git+https://github.com/p0dalirius/Coercer.git
 }
 
-function install_sprayhound {
-    pipx install git+https://github.com/Hackndo/sprayhound.git
-}
-
 function install_gf { 
     go install -v github.com/tomnomnom/gf@latest
     mkdir ~/.gf
@@ -723,14 +700,6 @@ function install_changeme {
     apti libpq-dev
     pip install -r requirements.txt
 }
-             
-function install_netntlmtosilverticket {
-    git clone https://github.com/NotMedic/NetNTLMtoSilverTicket.git /opt/tools/NetNTLMtoSilverTicket
-}
-
-function install_DPAT {
-    git clone https://github.com/clr2of8/DPAT.git /opt/tools/DPAT
-}
 
 function install_uro {
     pip3 install uro
@@ -764,8 +733,7 @@ function install_powershell {
 }
 
 function install_evil-winrm {
-    gem install winrm winrm-fs stringio logger fileutils
-    git clone https://github.com/Hackplayers/evil-winrm.git /opt/tools/evil-winrm
+    gem install evil-winrm
 }
 
 function install_msf {
@@ -855,12 +823,6 @@ function install_volatility {
     python3 -m pipx install .
 }
 
-function install_veil {
-    git clone https://github.com/Veil-Framework/Veil.git /opt/tools/Veil
-    cd /opt/tools/Veil
-    ./config/setup.sh --force --silent
-}
-
 function install_firefox {
     apti firefox-esr
     echo "pref(\"gfx.xrender.enabled\", true);" >> /etc/firefox-esr/firefox-esr.js;
@@ -946,13 +908,13 @@ function install_default {
     apti pkg-config
     install_golang
     apti npm
+    apti ruby-dev
     apti python2
     apti python3
     apti python3-venv
     apti python3-setuptools
     apti python3-pip
     apti python-is-python3
-    apti bpython
     install_cargo
     apti php
     apti gem
@@ -1019,7 +981,6 @@ function utilsrune {
 function crackrune {
     set_env
     install_hashcat
-    apti hydra
     pip3 install name-that-hash
     install_pack
     apti cewl 
@@ -1149,7 +1110,6 @@ function adrune {
     install_pre2k
     install_krbrelayx
     install_pretender
-    install_pkinittools
     install_mitm6
     install_Responder
     install_targetedKerberoast
@@ -1160,15 +1120,12 @@ function adrune {
     pipx install adidnsdump
     install_lsassy
     install_pyGPOabuse
-    install_sprayhound
     install_certsync
     apti freerdp2-x11
     install_privexchange
-    pipx install pivotnacci
     install_zerologon
     apti rdesktop
     install_ntlmv1-multi
-    install_ldaprelayscan
     install_enum4linuxng
     install_certipy
     install_manspider
@@ -1181,15 +1138,12 @@ function adrune {
     install_cve-2019-1040-scanner
     install_roadrecon
     apti heimdal-clients
-    install_netntlmtosilverticket
     install_dploot
     install_pylaps
-    install_DPAT
     install_pywerview
     install_acltoolkit
     install_kutil
     install_ntdsutil.py
-    install_veil
 }
 
 function wifirune {

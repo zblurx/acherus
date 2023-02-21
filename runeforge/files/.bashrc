@@ -96,6 +96,20 @@ function httpx-lowfruits(){
     ipinfo prips "$@" | httpx -sr -o httpx-low-fruits.out -title -sc -td -p 80,443,8080,8000,8009,8888,8443,9443,10443,7000-7004,8000-8003,9000-9003,7070,3000,4567,8081-8087
 }
 
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+# fzf stolen from snovvcrash
+function SharpCollection() {
+    `curl -sSL "https://api.github.com/repos/Flangvik/SharpCollection/git/trees/master?recursive=1" | jq -r ".tree[].path" | grep \\.exe | while read line; do echo "curl -sSL https://github.com/Flangvik/SharpCollection/raw/master/$line -o ${line#*/}"; done | fzf --tac --cycle --height=~50% --color=16` 
+}
+
+# function Ffuf-w() { 
+#     `([ -d /opt/resources/OneListForAll ] && find /opt/resources/OneListForAll/ -maxdepth 2 -type f -name "*.txt") | sort | while read line; do echo "ffuf -w $line -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36' -ic -sf -u "; done | fzf --tac --cycle --height=~50% --color=16 --print-query` 
+# }
+
+# function Httpx-p() { 
+#     echo `(echo 'httpx -sc -fr -location -title -server -td -method -ip -cname -cdn -p "80,81,443,1080,3000,3128,7001,7002,8080,8443,8888" -t 15 -l'; echo 'httpx -sc -fr -location -title -server -td -method -ip -cname -cdn -t 15 -l') | fzf --tac --cycle --height=~50% --color=16` 
+# }
+
 export GOPATH="$HOME/go"
 export TZ='Europe/Paris'
 export PATH="$HOME/.poetry/bin:/usr/local/go/bin:$GOPATH/bin:/root/.local/bin/:/root/.cargo/bin/:$HOME/.nimble/bin:$PATH"
