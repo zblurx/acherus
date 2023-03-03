@@ -157,9 +157,7 @@ function install_gron {
 }
 
 function install_bloodhoundpy {
-    git clone https://github.com/fox-it/BloodHound.py.git /opt/tools/bloodhound.py
-    cd /opt/tools/bloodhound.py
-    python3 -m pipx install .
+    pipx install git+https://github.com/fox-it/BloodHound.py.git
 }
 
 function install_pcredz {
@@ -194,7 +192,7 @@ function install_unfurl {
 }
 
 function install_enum4linuxng {
-    git clone https://github.com/cddmp/enum4linux-ng.git /opt/tools/enum4linux-ng
+    pipx install git+https://github.com/cddmp/enum4linux-ng.git
 }
 
 function install_krbrelayx {
@@ -259,9 +257,7 @@ function install_Responder {
 }
 
 function install_mitm6 {
-    git clone https://github.com/dirkjanm/mitm6 /opt/tools/mitm6
-    cd /opt/tools/mitm6
-    python3 -m pipx install .
+    pipx install git+https://github.com/dirkjanm/mitm6
 }
 
 function install_zerologon {
@@ -386,9 +382,11 @@ function install_pywerview {
 }
 
 function install_kutil {
-    git clone https://github.com/qtc-de/kutil.git /opt/tools/kutil
-    cd /opt/tools/kutil
-    python3 -m pipx install .
+    pipx install git+https://github.com/qtc-de/kutil.git
+}
+
+function install_pwncat {
+    pipx install git+https://github.com/calebstewart/pwncat
 }
 
 function install_pylaps {
@@ -448,7 +446,7 @@ function install_jwttool {
 }
 
 function install_acltoolkit {
-    pipx install acltoolkit-ad
+    pipx install git+https://github.com/zblurx/acltoolkit
 }
 
 function install_arsenal {
@@ -458,9 +456,7 @@ function install_arsenal {
 }
 
 function install_ldapsearch-ad {
-    git clone https://github.com/yaap7/ldapsearch-ad.git /opt/tools/ldapsearch-ad
-    cd /opt/tools/ldapsearch-ad
-    pipx install .
+    pipx install git+https://github.com/yaap7/ldapsearch-ad.git
 }
 
 function install_ldapnomnom {
@@ -479,7 +475,7 @@ function install_neo4j {
 }
 
 function install_pypykatz {
-    pipx install pypykatz
+    pipx install git+https://github.com/skelsec/pypykatz.git
 }
 
 function install_msprobe {
@@ -531,6 +527,10 @@ function install_chisel {
 
 function install_ipcdn {
     go install -v github.com/six2dez/ipcdn@latest
+}
+
+function install_serviceDetector {
+    git clone https://github.com/tothi/serviceDetector.git /opt/tools/serviceDetector
 }
 
 function install_fbhq {
@@ -601,7 +601,7 @@ function install_certsync {
 }
 
 function install_xLinkFinder {
-    pipx install git+https://github.com/xnl-h4ck3r/xnLinkFinder.git
+    git clone https://github.com/xnl-h4ck3r/xnLinkFinder.git /opt/tools/xnLinkFinder
 }
 
 function install_ntdsutil.py {
@@ -659,7 +659,7 @@ function install_proxmark3 {
 }
 
 function install_masky {
-    python3 -m pipx install masky
+    python3 -m pipx install git+https://github.com/Z4kSec/Masky.git
 }
 
 function install_fzf {
@@ -668,7 +668,7 @@ function install_fzf {
 }
 
 function install_certipy {
-    python3 -m pipx install certipy-ad
+    python3 -m pipx install git+https://github.com/ly4k/Certipy.git
 }
 
 function install_ldapdomaindump {
@@ -788,7 +788,7 @@ function install_ysoserial {
 }
 
 function install_dploot {
-    pipx install dploot
+    pipx install git+https://github.com/zblurx/dploot
 }
 
 function install_dumpsmbshare {
@@ -991,6 +991,7 @@ function exploitrune {
     install_msf
     install_sliver
     install_searchsploit
+    install_pwncat
     # install_empire
 }
 
@@ -1066,7 +1067,6 @@ function networkrune {
     apti arping
     apti arptables
     apti net-tools
-    # install_rustscan
     install_naabu
     apti proxychains4
     apti masscan
@@ -1088,7 +1088,6 @@ function networkrune {
 function adrune {
     set_env
     install_impacket
-    install_impacket-old
     install_cme
     install_ldapdomaindump
     apti ldap-utils
@@ -1115,6 +1114,7 @@ function adrune {
     install_targetedKerberoast
     install_LDAPmonitor # change
     install_gMSADumper
+    install_serviceDetector
     install_chisel
     install_petitpotam
     pipx install adidnsdump
@@ -1172,9 +1172,6 @@ function rfidrune {
 function voiprune {
     set_env
     install_sipvicious
-    apti sipcrack
-    apti sipsak
-    apti sipgrep
     install_SeeYouCM-Thief
 }
 
