@@ -89,3 +89,5 @@ alias dnschef.py='/opt/tools/dnschef/venv/bin/python /opt/tools/dnschef/dnschef.
 alias pywsus.py='/opt/tools/pywsus/venv/bin/python /opt/tools/pywsus/pywsus.py'
 alias linkedin2username.py='/opt/tools/linkedin2username/venv/bin/python /opt/tools/linkedin2username/linkedin2username.py'
 alias dns='cat /etc/resolv.conf'
+alias cme-bh-off="sed -i 's/bh_enabled = True/bh_enabled = False/g' /root/.cme/cme.conf && cat /root/.cme/cme.conf | grep --color=never 'bh_enabled ='"
+alias cme-bh-on="sed -i 's/bh_enabled = False/bh_enabled = True/g' /root/.cme/cme.conf && cat /root/.cme/cme.conf | grep --color=never 'bh_enabled ='"
