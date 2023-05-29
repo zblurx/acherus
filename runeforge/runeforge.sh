@@ -25,6 +25,17 @@ function install_bashrc {
     source /root/.bashrc
 }
 
+function install_python{
+    apti python2
+    apti python3
+    apti python3-venv
+    apti python3-setuptools
+    apti python3-pip
+    pip install packaging==20.0
+    apti python-is-python3
+    pip install pipx
+}
+
 function install_sudo {
     apti sudo
     cp /etc/hosts ~/hosts.new
@@ -81,6 +92,7 @@ function install_gobuster {
 function install_nuclei {
     # https://github.com/projectdiscovery/nuclei
     go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
+    git clone https://github.com/projectdiscovery/fuzzing-templates /opt/tools/nuclei-templates/fuzzing
     usr/local/go/bin/nuclei -update
     usr/local/go/bin/nuclei -ut 
     usr/local/go/bin/nuclei -duc
@@ -192,7 +204,13 @@ function install_unfurl {
 }
 
 function install_enum4linuxng {
-    pipx install git+https://github.com/cddmp/enum4linux-ng.git
+    git clone https://github.com/cddmp/enum4linux-ng /opt/tools/enum4linux-ng
+    python3 -m venv /opt/tools/enum4linux-ng
+    apti smbclient 
+    source /opt/tools/enum4linux-ng/venv/bin/activate
+    pip install wheel
+    pip install -r requirements.txt
+    deactivate
 }
 
 function install_krbrelayx {
@@ -272,7 +290,11 @@ function install_targetedKerberoast {
 function install_DefaultCredsCheatSheet {
     git clone https://github.com/ihebski/DefaultCreds-cheat-sheet.git /opt/tools/DefaultCreds
     cd /opt/tools/DefaultCreds
-    python3 -m pipx install .
+    virtualenv -p python3 venv
+    source /opt/tools/DefaultCreds/venv/bin/activate
+    python3 -m pip install -r requirements.txt
+    python3 -m pip install .
+    deactivate
 }
 
 function install_mapcidr {
@@ -294,6 +316,10 @@ function install_kerbrute {
 
 function install_petitpotam {
     git clone https://github.com/topotam/PetitPotam.git /opt/tools/PetitPotam
+}
+
+function install_adidnsdump {
+    pipx install git+https://github.com/dirkjanm/adidnsdump#egg=adidnsdump
 }
 
 function install_ntlmv1-multi {
@@ -326,15 +352,14 @@ function install_sysinternals {
 
 function install_ressources {
     git clone https://github.com/danielmiessler/SecLists.git --depth 1 /opt/resources/SecLists
-    git clone https://github.com/six2dez/OneListForAll.git --depth 1 /opt/resources/OneListForAll
-    git clone https://github.com/carlospolop/PEASS-ng.git /opt/resources/PEASS-ng
+    git clone https://github.com/six2dez/OneListForAll.git --depth 0 /opt/resources/OneListForAll
+    # git clone https://github.com/carlospolop/PEASS-ng.git /opt/resources/PEASS-ng
     git clone https://github.com/itm4n/PrivescCheck.git /opt/resources/PrivescCheck
     get_last_git_release gentilkiwi/mimikatz mimikatz
     install_impersonate-rs
-    get_last_git_release gentilkiwi/kekeo kekeo
+    # get_last_git_release gentilkiwi/kekeo kekeo
     git clone https://github.com/S3cur3Th1sSh1t/Amsi-Bypass-Powershell.git /opt/resources/Amsi-Bypass-Powershell
     git clone https://github.com/PowerShellMafia/PowerSploit.git /opt/resources/PowerSploit
-    git clone https://github.com/int0x33/nc.exe.git /opt/resources/nc/windows
     git clone https://github.com/pry0cc/relevant-wordlist.git /opt/resources/relevant-wordlist
     install_sysinternals
     mkdir /opt/resources/clem9669_wordlist/ && wget https://github.com/clem9669/wordlists/releases/download/22/clem9669_wordlist_small.7z -O /opt/resources/clem9669_wordlist/wordlist-french.7z
@@ -366,10 +391,6 @@ function install_eos {
     pipx install git+https://github.com/Synacktiv/eos
 }
 
-function install_hakip2host {
-    go install github.com/hakluke/hakip2host@latest
-}
-
 function install_bypass-url-parser {
     git clone https://github.com/laluka/bypass-url-parser.git /opt/tools/bypass-url-parser
 }
@@ -389,8 +410,16 @@ function install_pwncat {
     pipx install git+https://github.com/calebstewart/pwncat
 }
 
-function install_pylaps {
-    git clone https://github.com/p0dalirius/pyLAPS.git /opt/tools/pyLAPS
+function install_scarecrow {
+    git clone https://github.com/optiv/ScareCrow.git /opt/tools/ScareCrow
+    cd /opt/tools/ScareCrow
+    apti openssl osslsigncode mingw-w64
+    go get github.com/fatih/color
+    go get github.com/yeka/zip
+    go get github.com/josephspurrier/goversioninfo
+    go get github.com/Binject/debug/pe
+    go get github.com/awgh/rawreader
+    go build ScareCrow.go
 }
 
 function install_cve-2019-1040-scanner {
@@ -403,6 +432,10 @@ function install_webclientservicescanner {
 
 function install_gMSADumper {
     git clone https://github.com/micahvandeusen/gMSADumper.git /opt/tools/gMSADumper
+    virtualenv -p python3 /opt/tools/gMSADumper/venv
+    source /opt/tools/gMSADumper/venv/bin/activate
+    python3 -m pip install -r requirements.txt
+    deactivate
 }
 
 function install_roadrecon {
@@ -422,13 +455,9 @@ function install_gists {
 function install_pywsus {
     git clone https://github.com/GoSecure/pywsus.git /opt/tools/pywsus
     virtualenv -p python3 /opt/tools/pywsus/venv
-    source /opt/tools/eaphammer/venv/bin/activate
+    source /opt/tools/pywsus/venv/bin/activate
     python3 -m pip install -r requirements.txt
     deactivate
-}
-
-function install_gospider {
-    go install github.com/jaeles-project/gospider@latest
 }
 
 function install_eaphammer {
@@ -440,19 +469,12 @@ function install_eaphammer {
     deactivate
 }
 
-function install_jwttool {
-    git clone https://github.com/ticarpi/jwt_tool.git /opt/tools/jwt_tool
-    python3 -m pip install termcolor cprint pycryptodomex requests
-}
-
 function install_acltoolkit {
     pipx install git+https://github.com/zblurx/acltoolkit
 }
 
 function install_arsenal {
-    git clone https://github.com/Orange-Cyberdefense/arsenal.git /opt/tools/arsenal
-    cd /opt/tools/arsenal
-    python3 -m pipx install .
+    python3 -m pipx install git+https://github.com/Orange-Cyberdefense/arsenal.git
 }
 
 function install_ldapsearch-ad {
@@ -541,6 +563,7 @@ function install_donpapi {
     git clone https://github.com/login-securite/DonPAPI.git /opt/tools/DonPAPI
     cd /opt/tools/DonPAPI
     apti swig
+    git checkout MFA # TODO change quand ca sera merge
     python3 -m pipx install .
 }
 
@@ -643,7 +666,7 @@ function install_impacket-old {
 
 function install_cme {
     apt-get install -y libssl-dev libxml2-dev openssl autoconf g++ python3-dev git libxslt-dev libffi-dev build-essential libkrb5-dev
-    git clone --recursive https://github.com/byt3bl33d3r/CrackMapExec /opt/tools/CrackMapExec
+    git clone https://github.com/Porchetta-Industries/CrackMapExec.git /opt/tools/CrackMapExec
     cd /opt/tools/CrackMapExec
     python3 -m pipx install .
     mkdir -p ~/.cme
@@ -840,6 +863,7 @@ function install_onionsearch {
 
 function install_rusthound {
     git clone https://github.com/OPENCYBER-FR/RustHound.git /opt/tools/RustHound
+    apti gcc libclang-dev clang libclang-dev libgssapi-krb5-2 libkrb5-dev libsasl2-modules-gssapi-mit musl-tools gcc-mingw-w64-x86-64
     cd /opt/tools/RustHound
     make install
 }
@@ -909,12 +933,7 @@ function install_default {
     install_golang
     apti npm
     apti ruby-dev
-    apti python2
-    apti python3
-    apti python3-venv
-    apti python3-setuptools
-    apti python3-pip
-    apti python-is-python3
+    install_python
     install_cargo
     apti php
     apti gem
@@ -962,7 +981,6 @@ function install_default {
     apti socat
     apti ntpdate
     apti libqrencode4
-    pip install pipx
     install_fzf
     apti gcc-mingw-w64-x86-64
 }
@@ -989,7 +1007,7 @@ function crackrune {
 function exploitrune {
     set_env
     install_msf
-    install_sliver
+    # install_sliver
     install_searchsploit
     install_pwncat
     # install_empire
@@ -1033,7 +1051,6 @@ function webrune {
     install_htmlq
     install_waybackurls
     install_jsloot
-    install_hakip2host
     install_authz0
     install_ysoserial
     install_tlsx
@@ -1054,7 +1071,6 @@ function webrune {
     install_hike
     install_phpgcc
     install_dnsx
-    install_jwttool
 }
 
 function networkrune {
@@ -1111,16 +1127,17 @@ function adrune {
     install_pretender
     install_mitm6
     install_Responder
-    install_targetedKerberoast
+    # install_targetedKerberoast
     install_LDAPmonitor # change
     install_gMSADumper
-    install_serviceDetector
+    # install_serviceDetector
     install_chisel
-    install_petitpotam
-    pipx install adidnsdump
+    # install_petitpotam
+    install_adidnsdump
     install_lsassy
     install_pyGPOabuse
     install_certsync
+    install_scarecrow
     apti freerdp2-x11
     install_privexchange
     install_zerologon
@@ -1139,7 +1156,6 @@ function adrune {
     install_roadrecon
     apti heimdal-clients
     install_dploot
-    install_pylaps
     install_pywerview
     install_acltoolkit
     install_kutil

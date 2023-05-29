@@ -29,7 +29,7 @@ RUN /runeforge/runeforge.sh  crackrune
 RUN /runeforge/runeforge.sh  voiprune
 RUN /runeforge/runeforge.sh  adrune
 RUN /runeforge/runeforge.sh  wifirune
-RUN /runeforge/runeforge.sh  rfidrune
+# RUN /runeforge/runeforge.sh  rfidrune
 # RUN /runeforge/runeforge.sh  codereviewrune
 # RUN /runeforge/runeforge.sh  reverserune
 RUN /runeforge/runeforge.sh  cleanup
