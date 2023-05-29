@@ -25,7 +25,7 @@ function install_bashrc {
     source /root/.bashrc
 }
 
-function install_python{
+function install_python {
     apti python2
     apti python3
     apti python3-venv
