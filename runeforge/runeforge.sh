@@ -69,10 +69,9 @@ function install_pretender {
 
 function install_credmaster {
     git clone https://github.com/knavesec/CredMaster.git /opt/tools/CredMaster
-    /opt/tools/CredMaster
-    virtualenv -p python3 venv
-    source /opt/tools/impacket-old/venv/bin/activate
-    python3 -m pip install -r requirements.txt
+    virtualenv -p python3 /opt/tools/CredMaster/venv
+    source /opt/tools/CredMaster/venv/bin/activate
+    python3 -m pip install -r /opt/tools/CredMaster/requirements.txt
     deactivate
 }
 
@@ -205,11 +204,11 @@ function install_unfurl {
 
 function install_enum4linuxng {
     git clone https://github.com/cddmp/enum4linux-ng /opt/tools/enum4linux-ng
-    python3 -m venv /opt/tools/enum4linux-ng
+    virtualenv -p python3 /opt/tools/enum4linux-ng/venv
     apti smbclient 
     source /opt/tools/enum4linux-ng/venv/bin/activate
     pip install wheel
-    pip install -r requirements.txt
+    pip install -r /opt/tools/enum4linux-ng/requirements.txt
     deactivate
 }
 
@@ -241,7 +240,7 @@ function install_linkedin2username {
     git clone https://github.com/initstring/linkedin2username.git /opt/tools/linkedin2username
     virtualenv -p python3 /opt/tools/linkedin2username/venv
     source /opt/tools/linkedin2username/venv/bin/activate
-    pip install -r requirements.txt
+    pip install -r /opt/tools/linkedin2username/requirements.txt
     deactivate
 }
 
@@ -257,7 +256,7 @@ function install_dnschef {
     git clone https://github.com/iphelix/dnschef.git /opt/tools/dnschef
     virtualenv -p python3 /opt/tools/dnschef/venv
     source /opt/tools/dnschef/venv/bin/activate
-    pip install -r requirements.txt
+    pip install -r /opt/tools/dnschef/requirements.txt
     deactivate
 }
 
@@ -289,10 +288,9 @@ function install_targetedKerberoast {
 
 function install_DefaultCredsCheatSheet {
     git clone https://github.com/ihebski/DefaultCreds-cheat-sheet.git /opt/tools/DefaultCreds
-    cd /opt/tools/DefaultCreds
-    virtualenv -p python3 venv
+    virtualenv -p python3 /opt/tools/DefaultCreds/venv
     source /opt/tools/DefaultCreds/venv/bin/activate
-    python3 -m pip install -r requirements.txt
+    python3 -m pip install -r /opt/tools/DefaultCreds/requirements.txt
     python3 -m pip install .
     deactivate
 }
@@ -303,7 +301,10 @@ function install_mapcidr {
 
 function install_SeeYouCM-Thief {
     git clone https://github.com/trustedsec/SeeYouCM-Thief.git /opt/tools/SeeYouCM-Thief
+    virtualenv -p python3 /opt/tools/SeeYouCM-Thief/venv
+    source /opt/tools/SeeYouCM-Thief/venv/bin/activate
     python3 -m pip install -r /opt/tools/SeeYouCM-Thief/requirements.txt
+    deactivate
 }
 
 function install_simplehttpserver {
@@ -434,7 +435,7 @@ function install_gMSADumper {
     git clone https://github.com/micahvandeusen/gMSADumper.git /opt/tools/gMSADumper
     virtualenv -p python3 /opt/tools/gMSADumper/venv
     source /opt/tools/gMSADumper/venv/bin/activate
-    python3 -m pip install -r requirements.txt
+    python3 -m pip install -r /opt/tools/gMSADumper/requirements.txt
     deactivate
 }
 
@@ -456,7 +457,7 @@ function install_pywsus {
     git clone https://github.com/GoSecure/pywsus.git /opt/tools/pywsus
     virtualenv -p python3 /opt/tools/pywsus/venv
     source /opt/tools/pywsus/venv/bin/activate
-    python3 -m pip install -r requirements.txt
+    python3 -m pip install -r /opt/tools/pywsus/requirements.txt
     deactivate
 }
 
@@ -657,8 +658,7 @@ function install_impacket {
 function install_impacket-old {
     # https://github.com/fortra/impacket
     git clone https://github.com/fortra/impacket.git /opt/tools/impacket-old
-    cd /opt/tools/impacket-old
-    virtualenv -p python3 venv
+    virtualenv -p python3 /opt/tools/impacket-old/venv
     source /opt/tools/impacket-old/venv/bin/activate
     python3 -m pip install .
     deactivate
@@ -818,7 +818,7 @@ function install_dumpsmbshare {
     git clone https://github.com/p0dalirius/DumpSMBShare.git /opt/tools/DumpSMBShare
     virtualenv -p python3 /opt/tools/DumpSMBShare/venv
     source /opt/tools/DumpSMBShare/venv/bin/activate
-    python3 -m pip install -r requirements.txt
+    python3 -m pip install -r /opt/tools/DumpSMBShare/requirements.txt
     deactivate
 }
 

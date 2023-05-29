@@ -93,7 +93,7 @@ function cl() {
 
 function httpx-lowfruits(){
     # lowfruits by jdi
-    ipinfo prips "$@" | httpx -sr -o httpx-low-fruits.out -title -sc -td -p 80,443,8080,8000,8009,8888,8443,9443,10443,7000-7004,8000-8003,9000-9003,7070,3000,4567,8081-8087
+    ipinfo prips "$@" | httpx -sr -t 100 -rl 250 -o httpx-low-fruits.out -title -sc -td -p 80,443,8080,8000,8009,8888,8443,9443,10443,7000-7004,8000-8003,9000-9003,7070,3000,4567,8081-8087
 }
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
