@@ -117,4 +117,5 @@ export GRDIR=/opt/tools/graudit/signatures
 export HISTFILE=/data/.bash_history
 export HISTTIMEFORMAT="%F %T "
 export PROMPT_COMMAND='history -a'
+export LC_ALL=en_US.UTF-8
 
