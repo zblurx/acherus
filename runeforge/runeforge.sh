@@ -31,9 +31,10 @@ function install_python {
     apti python3-venv
     apti python3-setuptools
     apti python3-pip
-    pip install packaging==20.0
+    apti pipx
+    pip install packaging==20.0 --break-system-packages
     apti python-is-python3
-    pip install pipx
+    # pip install pipx
 }
 
 function install_sudo {
@@ -268,7 +269,7 @@ function install_Responder {
     sed -i 's/Analyzer-Session.log/\/data\/.Analyzer-Session.log/g' /opt/tools/Responder/Responder.conf
     sed -i 's/Config-Responder.log/\/data\/.Config-Responder.log/g' /opt/tools/Responder/Responder.conf
 
-    pip install netifaces
+    pip install netifaces --break-system-packages
     x86_64-w64-mingw32-gcc /opt/tools/Responder/tools/MultiRelay/bin/Runas.c -o /opt/tools/Responder/tools/MultiRelay/bin/Runas.exe -municode -lwtsapi32 -luserenv
     x86_64-w64-mingw32-gcc /opt/tools/Responder/tools/MultiRelay/bin/Syssvc.c -o /opt/tools/Responder/tools/MultiRelay/bin/Syssvc.exe -municode
 }
@@ -353,17 +354,17 @@ function install_sysinternals {
 
 function install_ressources {
     git clone https://github.com/danielmiessler/SecLists.git --depth 1 /opt/resources/SecLists
-    git clone https://github.com/six2dez/OneListForAll.git --depth 0 /opt/resources/OneListForAll
+    git clone https://github.com/six2dez/OneListForAll.git --depth 1 /opt/resources/OneListForAll
     # git clone https://github.com/carlospolop/PEASS-ng.git /opt/resources/PEASS-ng
-    git clone https://github.com/itm4n/PrivescCheck.git /opt/resources/PrivescCheck
+    # git clone https://github.com/itm4n/PrivescCheck.git /opt/resources/PrivescCheck
     get_last_git_release gentilkiwi/mimikatz mimikatz
     install_impersonate-rs
     # get_last_git_release gentilkiwi/kekeo kekeo
     git clone https://github.com/S3cur3Th1sSh1t/Amsi-Bypass-Powershell.git /opt/resources/Amsi-Bypass-Powershell
     git clone https://github.com/PowerShellMafia/PowerSploit.git /opt/resources/PowerSploit
-    git clone https://github.com/pry0cc/relevant-wordlist.git /opt/resources/relevant-wordlist
+    # git clone https://github.com/pry0cc/relevant-wordlist.git /opt/resources/relevant-wordlist
     install_sysinternals
-    mkdir /opt/resources/clem9669_wordlist/ && wget https://github.com/clem9669/wordlists/releases/download/22/clem9669_wordlist_small.7z -O /opt/resources/clem9669_wordlist/wordlist-french.7z
+    # mkdir /opt/resources/clem9669_wordlist/ && wget https://github.com/clem9669/wordlists/releases/download/22/clem9669_wordlist_small.7z -O /opt/resources/clem9669_wordlist/wordlist-french.7z
     get_last_git_release vletoux/pingcastle PingCastle
 }
 
@@ -561,11 +562,13 @@ function install_fbhq {
 }
 
 function install_donpapi {
-    git clone https://github.com/login-securite/DonPAPI.git /opt/tools/DonPAPI
-    cd /opt/tools/DonPAPI
-    apti swig
-    git checkout MFA # TODO change quand ca sera merge
-    python3 -m pipx install .
+    pipx install git+https://github.com/login-securite/DonPAPI.git
+}
+
+function install_azurehound {
+    git clone https://github.com/BloodHoundAD/AzureHound.git /opt/tools/AzureHound
+    cd /opt/tools/AzureHound
+    go build -ldflags="-s -w -X github.com/bloodhoundad/azurehound/v2/constants.Version=`git describe tags --exact-match 2> /dev/null || git rev-parse HEAD`"
 }
 
 function install_ldeep {
@@ -666,7 +669,7 @@ function install_impacket-old {
 
 function install_cme {
     apt-get install -y libssl-dev libxml2-dev openssl autoconf g++ python3-dev git libxslt-dev libffi-dev build-essential libkrb5-dev
-    git clone https://github.com/Porchetta-Industries/CrackMapExec.git /opt/tools/CrackMapExec
+    git clone https://github.com/mpgn/CrackMapExec.git /opt/tools/CrackMapExec
     cd /opt/tools/CrackMapExec
     python3 -m pipx install .
     mkdir -p ~/.cme
@@ -774,10 +777,10 @@ function install_pack {
 function install_hashcat {
     apti hashcat
     mkdir -p /opt/resources/hashcat_rules/
-    git clone https://github.com/clem9669/hashcat-rule.git /opt/resources/hashcat_rules/clem9669 
+    # git clone https://github.com/clem9669/hashcat-rule.git /opt/resources/hashcat_rules/clem9669 
     wget https://raw.githubusercontent.com/NotSoSecure/password_cracking_rules/master/OneRuleToRuleThemAll.rule -O /opt/resources/hashcat_rules/OneRuleToRuleThemAll.rule
-    wget https://raw.githubusercontent.com/NSAKEY/nsa-rules/master/_NSAKEY.v2.dive.rule -O /opt/resources/hashcat_rules/nsa_dive.rule
-    wget https://github.com/rarecoil/pantagrule/raw/master/rules/hashesorg.v6/pantagrule.hashorg.v6.popular.rule.gz -O /opt/resources/hashcat_rules/pantagrule.hashorg.v6.popular.rule.gz
+    # wget https://raw.githubusercontent.com/NSAKEY/nsa-rules/master/_NSAKEY.v2.dive.rule -O /opt/resources/hashcat_rules/nsa_dive.rule
+    # wget https://github.com/rarecoil/pantagrule/raw/master/rules/hashesorg.v6/pantagrule.hashorg.v6.popular.rule.gz -O /opt/resources/hashcat_rules/pantagrule.hashorg.v6.popular.rule.gz
     apti hashcat-utils # change
 }
 
@@ -1154,6 +1157,7 @@ function adrune {
     install_masky
     install_cve-2019-1040-scanner
     install_roadrecon
+    install_azurehound
     apti heimdal-clients
     install_dploot
     install_pywerview
