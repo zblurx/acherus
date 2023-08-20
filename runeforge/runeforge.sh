@@ -31,10 +31,10 @@ function install_python {
     apti python3-venv
     apti python3-setuptools
     apti python3-pip
-    apti pipx
-    pip install packaging==20.0 --break-system-packages
+    # apti pipx
+    pip install packaging==20.0
     apti python-is-python3
-    # pip install pipx
+    pip install pipx
 }
 
 function install_sudo {

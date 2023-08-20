@@ -1,4 +1,4 @@
-FROM debian
+FROM debian:bullseye
 
 LABEL version=1.2.0
 LABEL maintainer=@zblurx
