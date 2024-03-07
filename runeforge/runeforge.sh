@@ -148,10 +148,10 @@ function install_golang {
     cd /tmp/
     if [[ $(uname -m) = 'x86_64' ]]
     then
-        wget -O /tmp/go.tar.gz https://go.dev/dl/go1.20.1.linux-amd64.tar.gz
+        wget -O /tmp/go.tar.gz https://go.dev/dl/go1.21.3.linux-amd64.tar.gz
     elif [[ $(uname -m) = 'aarch64' ]]
     then
-        wget -O /tmp/go.tar.gz https://go.dev/dl/go1.20.1.linux-arm64.tar.gz
+        wget -O /tmp/go.tar.gz https://go.dev/dl/go1.21.3.linux-arm64.tar.gz
     fi
     rm -rf /usr/local/go
     tar -C /usr/local -xzf /tmp/go.tar.gz
@@ -269,7 +269,7 @@ function install_Responder {
     sed -i 's/Analyzer-Session.log/\/data\/.Analyzer-Session.log/g' /opt/tools/Responder/Responder.conf
     sed -i 's/Config-Responder.log/\/data\/.Config-Responder.log/g' /opt/tools/Responder/Responder.conf
 
-    pip install netifaces --break-system-packages
+    pip3 install netifaces
     x86_64-w64-mingw32-gcc /opt/tools/Responder/tools/MultiRelay/bin/Runas.c -o /opt/tools/Responder/tools/MultiRelay/bin/Runas.exe -municode -lwtsapi32 -luserenv
     x86_64-w64-mingw32-gcc /opt/tools/Responder/tools/MultiRelay/bin/Syssvc.c -o /opt/tools/Responder/tools/MultiRelay/bin/Syssvc.exe -municode
 }
@@ -304,6 +304,14 @@ function install_SeeYouCM-Thief {
     git clone https://github.com/trustedsec/SeeYouCM-Thief.git /opt/tools/SeeYouCM-Thief
     virtualenv -p python3 /opt/tools/SeeYouCM-Thief/venv
     source /opt/tools/SeeYouCM-Thief/venv/bin/activate
+    python3 -m pip install -r /opt/tools/SeeYouCM-Thief/requirements.txt
+    deactivate
+}
+
+function install_sccmhunter {
+    git clone https://github.com/garrettfoster13/sccmhunter.git /opt/tools/sccmhunter
+    virtualenv -p python3 /opt/tools/sccmhunter/venv
+    source /opt/tools/sccmhunter/venv/bin/activate
     python3 -m pip install -r /opt/tools/SeeYouCM-Thief/requirements.txt
     deactivate
 }
@@ -440,8 +448,10 @@ function install_gMSADumper {
     deactivate
 }
 
-function install_roadrecon {
+function install_roadtools {
     pipx install roadrecon
+    pipx install roadtx
+    git clone https://github.com/dirkjanm/roadtools_hybrid.git /opt/tools/roadtools_hybrid
 }
 
 function install_gists {
@@ -637,7 +647,7 @@ function install_ntdsutil.py {
 
 function install_amass {
     # https://github.com/OWASP/Amass
-    go install -v github.com/OWASP/Amass/v3/...@latest
+    go install -v github.com/owasp-amass/amass/v4/...@master
 }
 
 function install_shcheck {
@@ -653,27 +663,18 @@ function install_sliver {
 
 function install_impacket {
     # https://github.com/fortra/impacket
-    git clone https://github.com/ThePorgs/impacket.git /opt/tools/impacket
+    git clone https://github.com/fortra/impacket.git /opt/tools/impacket
     cd /opt/tools/impacket
     python3 -m pipx install .
 }
 
-function install_impacket-old {
-    # https://github.com/fortra/impacket
-    git clone https://github.com/fortra/impacket.git /opt/tools/impacket-old
-    virtualenv -p python3 /opt/tools/impacket-old/venv
-    source /opt/tools/impacket-old/venv/bin/activate
-    python3 -m pip install .
-    deactivate
-}
-
-function install_cme {
+function install_nxc {
     apt-get install -y libssl-dev libxml2-dev openssl autoconf g++ python3-dev git libxslt-dev libffi-dev build-essential libkrb5-dev
-    git clone https://github.com/mpgn/CrackMapExec.git /opt/tools/CrackMapExec
-    cd /opt/tools/CrackMapExec
+    git clone https://github.com/Pennyw0rth/NetExec.git /opt/tools/NetExec
+    cd /opt/tools/NetExec
     python3 -m pipx install .
-    mkdir -p ~/.cme
-    cp -v /runeforge/files/cme.conf ~/.cme/cme.conf
+    mkdir -p ~/.nxc
+    cp -v /runeforge/files/nxc.conf ~/.nxc/nxc.conf
 }
 
 function install_proxmark3 {
@@ -791,6 +792,10 @@ function install_whatportis {
 
 function install_dhcpp {
     go install github.com/zblurx/dhcpp@latest
+}
+
+function install_adconnectdump {
+    git clone https://github.com/dirkjanm/adconnectdump.git /opt/tools/adconnectdump
 }
 
 function install_nimcrypt {
@@ -1107,7 +1112,7 @@ function networkrune {
 function adrune {
     set_env
     install_impacket
-    install_cme
+    install_nxc
     install_ldapdomaindump
     apti ldap-utils
     apti rpcbind
@@ -1119,9 +1124,10 @@ function adrune {
     install_ritm
     install_pypykatz
     install_evil-winrm
-    install_pth_toolkit
+    # install_pth_toolkit
     install_credmaster
     install_ldeep
+    install_sccmhunter
     install_ldapsearch-ad
     install_pcredz
     install_BloodHound_and_friends
@@ -1135,7 +1141,7 @@ function adrune {
     install_gMSADumper
     # install_serviceDetector
     install_chisel
-    # install_petitpotam
+    install_petitpotam
     install_adidnsdump
     install_lsassy
     install_pyGPOabuse
@@ -1147,6 +1153,7 @@ function adrune {
     apti rdesktop
     install_ntlmv1-multi
     install_enum4linuxng
+    install_adconnectdump
     install_certipy
     install_manspider
     install_pywsus
@@ -1156,7 +1163,7 @@ function adrune {
     install_webclientservicescanner
     install_masky
     install_cve-2019-1040-scanner
-    install_roadrecon
+    install_roadtools
     install_azurehound
     apti heimdal-clients
     install_dploot
