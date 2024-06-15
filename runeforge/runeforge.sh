@@ -834,6 +834,56 @@ function install_cookiemonster {
     go install github.com/iangcarroll/cookiemonster/cmd/cookiemonster@latest
 }
 
+function install_thievingfox {
+    git clone https://github.com/Slowerzs/ThievingFox.git /opt/tools/ThievingFox
+    apti mingw-w64 nuget
+    rustup target add x86_64-pc-windows-gnu
+    rustup target add i686-pc-windows-gnu
+    virtualenv -p python3 /opt/tools/ThievingFox/venv
+    source /opt/tools/ThievingFox/venv/bin/activate
+    python3 -m pip install -r /opt/tools/ThievingFox/requirements.txt
+    deactivate
+}
+
+function install_adcheck {
+    pipx install git+https://github.com/CobblePot59/ADcheck.git
+}
+
+function install_smbclient-ng {
+    pipx install git+https://github.com/p0dalirius/smbclient-ng.git
+}
+
+function install_atexec-pro {
+    git clone https://github.com/Ridter/atexec-pro.git /opt/tools/atexec-pro
+}
+
+function install_wmiexec-pro {
+    git clone https://github.com/XiaoliChan/wmiexec-Pro /opt/tools/wmiexec-Pro
+}
+
+function install_onesixtyone {
+    git clone https://github.com/trailofbits/onesixtyone.git /opt/tools/onesixtyone
+    cd /opt/tools/onesixtyone
+    make install
+}
+
+function install_ccmpwn {
+    git clone https://github.com/mandiant/ccmpwn.git /opt/tools/ccmpwn.py
+
+}
+
+function install_msldap {
+    pipx install git+https://github.com/skelsec/msldap.git
+}
+
+function install_conpass {
+    pipx install git+https://github.com/login-securite/conpass.git
+}
+
+function install_pysnaffler {
+    pipx install git+https://github.com/skelsec/pysnaffler.git
+}
+
 function install_ghidra {
     apti openjdk-11-jdk
     mkdir /opt/tools/ghidra
@@ -1089,6 +1139,7 @@ function networkrune {
     apti iptables
     apti arp-scan
     apti arping
+    install_onesixtyone
     apti arptables
     apti net-tools
     install_naabu
@@ -1128,8 +1179,8 @@ function adrune {
     install_credmaster
     install_ldeep
     install_sccmhunter
-    install_ldapsearch-ad
-    install_pcredz
+    # install_ldapsearch-ad
+    # install_pcredz
     install_BloodHound_and_friends
     install_pre2k
     install_krbrelayx
@@ -1138,39 +1189,48 @@ function adrune {
     install_Responder
     # install_targetedKerberoast
     install_LDAPmonitor # change
-    install_gMSADumper
+    # install_gMSADumper
     # install_serviceDetector
-    install_chisel
+    # install_chisel
     install_petitpotam
     install_adidnsdump
     install_lsassy
     install_pyGPOabuse
     install_certsync
-    install_scarecrow
+    install_msldap
+    # install_scarecrow
     apti freerdp2-x11
-    install_privexchange
+    # install_privexchange
     install_zerologon
-    apti rdesktop
+    # apti rdesktop
     install_ntlmv1-multi
     install_enum4linuxng
     install_adconnectdump
     install_certipy
+    install_thievingfox
+    install_wmiexec-pro
+    install_smbclient-ng 
+    install_atexec-pro 
+    install_ccmpwn
     install_manspider
     install_pywsus
-    install_dumpsmbshare
+    # install_dumpsmbshare
+    install_conpass
     install_kerbrute
     install_donpapi
-    install_webclientservicescanner
+    # install_webclientservicescanner
     install_masky
     install_cve-2019-1040-scanner
     install_roadtools
     install_azurehound
+    install_pysnaffler
     apti heimdal-clients
     install_dploot
+    install_adcheck
     install_pywerview
     install_acltoolkit
     install_kutil
-    install_ntdsutil.py
+    # install_ntdsutil.py
 }
 
 function wifirune {
