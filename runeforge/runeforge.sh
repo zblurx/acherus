@@ -34,7 +34,7 @@ function install_python {
     # apti pipx
     pip install packaging==20.0
     apti python-is-python3
-    pip install pipx
+    pip install pipx --break-system-packages
 }
 
 function install_sudo {
@@ -84,14 +84,9 @@ function install_brb {
     go install -v github.com/zblurx/brb@latest
 }
 
-function install_gobuster {
-    # https://github.com/OJ/gobuster
-    go install -v github.com/OJ/gobuster/v3@latest
-}
-
 function install_nuclei {
     # https://github.com/projectdiscovery/nuclei
-    go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
+    go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
     git clone https://github.com/projectdiscovery/fuzzing-templates /opt/tools/nuclei-templates/fuzzing
     usr/local/go/bin/nuclei -update
     usr/local/go/bin/nuclei -ut 
@@ -112,11 +107,6 @@ function install_naabu {
     # https://github.com/projectdiscovery/naabu
     apt-get install -y libpcap-dev
     go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
-}
-
-function install_testssl {
-    # https://github.com/drwetter/testssl.sh
-    git clone --depth 1 https://github.com/drwetter/testssl.sh.git /opt/tools/testssl
 }
 
 function install_burp {
@@ -269,7 +259,7 @@ function install_Responder {
     sed -i 's/Analyzer-Session.log/\/data\/.Analyzer-Session.log/g' /opt/tools/Responder/Responder.conf
     sed -i 's/Config-Responder.log/\/data\/.Config-Responder.log/g' /opt/tools/Responder/Responder.conf
 
-    pip3 install netifaces
+    pipx install netifaces
     x86_64-w64-mingw32-gcc /opt/tools/Responder/tools/MultiRelay/bin/Runas.c -o /opt/tools/Responder/tools/MultiRelay/bin/Runas.exe -municode -lwtsapi32 -luserenv
     x86_64-w64-mingw32-gcc /opt/tools/Responder/tools/MultiRelay/bin/Syssvc.c -o /opt/tools/Responder/tools/MultiRelay/bin/Syssvc.exe -municode
 }
@@ -368,8 +358,8 @@ function install_ressources {
     get_last_git_release gentilkiwi/mimikatz mimikatz
     install_impersonate-rs
     # get_last_git_release gentilkiwi/kekeo kekeo
-    git clone https://github.com/S3cur3Th1sSh1t/Amsi-Bypass-Powershell.git /opt/resources/Amsi-Bypass-Powershell
-    git clone https://github.com/PowerShellMafia/PowerSploit.git /opt/resources/PowerSploit
+    # git clone https://github.com/S3cur3Th1sSh1t/Amsi-Bypass-Powershell.git /opt/resources/Amsi-Bypass-Powershell
+    # git clone https://github.com/PowerShellMafia/PowerSploit.git /opt/resources/PowerSploit
     # git clone https://github.com/pry0cc/relevant-wordlist.git /opt/resources/relevant-wordlist
     install_sysinternals
     # mkdir /opt/resources/clem9669_wordlist/ && wget https://github.com/clem9669/wordlists/releases/download/22/clem9669_wordlist_small.7z -O /opt/resources/clem9669_wordlist/wordlist-french.7z
@@ -389,20 +379,12 @@ function install_crosslinked {
     python3 -m pipx install git+https://github.com/m8sec/crosslinked
 }
 
-function install_authz0 {
-    go install github.com/hahwul/authz0@latest
-}
-
 function install_ipinfo {
     go install github.com/ipinfo/cli/ipinfo@latest
 }
 
-function install_eos {
-    pipx install git+https://github.com/Synacktiv/eos
-}
-
 function install_bypass-url-parser {
-    git clone https://github.com/laluka/bypass-url-parser.git /opt/tools/bypass-url-parser
+    pipx install git+https://github.com/laluka/bypass-url-parser.git
 }
 
 function install_pywerview {
@@ -417,7 +399,7 @@ function install_kutil {
 }
 
 function install_pwncat {
-    pipx install git+https://github.com/calebstewart/pwncat
+    pipx install pwncat-cs
 }
 
 function install_scarecrow {
@@ -512,10 +494,6 @@ function install_pypykatz {
     pipx install git+https://github.com/skelsec/pypykatz.git
 }
 
-function install_msprobe {
-    pipx install git+https://github.com/puzzlepeaches/msprobe.git
-}
-
 function install_BloodHound {
     # git clone https://github.com/BloodHoundAD/BloodHound /opt/tools/BloodHound
     # npm install -g electron-packager
@@ -559,10 +537,6 @@ function install_chisel {
     go install -v github.com/jpillora/chisel@latest
 }
 
-function install_ipcdn {
-    go install -v github.com/six2dez/ipcdn@latest
-}
-
 function install_serviceDetector {
     git clone https://github.com/tothi/serviceDetector.git /opt/tools/serviceDetector
 }
@@ -585,10 +559,6 @@ function install_ldeep {
     pipx install git+https://github.com/franc-pentest/ldeep.git
 }
 
-function install_ritm {
-    pipx install git+https://github.com/Tw1sm/RITM
-}
-
 function install_searchsploit {
     git clone https://gitlab.com/exploit-database/exploitdb /opt/tools/exploitdb
     cd /opt/tools/exploitdb
@@ -607,11 +577,6 @@ function install_graudit {
 
 function install_holehe {
     pipx install git+https://github.com/megadose/holehe.git
-}
-
-function install_nndefaccts {
-    git clone https://github.com/nnposter/nndefaccts.git /opt/tools/nndefaccts
-    cp /opt/tools/nndefaccts/http-default-accounts-fingerprints-nndefaccts.lua /usr/share/nmap/nselib/data/http-default-accounts-fingerprints.lua
 }
 
 function install_gau {
@@ -638,7 +603,7 @@ function install_certsync {
 }
 
 function install_xLinkFinder {
-    git clone https://github.com/xnl-h4ck3r/xnLinkFinder.git /opt/tools/xnLinkFinder
+    pipx install git+https://github.com/xnl-h4ck3r/xnLinkFinder.git
 }
 
 function install_ntdsutil.py {
@@ -648,10 +613,6 @@ function install_ntdsutil.py {
 function install_amass {
     # https://github.com/OWASP/Amass
     go install -v github.com/owasp-amass/amass/v4/...@master
-}
-
-function install_shcheck {
-    pipx install git+https://github.com/santoru/shcheck.git
 }
 
 function install_sliver {
@@ -698,10 +659,6 @@ function install_certipy {
     python3 -m pipx install git+https://github.com/ly4k/Certipy.git
 }
 
-function install_ldapdomaindump {
-    pipx install git+https://github.com/dirkjanm/ldapdomaindump
-}
-
 function install_phpgcc {
     git clone https://github.com/ambionics/phpggc.git /opt/tools/phpgcc
 }
@@ -729,11 +686,11 @@ function install_changeme {
 }
 
 function install_uro {
-    pip3 install uro
+    pipx install uro
 }
 
 function install_arjun {
-    pip3 install arjun
+    pipx install arjun
 }
 
 function install_keepwn {
@@ -806,7 +763,11 @@ function install_nimcrypt {
 }
 
 function install_jsbeautifier {
-    pip3 install jsbeautifier
+    pipx install jsbeautifier
+}
+
+function install_alterx {
+    go install github.com/projectdiscovery/alterx/cmd/alterx@latest
 }
 
 function install_bloodhound-import {
@@ -830,10 +791,6 @@ function install_dumpsmbshare {
     deactivate
 }
 
-function install_cookiemonster {
-    go install github.com/iangcarroll/cookiemonster/cmd/cookiemonster@latest
-}
-
 function install_thievingfox {
     git clone https://github.com/Slowerzs/ThievingFox.git /opt/tools/ThievingFox
     apti mingw-w64 nuget
@@ -845,9 +802,6 @@ function install_thievingfox {
     deactivate
 }
 
-function install_adcheck {
-    pipx install git+https://github.com/CobblePot59/ADcheck.git
-}
 
 function install_smbclient-ng {
     pipx install git+https://github.com/p0dalirius/smbclient-ng.git
@@ -916,7 +870,7 @@ function install_firefox {
 }
 
 function install_onionsearch {
-    pip3 install onionsearch
+    pipx install onionsearch
 }
 
 function install_rusthound {
@@ -948,15 +902,11 @@ function install_sipvicious {
 
 function install_mfdread {
     git clone https://github.com/zhovner/mfdread.git /opt/tools/mfdread
-    pip3 install bitstring
+    pipx install bitstring
 }
 
 function install_rustscan {
     cargo install rustscan
-}
-
-function install_htmlq {
-    cargo install htmlq
 }
 
 function install_mdcat {
@@ -1045,19 +995,20 @@ function install_default {
 
 function utilsrune {
     set_env
+    apti whois
     install_arsenal
     install_whatportis
     install_ressources
     install_DefaultCredsCheatSheet
-    install_gists
+    # install_gists
     install_ipinfo
     install_tldr
 }
 
 function crackrune {
     set_env
-    install_hashcat
-    pip3 install name-that-hash
+    # install_hashcat
+    pipx install name-that-hash
     install_pack
     apti cewl 
 }
@@ -1075,7 +1026,6 @@ function osintrune {
     set_env
     install_onionsearch
     install_holehe
-    apti whois
     install_crosslinked
     install_linkedin2username
     install_truffleHog
@@ -1090,39 +1040,30 @@ function codereviewrune {
 function webrune {
     set_env
     install_ffuf
-    install_gobuster
     install_nuclei
-    install_shcheck
     install_subfinder
     install_httpx
-    install_testssl
     install_gowitness
     install_katana
     install_proxify
-    install_msprobe
-    install_ipcdn
     install_amass
     install_assetfinder
     install_fff
     install_meg
     install_unfurl
-    install_htmlq
     install_waybackurls
     install_jsloot
-    install_authz0
     install_ysoserial
     install_tlsx
     install_brb
     install_sqlmap
     install_gau
-    install_burp
+    install_alterx
     apti whatweb
     install_arjun
     install_uro
     install_simplehttpserver
-    install_eos
     install_bypass-url-parser
-    install_cookiemonster
     install_jsbeautifier
     install_xLinkFinder
     install_gf
@@ -1134,7 +1075,6 @@ function webrune {
 function networkrune {
     set_env
     apti nmap
-    install_nndefaccts
     apti netdiscover
     apti iptables
     apti arp-scan
@@ -1164,7 +1104,6 @@ function adrune {
     set_env
     install_impacket
     install_nxc
-    install_ldapdomaindump
     apti ldap-utils
     apti rpcbind
     apti chntpw
@@ -1172,7 +1111,6 @@ function adrune {
     install_coercer
     install_keepwn
     apti nbtscan
-    install_ritm
     install_pypykatz
     install_evil-winrm
     # install_pth_toolkit
@@ -1201,13 +1139,13 @@ function adrune {
     # install_scarecrow
     apti freerdp2-x11
     # install_privexchange
-    install_zerologon
+    # install_zerologon
     # apti rdesktop
     install_ntlmv1-multi
     install_enum4linuxng
     install_adconnectdump
     install_certipy
-    install_thievingfox
+    # install_thievingfox
     install_wmiexec-pro
     install_smbclient-ng 
     install_atexec-pro 
@@ -1219,17 +1157,16 @@ function adrune {
     install_kerbrute
     install_donpapi
     # install_webclientservicescanner
-    install_masky
-    install_cve-2019-1040-scanner
+    # install_masky
+    # install_cve-2019-1040-scanner
     install_roadtools
     install_azurehound
     install_pysnaffler
     apti heimdal-clients
     install_dploot
-    install_adcheck
     install_pywerview
-    install_acltoolkit
-    install_kutil
+    # install_acltoolkit
+    # install_kutil
     # install_ntdsutil.py
 }
 
@@ -1238,7 +1175,7 @@ function wifirune {
     apti wireless-tools
     apti iw
     apti aircrack-ng
-    apti reaver
+    # apti reaver
     apti hcxtools
     apti hcxdumptool
     install_eaphammer

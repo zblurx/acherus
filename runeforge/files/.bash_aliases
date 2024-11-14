@@ -46,19 +46,14 @@ alias toqr='qrencode -o - | feh --force-aliasing -FZ -'
 alias seclists='cd /opt/resources/SecLists'
 alias onelistforall='cd /opt/resources/OneListForAll'
 alias sqlmap='python3 /opt/tools/sqlmap/sqlmap.py'
-alias cme='crackmapexec'
-alias fuxploider='cd /opt/tools/fuxploider && python3 /opt/tools/fuxploider/fuxploider.py'
 alias burp='/opt/tools/burp/BurpSuiteCommunity'
 alias searchcreds='/opt/tools/DefaultCreds/venv/bin/python /opt/tools/DefaultCreds/creds search'
 alias creds='/opt/tools/DefaultCreds/venv/bin/python /opt/tools/DefaultCreds/creds'
 alias a="arsenal"
 alias chromium='chromium --no-sandbox'
 alias bhimport='bloodhound-import -du neo4j -dp acherus'
-alias ssrfmap='python3 /opt/tools/SSRFmap/ssrfmap.py'
 alias enum4linux-ng='/opt/tools/enum4linux-ng/venv/bin/python /opt/tools/enum4linux-ng/enum4linux-ng.py'
 alias msfconsole='msfconsole -H /root/.msfhistory'
-alias testssl='/opt/tools/testssl/testssl.sh'
-alias pcredz='/opt/tools/PCredz/venv/bin/python /opt/tools/PCredz/Pcredz'
 alias krbrelayx='python3 /opt/tools/krbrelayx/krbrelayx.py'
 alias graudit='/opt/tools/graudit/graudit'
 alias pkinittools='cd /opt/tools/PKINITtools'
@@ -84,5 +79,5 @@ alias dnschef.py='/opt/tools/dnschef/venv/bin/python /opt/tools/dnschef/dnschef.
 alias pywsus.py='/opt/tools/pywsus/venv/bin/python /opt/tools/pywsus/pywsus.py'
 alias linkedin2username.py='/opt/tools/linkedin2username/venv/bin/python /opt/tools/linkedin2username/linkedin2username.py'
 alias dns='cat /etc/resolv.conf'
-alias cme-bh-off="sed -i 's/bh_enabled = True/bh_enabled = False/g' /root/.cme/cme.conf && cat /root/.cme/cme.conf | grep --color=never 'bh_enabled ='"
-alias cme-bh-on="sed -i 's/bh_enabled = False/bh_enabled = True/g' /root/.cme/cme.conf && cat /root/.cme/cme.conf | grep --color=never 'bh_enabled ='"
+alias nxc-bh-off="sed -i 's/bh_enabled = True/bh_enabled = False/g' /root/.nxc/nxc.conf && cat /root/.nxc/nxc.conf | grep --color=never 'bh_enabled ='"
+alias nxc-bh-on="sed -i 's/bh_enabled = False/bh_enabled = True/g' /root/.nxc/nxc.conf && cat /root/.nxc/nxc.conf | grep --color=never 'bh_enabled ='"
