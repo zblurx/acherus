@@ -1,6 +1,6 @@
 FROM debian:12
 
-LABEL version=1.2.0
+LABEL version=1.3.0
 LABEL maintainer=@zblurx
 
 ENV DEBIAN_FRONTEND noninteractive

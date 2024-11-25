@@ -80,6 +80,10 @@ function install_jsloot {
     go install -v github.com/zblurx/jsloot@latest
 }
 
+function install_jsluice {
+    go install github.com/BishopFox/jsluice/cmd/jsluice@latest
+}
+
 function install_brb {
     go install -v github.com/zblurx/brb@latest
 }
@@ -677,6 +681,22 @@ function install_dnsx {
     go install -v github.com/projectdiscovery/dnsx/cmd/dnsx@latest
 }
 
+function install_shuffledns {
+    go install -v github.com/projectdiscovery/shuffledns/cmd/shuffledns@latest
+}
+
+function install_qsreplace {
+    go install -v github.com/tomnomnom/qsreplace@latest
+}
+
+function install_hakrevdns {
+    go install github.com/hakluke/hakrevdns@latest
+}
+
+function install_urlfinder {
+    go install -v github.com/projectdiscovery/urlfinder/cmd/urlfinder@latest
+}
+
 function install_changeme {
     git clone https://github.com/ztgrace/changeme.git /opt/tools/changeme
     cd /opt/tools/changeme
@@ -1039,135 +1059,139 @@ function codereviewrune {
 
 function webrune {
     set_env
-    install_ffuf
-    install_nuclei
-    install_subfinder
-    install_httpx
-    install_gowitness
-    install_katana
-    install_proxify
-    install_amass
-    install_assetfinder
-    install_fff
-    install_meg
-    install_unfurl
-    install_waybackurls
-    install_jsloot
-    install_ysoserial
-    install_tlsx
-    install_brb
-    install_sqlmap
-    install_gau
-    install_alterx
     apti whatweb
+    install_alterx
+    install_amass
     install_arjun
-    install_uro
-    install_simplehttpserver
+    install_assetfinder
+    install_brb
     install_bypass-url-parser
-    install_jsbeautifier
-    install_xLinkFinder
-    install_gf
-    install_hike
-    install_phpgcc
     install_dnsx
+    install_fff
+    install_ffuf
+    install_gau
+    install_gf
+    install_gowitness
+    install_hakrevdns
+    install_hike
+    install_httpx
+    install_jsbeautifier
+    install_jsluice
+    install_katana
+    install_meg
+    install_nuclei
+    install_phpgcc
+    install_proxify
+    install_qsreplace
+    install_shuffledns
+    install_simplehttpserver
+    install_sqlmap
+    install_subfinder
+    install_tlsx
+    install_unfurl
+    install_urlfinder
+    install_uro
+    install_waybackurls
+    install_xLinkFinder
+    install_ysoserial
 }
 
 function networkrune {
     set_env
-    apti nmap
-    apti netdiscover
-    apti iptables
     apti arp-scan
     apti arping
-    install_onesixtyone
     apti arptables
-    apti net-tools
-    install_naabu
-    apti proxychains4
-    apti masscan
-    apti traceroute
-    apti openvpn
-    apti openresolv
-    install_mapcidr
+    apti dsniff
     apti ipcalc
-    install_bettercap
-    install_dnschef
+    apti iptables
+    apti macchanger
+    apti masscan
+    apti net-tools
+    apti netdiscover
+    apti nmap
+    apti openresolv
+    apti openvpn
+    apti proxychains4
+    apti tcpdump
+    apti traceroute
     apti tshark
     apti wireshark
-    apti dsniff
+    install_bettercap
     install_dhcpp
-    apti tcpdump
-    apti macchanger
+    install_dnschef
+    install_mapcidr
+    install_naabu
+    install_onesixtyone
 }
 
 function adrune {
     set_env
-    install_impacket
-    install_nxc
-    apti ldap-utils
-    apti rpcbind
     apti chntpw
-    install_ldapnomnom
-    install_coercer
-    install_keepwn
-    apti nbtscan
-    install_pypykatz
-    install_evil-winrm
-    # install_pth_toolkit
-    install_credmaster
-    install_ldeep
-    install_sccmhunter
-    # install_ldapsearch-ad
-    # install_pcredz
-    install_BloodHound_and_friends
-    install_pre2k
-    install_krbrelayx
-    install_pretender
-    install_mitm6
-    install_Responder
-    # install_targetedKerberoast
-    install_LDAPmonitor # change
-    # install_gMSADumper
-    # install_serviceDetector
-    # install_chisel
-    install_petitpotam
-    install_adidnsdump
-    install_lsassy
-    install_pyGPOabuse
-    install_certsync
-    install_msldap
-    # install_scarecrow
     apti freerdp2-x11
-    # install_privexchange
-    # install_zerologon
-    # apti rdesktop
-    install_ntlmv1-multi
-    install_enum4linuxng
-    install_adconnectdump
-    install_certipy
-    # install_thievingfox
-    install_wmiexec-pro
-    install_smbclient-ng 
-    install_atexec-pro 
-    install_ccmpwn
-    install_manspider
-    install_pywsus
-    # install_dumpsmbshare
-    install_conpass
-    install_kerbrute
-    install_donpapi
-    # install_webclientservicescanner
-    # install_masky
-    # install_cve-2019-1040-scanner
-    install_roadtools
-    install_azurehound
-    install_pysnaffler
     apti heimdal-clients
+    apti ldap-utils
+    apti nbtscan
+    apti rpcbind
+    install_BloodHound_and_friends
+    install_LDAPmonitor # change
+    install_Responder
+    install_adconnectdump
+    install_adidnsdump
+    install_atexec-pro
+    install_azurehound
+    install_ccmpwn
+    install_certipy
+    install_certsync
+    install_coercer
+    install_conpass
+    install_credmaster
+    install_donpapi
     install_dploot
+    install_enum4linuxng
+    install_evil-winrm
+    install_impacket
+    install_keepwn
+    install_kerbrute
+    install_krbrelayx
+    install_ldapnomnom
+    install_ldeep
+    install_lsassy
+    install_manspider
+    install_mitm6
+    install_msldap
+    install_ntlmv1-multi
+    install_nxc
+    install_petitpotam
+    install_pre2k
+    install_pretender
+    install_pyGPOabuse
+    install_pypykatz
+    install_pysnaffler
     install_pywerview
+    install_pywsus
+    install_roadtools
+    install_sccmhunter
+    install_smbclient-ng
+    install_wmiexec-pro
+    # apti rdesktop
     # install_acltoolkit
+    # install_chisel
+    # install_cve-2019-1040-scanner
+    # install_dumpsmbshare
+    # install_gMSADumper
     # install_kutil
+    # install_ldapsearch-ad
+    # install_masky
     # install_ntdsutil.py
+    # install_pcredz
+    # install_privexchange
+    # install_pth_toolkit
+    # install_scarecrow
+    # install_serviceDetector
+    # install_targetedKerberoast
+    # install_thievingfox
+    # install_webclientservicescanner
+    # install_zerologon
 }
 
 function wifirune {
