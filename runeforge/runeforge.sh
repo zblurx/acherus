@@ -796,7 +796,7 @@ function install_bloodhound-import {
 
 function install_ysoserial {
     mkdir /opt/tools/ysoserial/
-    wget https://jitpack.io/com/github/frohoff/ysoserial/master-SNAPSHOT/ysoserial-master-SNAPSHOT.jar -O /opt/tools/ysoserial/ysoserial.jar
+    wget https://github.com/frohoff/ysoserial/releases/latest/download/ysoserial-all.jar -O /opt/tools/ysoserial/ysoserial.jar
 }
 
 function install_dploot {
@@ -838,6 +838,7 @@ function install_wmiexec-pro {
 function install_onesixtyone {
     git clone https://github.com/trailofbits/onesixtyone.git /opt/tools/onesixtyone
     cd /opt/tools/onesixtyone
+    make onesixtyone
     make install
 }
 
